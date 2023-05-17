@@ -1,0 +1,16 @@
+{
+  "name": "root",
+  "private": true,
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^6.6.2"
+  },
+  "scripts": {
+    "dev": "lerna run dev --parallel"
+  }
+}
