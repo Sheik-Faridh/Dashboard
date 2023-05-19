@@ -1,49 +1,12 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FwInput, FwButton, FwCheckbox } from '@freshworks/crayons/react';
 import { ReactComponent as GoogleIcon } from '@/assets/svg/google-icon.svg';
+import { AuthFormContainer } from '@/components/container';
 import Divider from '@/components/divider';
-
-const FormContainer = styled.div`
-  width: 100%;
-  margin: 20px 0;
-  & > .form-wrapper {
-    width: 80%;
-    & > label {
-      display: block;
-      text-align: center;
-    }
-    & > .oauth-button-wrapper {
-      margin: 20px 0 10px;
-      & > fw-button {
-        width: 100%;
-        & > svg {
-          width: 20px;
-          height: 20px;
-          margin-right: 10px;
-        }
-      }
-    }
-    & > form {
-      & > fw-input:not(#password) {
-        margin-bottom: 15px;
-      }
-      & > .line-wrapper {
-        margin: 6px 0;
-      }
-      & > .btn-wrapper {
-        margin: 30px 0 10px;
-        & fw-button {
-          width: 100%;
-        }
-      }
-    }
-  }
-`;
 
 const Form = () => {
   return (
-    <FormContainer className="fw-flex fw-justify-center">
+    <AuthFormContainer className="fw-flex fw-justify-center">
       <div className="form-wrapper fw-card-3 fw-p-20">
         <label className="fw-type-h4 fw-color-smoke-700">
           Log in to your account
@@ -62,7 +25,7 @@ const Form = () => {
             label="Email"
             iconLeft="email"
             placeholder="Enter your email"
-            hint-text="Enter your email address associated with the account"
+            hintText="Enter your email address associated with the account"
             required
             clearInput
           />
@@ -72,7 +35,8 @@ const Form = () => {
             label="Password"
             iconLeft="password"
             placeholder="Enter your password"
-            hint-text="Enter your account password"
+            className="no-margin"
+            hintText="Enter your account password"
             required
             clearInput
           />
@@ -102,7 +66,7 @@ const Form = () => {
           </div>
         </form>
       </div>
-    </FormContainer>
+    </AuthFormContainer>
   );
 };
 
