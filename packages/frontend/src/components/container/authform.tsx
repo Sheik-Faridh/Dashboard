@@ -4,7 +4,7 @@ const AuthFormContainer = styled.div`
   width: 100%;
   margin: 20px 0;
   & > .form-wrapper {
-    width: 80%;
+    width: 85%;
     & > label {
       display: block;
       text-align: center;

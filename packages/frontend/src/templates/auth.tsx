@@ -16,13 +16,14 @@ const Container = styled.div`
       width: 80%;
       height: 90%;
       max-width: 1900px;
-      & > .form-wrapper {
-        flex-basis: 0;
+      max-height: 700px;
+      & > .form-outer-wrapper {
+        flex: 1.2 1 0;
         & > .header-logo-wrapper {
           width: 100%;
           & > .logo-wrapper {
-            width: 100px;
-            height: 80px;
+            width: 70px;
+            height: 50px;
             & > img {
               width: 100%;
               height: 100%;
@@ -30,6 +31,7 @@ const Container = styled.div`
             }
           }
           & > .logo-name {
+            font-size: 1.4rem;
             text-transform: uppercase;
             background: linear-gradient(
               to right,
@@ -45,17 +47,28 @@ const Container = styled.div`
           }
         }
       }
-      & > .image-wrapper {
-        flex-basis: 0;
-        border-radius: 50px;
-        padding: 0;
-        & img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+      & > .image-container {
+        flex: 1 1 0;
+        & > .image-wrapper {
           border-radius: 50px;
+          padding: 0;
+          width: fit-content;
+          height: fit-content;
+          & img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50px;
+          }
         }
       }
+    }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    & > .outer-wrapper > .inner-wrapper {
+      width: 98%;
+      height: 98%;
     }
   }
 `;
@@ -68,7 +81,7 @@ const AuthTemplate = ({
     <Container>
       <div className="fw-bg-smoke-50 fw-flex fw-justify-center fw-items-center outer-wrapper">
         <div className="fw-card-3 fw-p-20 fw-flex fw-gap-5 inner-wrapper">
-          <div className="form-wrapper fw-flex-grow">
+          <div className="form-outer-wrapper">
             <div className="header-logo-wrapper fw-flex fw-items-center">
               <div className="logo-wrapper">
                 <img src={LogoImage} alt="Logo" />
@@ -77,8 +90,10 @@ const AuthTemplate = ({
             </div>
             {children}
           </div>
-          <div className="image-wrapper fw-flex-grow fw-card-2">
-            <img src={image} alt="Image" />
+          <div className="image-container fw-flex fw-items-center">
+            <div className="image-wrapper fw-card-2">
+              <img src={image} alt="Image" />
+            </div>
           </div>
         </div>
       </div>
