@@ -3,8 +3,19 @@ import { FwInput, FwButton } from '@freshworks/crayons/react';
 import { ReactComponent as GoogleIcon } from '@/assets/svg/google-icon.svg';
 import { AuthFormContainer } from '@/components/container';
 import Divider from '@/components/divider';
+import { useSignupForm } from '@/hooks/signup';
+import { getFormInputError, getFormInputState } from '@/utils/form';
 
 const Form = () => {
+  const { errors } = useSignupForm({
+    selectors: {
+      nameSelector: '#name',
+      emailSelector: '#email',
+      passwordSelector: '#password',
+      confirmPasswordSelector: '#confirm-password',
+      submitBtnSelector: '#signup-submit-btn',
+    },
+  });
   return (
     <AuthFormContainer className="fw-flex fw-justify-center">
       <div className="form-wrapper fw-card-3 fw-p-20">
@@ -24,6 +35,8 @@ const Form = () => {
             type="name"
             label="User Name"
             placeholder="Enter your name"
+            state={getFormInputState(errors?.name)}
+            errorText={getFormInputError(errors?.name)}
             required
             clearInput
           />
@@ -33,6 +46,8 @@ const Form = () => {
             label="Email"
             iconLeft="email"
             placeholder="Enter your email"
+            state={getFormInputState(errors?.email)}
+            errorText={getFormInputError(errors?.email)}
             required
             clearInput
           />
@@ -42,6 +57,8 @@ const Form = () => {
             label="Password"
             iconLeft="password"
             placeholder="Enter password"
+            state={getFormInputState(errors?.password)}
+            errorText={getFormInputError(errors?.password)}
             required
             clearInput
           />
@@ -51,11 +68,13 @@ const Form = () => {
             label="Confirm Password"
             iconLeft="password"
             placeholder="Enter password"
+            state={getFormInputState(errors?.confirmPassword)}
+            errorText={getFormInputError(errors?.confirmPassword)}
             required
             clearInput
           />
           <div className="btn-wrapper fw-flex">
-            <FwButton color="primary" type="submit">
+            <FwButton color="primary" id="signup-submit-btn">
               Submit
             </FwButton>
           </div>

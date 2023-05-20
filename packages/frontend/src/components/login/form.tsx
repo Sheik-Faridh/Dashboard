@@ -3,8 +3,18 @@ import { FwInput, FwButton, FwCheckbox } from '@freshworks/crayons/react';
 import { ReactComponent as GoogleIcon } from '@/assets/svg/google-icon.svg';
 import { AuthFormContainer } from '@/components/container';
 import Divider from '@/components/divider';
+import { useLoginForm } from '@/hooks/login';
+import { getFormInputError, getFormInputState } from '@/utils/form';
 
 const Form = () => {
+  const { errors } = useLoginForm({
+    selectors: {
+      emailSelector: '#email',
+      passwordSelector: '#password',
+      submitBtnSelector: '#login-submit-btn',
+      rememberMeSelector: '#remember-me-checkbox',
+    },
+  });
   return (
     <AuthFormContainer className="fw-flex fw-justify-center">
       <div className="form-wrapper fw-card-3 fw-p-20">
@@ -26,6 +36,8 @@ const Form = () => {
             iconLeft="email"
             placeholder="Enter your email"
             hintText="Enter your email address associated with the account"
+            state={getFormInputState(errors?.email)}
+            errorText={getFormInputError(errors?.email)}
             required
             clearInput
           />
@@ -37,11 +49,13 @@ const Form = () => {
             placeholder="Enter your password"
             className="no-margin"
             hintText="Enter your account password"
+            state={getFormInputState(errors?.password)}
+            errorText={getFormInputError(errors?.password)}
             required
             clearInput
           />
           <div className="line-wrapper fw-flex fw-justify-between">
-            <FwCheckbox>
+            <FwCheckbox id="remember-me-checkbox">
               <span>Remember Me</span>
             </FwCheckbox>
             <Link className="fw-type-h7 fw-color-azure-800" to="">
@@ -49,7 +63,7 @@ const Form = () => {
             </Link>
           </div>
           <div className="btn-wrapper fw-flex">
-            <FwButton color="primary" type="submit">
+            <FwButton id="login-submit-btn" color="primary">
               Submit
             </FwButton>
           </div>
