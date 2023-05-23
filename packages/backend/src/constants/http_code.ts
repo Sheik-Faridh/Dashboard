@@ -24,8 +24,8 @@ export const HttpStatusCodeNames: Record<HttpStatusCode, string> = {
   [HttpStatusCode.Unauthorized]: 'Unauthorized',
   [HttpStatusCode.Forbidden]: 'Forbidden',
   [HttpStatusCode.PaymentRequired]: 'Payment Required',
-  [HttpStatusCode.Forbidden]: 'Forbidden',
   [HttpStatusCode.NotFound]: 'Not Found',
+  [HttpStatusCode.MethodNotSupported]: 'Method Not Supported',
 
   // Server Errors
   [HttpStatusCode.InternalServerError]: 'Internal Server Error',

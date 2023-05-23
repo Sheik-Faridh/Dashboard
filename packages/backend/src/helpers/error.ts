@@ -57,6 +57,17 @@ export class ForbiddenRequest extends BaseError {
   }
 }
 
+export class MethodNotSupportedRequest extends BaseError {
+  constructor(description = 'method not supported', errors?: ValidationError) {
+    super(
+      HttpStatusCodeNames[HttpStatusCode.MethodNotSupported],
+      HttpStatusCode.MethodNotSupported,
+      description,
+      errors,
+    )
+  }
+}
+
 export class NotFoundRequest extends BaseError {
   constructor(description = 'not found', errors?: ValidationError) {
     super(

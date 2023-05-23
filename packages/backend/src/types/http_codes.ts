@@ -22,6 +22,7 @@ export enum HttpStatusCode {
   PaymentRequired = 402,
   Forbidden = 403,
   NotFound = 404,
+  MethodNotSupported = 405,
 
   // Server Errors
   InternalServerError = 500,

@@ -2,8 +2,20 @@ import { NextFunction, Request, Response } from 'express'
 import { ValidationError } from 'joi'
 import BaseError, {
   InternalServerError,
+  MethodNotSupportedRequest,
   NotFoundRequest,
 } from '@/helpers/error'
+
+export const methodNotSupportedHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  // Create a new error with a custom message
+  const error = new MethodNotSupportedRequest('Method Not Supported')
+  // Pass the error to the error-handling middleware
+  next(error)
+}
 
 export const notFoundHandler = (
   req: Request,
