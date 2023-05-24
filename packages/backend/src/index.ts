@@ -5,6 +5,7 @@ import cors from 'cors'
 import compression from 'compression'
 import helmet from 'helmet'
 import apiRouter from '@/routes'
+import bootstrap from './bootstrap'
 import logger, { requestLogger } from '@/logger'
 import { errorHandler, notFoundHandler } from '@/error'
 
@@ -28,6 +29,8 @@ app.use(notFoundHandler)
 
 app.use(errorHandler)
 
-app.listen(PORT, () => {
-  logger.info(`Server is running on port ${PORT}`)
+bootstrap().then(() => {
+  app.listen(PORT, () => {
+    logger.info(`Server is running on port ${PORT}`)
+  })
 })

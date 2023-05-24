@@ -5,11 +5,10 @@ import fs from 'fs'
 import DailyRotateFile from 'winston-daily-rotate-file'
 
 const logDirName = 'logs'
-const logsDir = path.join(__dirname, logDirName)
 
 // Create logs directory if it doesn't exist
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir)
+if (!fs.existsSync(logDirName)) {
+  fs.mkdirSync(logDirName)
 }
 
 const logger = winston.createLogger({
@@ -23,13 +22,7 @@ const logger = winston.createLogger({
   ),
 })
 
-if (process.env.NODE_ENV === 'development') {
-  logger.add(
-    new winston.transports.Console({
-      format: format.combine(format.colorize(), format.simple()),
-    }),
-  )
-} else {
+if (process.env.NODE_ENV === 'production') {
   // Define file transport for error logs
   const errorTransport = new DailyRotateFile({
     dirname: path.join(logDirName, 'error'),
@@ -53,6 +46,12 @@ if (process.env.NODE_ENV === 'development') {
   })
 
   logger.add(combinedTransport)
+} else {
+  logger.add(
+    new winston.transports.Console({
+      format: format.combine(format.colorize(), format.simple()),
+    }),
+  )
 }
 
 export const requestLogger = (
