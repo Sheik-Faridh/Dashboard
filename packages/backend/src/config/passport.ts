@@ -1,7 +1,15 @@
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
-import { User } from '@/models/init-models'
+import { User, UserAttributes } from '@/models/init-models'
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface User extends UserAttributes {}
+  }
+}
 
 passport.use(
   new LocalStrategy(

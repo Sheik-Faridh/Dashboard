@@ -22,11 +22,12 @@ const props: Array<keyof Omit<IValidation, 'options'>> = [
 export const validate = (settings: Partial<IValidation>) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const errors: ValidationErrorItem[] = []
-    for (const key in props) {
+    for (const key of props) {
       if (settings?.[key as keyof IValidation]) {
         const data = req[key as keyof Request]
         const schema = settings[key as keyof IValidation] as Joi.ObjectSchema
         const options = settings?.options ?? {}
+        console.log(options, data, schema)
         const result = schema.validate(data, options)
         result.error?.details && errors.push(...result.error.details)
       }

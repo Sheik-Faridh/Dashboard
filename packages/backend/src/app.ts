@@ -8,7 +8,7 @@ import { createClient } from 'redis'
 import helmet from 'helmet'
 import RedisStore from 'connect-redis'
 import apiRouter from '@/routes'
-import { requestLogger } from '@/helpers/logger'
+import { requestLogger } from '@/middleware/logger'
 import { errorHandler, notFoundHandler } from '@/middleware/error'
 import passport from '@/config/passport'
 
@@ -49,9 +49,9 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use('/api/v1', apiRouter)
-
 app.use(requestLogger)
+
+app.use('/api/v1', apiRouter)
 
 app.use(notFoundHandler)
 
