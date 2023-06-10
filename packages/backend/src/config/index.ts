@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import path from 'path'
+import fs from 'fs'
 import { Dialect } from 'sequelize'
 
 type Config = {
@@ -12,18 +13,21 @@ type Config = {
   DB_PORT: number
   DB_DIALECT: Dialect
   DB_HOST: string
+  SESSION_SECRET: string
   SALT_ROUND: number
+  COOKIE_MAX_AGE: number
 }
 
 // Load environment-specific variables based on the NODE_ENV value
-if (process.env.NODE_ENV === 'production')
-  dotenv.config({
-    path: path.resolve(__dirname, '../secrets/.env.production'),
-  })
-else
+if (fs.existsSync(path.resolve(__dirname, '../secrets/.env.development')))
   dotenv.config({
     path: path.resolve(__dirname, '../secrets/.env.development'),
   })
+else if (fs.existsSync(path.resolve(__dirname, '../secrets/.env.production')))
+  dotenv.config({
+    path: path.resolve(__dirname, '../secrets/.env.production'),
+  })
+else console.error('.env file not found')
 
 export default {
   PORT: Number(process.env.PORT),
@@ -35,5 +39,7 @@ export default {
   DB_PORT: Number(process.env.DB_PORT),
   DB_DIALECT: process.env.DB_DIALECT,
   DB_HOST: process.env.DB_HOST,
+  SESSION_SECRET: process.env.SESSION_SECRET,
   SALT_ROUND: 10,
+  COOKIE_MAX_AGE: 24 * 60 * 60,
 } as Config

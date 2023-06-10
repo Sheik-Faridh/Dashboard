@@ -3,6 +3,9 @@ import winston, { format } from 'winston'
 import path from 'path'
 import fs from 'fs'
 import DailyRotateFile from 'winston-daily-rotate-file'
+import config from '@/config'
+
+const { NODE_ENV } = config
 
 const logDirName = 'logs'
 
@@ -22,7 +25,7 @@ const logger = winston.createLogger({
   ),
 })
 
-if (process.env.NODE_ENV === 'production') {
+if (NODE_ENV === 'production') {
   // Define file transport for error logs
   const errorTransport = new DailyRotateFile({
     dirname: path.join(logDirName, 'error'),

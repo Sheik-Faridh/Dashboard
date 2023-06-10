@@ -1,6 +1,6 @@
 import express from 'express'
 import { loginController } from '@/controllers/auth'
-import { methodNotSupportedHandler } from '@/error'
+import { methodNotSupportedHandler } from '@/utils/error'
 
 const router = express.Router()
 
