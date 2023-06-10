@@ -27,7 +27,6 @@ export const validate = (settings: Partial<IValidation>) => {
         const data = req[key as keyof Request]
         const schema = settings[key as keyof IValidation] as Joi.ObjectSchema
         const options = settings?.options ?? {}
-        console.log(options, data, schema)
         const result = schema.validate(data, options)
         result.error?.details && errors.push(...result.error.details)
       }
