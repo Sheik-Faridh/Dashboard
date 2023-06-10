@@ -2,7 +2,7 @@ import { createNamespace } from 'cls-hooked'
 import SequelizeAuto, { AutoOptions } from 'sequelize-auto'
 import path from 'path'
 import sequelize from '@/db'
-import logger from '@/utils/logger'
+import logger from '@/helpers/logger'
 
 const nameSpace = createNamespace('migration')
 

@@ -1,6 +1,6 @@
-import { bindHooksToModels } from '@/utils/hooks'
+import { bindHooksToModels } from '@/helpers/hooks'
 import db from '@/db'
-import logger from '@/utils/logger'
+import logger from '@/helpers/logger'
 
 const bootstrap = async () => {
   try {

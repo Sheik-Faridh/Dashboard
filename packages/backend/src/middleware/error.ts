@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { ValidationError } from 'joi'
+import { ValidationErrorItem } from 'joi'
 import BaseError, {
   InternalServerError,
   MethodNotSupportedRequest,
@@ -40,7 +40,7 @@ export const errorHandler = (
     err = new InternalServerError(err.message)
   }
 
-  const error: { message: string; errors?: ValidationError } = {
+  const error: { message: string; errors?: ValidationErrorItem[] } = {
     message: err.message,
   }
   if (err.errors) error.errors = err.errors
