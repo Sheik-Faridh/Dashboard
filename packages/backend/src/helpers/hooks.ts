@@ -1,6 +1,6 @@
-import { Sequelize } from 'sequelize'
 import bcrypt from 'bcrypt'
-import { User, initModels } from '@/models/init-models'
+import { models } from '@/database'
+import { User } from '@/models/init-models'
 import config from '@/config'
 
 const { SALT_ROUND } = config
@@ -12,8 +12,7 @@ const encryptPassword = async (user: User) => {
   }
 }
 
-export const bindHooksToModels = (db: Sequelize) => {
-  const models = initModels(db)
+export const bindHooksToModels = () => {
   models.User.addHook('beforeCreate', 'bcryptBeforeCreate', encryptPassword)
   models.User.addHook('beforeUpdate', 'bcryptBeforeUpdate', encryptPassword)
 }

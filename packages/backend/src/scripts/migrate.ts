@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize'
 import { createNamespace } from 'cls-hooked'
 import { Umzug, SequelizeStorage } from 'umzug'
-import sequelize from '@/db'
+import sequelize from '@/database'
 import logger from '@/helpers/logger'
 
 const nameSpace = createNamespace('migration')

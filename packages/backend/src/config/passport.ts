@@ -1,22 +1,14 @@
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
-import { User, UserAttributes } from '@/models/init-models'
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Express {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface User extends UserAttributes {}
-  }
-}
+import { models } from '@/database'
 
 passport.use(
   new LocalStrategy(
     { usernameField: 'email' },
     async (email, password, done) => {
       try {
-        const user = await User.findOne({ where: { email }, raw: true })
+        const user = await models.User.findOne({ where: { email }, raw: true })
 
         if (!user)
           return done(undefined, false, {
@@ -43,7 +35,7 @@ passport.serializeUser((user, cb) => {
 
 passport.deserializeUser<number>(async (id, done) => {
   try {
-    const user = await User.findByPk(id)
+    const user = await models.User.findByPk(id)
     if (!user) return done('User not found')
     return done(undefined, user)
   } catch (error) {

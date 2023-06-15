@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize'
 import { createNamespace } from 'cls-hooked'
 import { Umzug, SequelizeStorage } from 'umzug'
-import sequelize from '@/db'
+import sequelize from '@/database'
 import logger from '@/helpers/logger'
 
 const nameSpace = createNamespace('seeds')
@@ -29,6 +29,7 @@ nameSpace.run(async () => {
   try {
     await sequelize.authenticate()
     logger.info('Authenticated successfully')
+    await seed.down({ to: 0 })
     await seed.up()
     logger.info('Seeds completed successfully')
   } catch (error) {

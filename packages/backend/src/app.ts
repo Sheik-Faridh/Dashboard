@@ -4,21 +4,17 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import compression from 'compression'
 import session from 'express-session'
-import { createClient } from 'redis'
 import helmet from 'helmet'
 import RedisStore from 'connect-redis'
 import apiRouter from '@/routes'
 import { requestLogger } from '@/middleware/logger'
 import { errorHandler, notFoundHandler } from '@/middleware/error'
 import passport from '@/config/passport'
+import redisClient from '@/helpers/redis'
 
-const { REDIS_URL, SESSION_SECRET, COOKIE_MAX_AGE, NODE_ENV } = config
+const { SESSION_SECRET, COOKIE_MAX_AGE, NODE_ENV } = config
 
 const app = express()
-
-const redisClient = createClient({
-  url: REDIS_URL,
-})
 
 const redisStore = new RedisStore({
   client: redisClient,
