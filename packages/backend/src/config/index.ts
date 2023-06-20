@@ -16,6 +16,9 @@ type Config = {
   SESSION_SECRET: string
   SALT_ROUND: number
   COOKIE_MAX_AGE: number
+  GOOGLE_CLIENT_ID: string
+  GOOGLE_CLIENT_SECRET: string
+  GOOGLE_CALLBACK_URL: string
 }
 
 // Load environment-specific variables based on the NODE_ENV value
@@ -42,4 +45,7 @@ export default {
   SESSION_SECRET: process.env.SESSION_SECRET,
   SALT_ROUND: 10,
   COOKIE_MAX_AGE: 24 * 60 * 60,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
 } as Config

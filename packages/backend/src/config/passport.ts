@@ -1,7 +1,12 @@
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { models } from '@/database'
+import config from '@/config'
+import { InternalServerError } from '@/helpers/error'
+
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } = config
 
 passport.use(
   new LocalStrategy(
@@ -24,6 +29,30 @@ passport.use(
         })
       } catch (error) {
         return done(error)
+      }
+    },
+  ),
+)
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: GOOGLE_CALLBACK_URL,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const [user] = await models.User.findOrCreate({
+          where: {
+            password: accessToken,
+            name: profile?.name?.givenName,
+            email: profile?.emails?.[0]?.value,
+          },
+        })
+        done(null, user)
+      } catch (error) {
+        return done(new InternalServerError('Internal Server Error'))
       }
     },
   ),

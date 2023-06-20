@@ -21,3 +21,31 @@ export const loginController = (
     },
   )(req, res, next)
 }
+
+export const oAuthCallbackController = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!req.user) return next(new BadRequest('User not Found'))
+
+  req.logIn(req.user, function (err) {
+    if (err) next(err)
+    res.status(200).json({ message: 'Login Successfull' })
+  })
+}
+
+export const logoutController = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  req.logout(function (err) {
+    if (err) next(err)
+    req.session.destroy(function (e) {
+      if (e) next(e)
+      res.clearCookie('connect.sid')
+      res.status(200).json({ message: 'Logout Successfull' })
+    })
+  })
+}
