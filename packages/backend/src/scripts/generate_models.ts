@@ -4,7 +4,7 @@ import path from 'path'
 import sequelize from '@/database'
 import logger from '@/helpers/logger'
 
-const nameSpace = createNamespace('migration')
+const nameSpace = createNamespace('models')
 
 nameSpace.run(async () => {
   try {

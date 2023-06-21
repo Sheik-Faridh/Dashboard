@@ -4,7 +4,7 @@ import { Umzug, SequelizeStorage } from 'umzug'
 import sequelize from '@/database'
 import logger from '@/helpers/logger'
 
-const nameSpace = createNamespace('migration')
+const nameSpace = createNamespace('reset')
 
 const migration = new Umzug({
   migrations: {
