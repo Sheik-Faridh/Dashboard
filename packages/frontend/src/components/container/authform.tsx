@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const AuthFormContainer = styled.div`
   width: 100%;
@@ -35,6 +35,6 @@ const AuthFormContainer = styled.div`
       }
     }
   }
-`;
+`
 
-export default AuthFormContainer;
+export default AuthFormContainer

@@ -1,13 +1,13 @@
 interface Detail {
-  name: string;
-  value: string;
+  name: string
+  value: string
   meta: {
-    checked: boolean;
-  };
+    checked: boolean
+  }
 }
 
 export interface CustomEvent extends Event {
-  detail: Detail;
+  detail: Detail
 }
 
 export enum FieldType {

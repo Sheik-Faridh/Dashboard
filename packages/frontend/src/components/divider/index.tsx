@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react';
-import styled, { css } from 'styled-components';
+import { PropsWithChildren } from 'react'
+import styled, { css } from 'styled-components'
 
 enum Orientation {
   horizontal = 'horizontal',
@@ -7,12 +7,12 @@ enum Orientation {
 }
 
 type DividerProps = {
-  orientation: Orientation;
-};
+  orientation: Orientation
+}
 
 type DividerStyledProps = {
-  $orientation: Orientation;
-};
+  $orientation: Orientation
+}
 
 const Container = styled.div<DividerStyledProps>`
   width: 100%;
@@ -33,17 +33,17 @@ const Container = styled.div<DividerStyledProps>`
       : css`
           flex-flow: column;
         `};
-`;
+`
 
 const Divider = (props: PropsWithChildren<Partial<DividerProps>>) => {
-  const { children, orientation = Orientation.horizontal } = props;
+  const { children, orientation = Orientation.horizontal } = props
   return (
-    <Container className="fw-flex" $orientation={orientation}>
-      <span className="wrapper fw-color-elephant-800 fw-type-h6">
+    <Container className='fw-flex' $orientation={orientation}>
+      <span className='wrapper fw-color-elephant-800 fw-type-h6'>
         {children}
       </span>
     </Container>
-  );
-};
+  )
+}
 
-export default Divider;
+export default Divider

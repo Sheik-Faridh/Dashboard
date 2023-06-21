@@ -1,27 +1,27 @@
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { passwordSchema } from '@/utils/form';
-import { CustomFormFields, useRegisterCrayonsFormFields } from '@/hooks/common';
-import { CrayonsEventType, FieldType } from '@/types/common';
-import { useCallback, useMemo } from 'react';
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import { passwordSchema } from '@/utils/form'
+import { CustomFormFields, useRegisterCrayonsFormFields } from '@/hooks/common'
+import { CrayonsEventType, FieldType } from '@/types/common'
+import { useCallback, useMemo } from 'react'
 
 type FormData = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+}
 
 type UseSignupFormProps = {
   selectors: {
-    nameSelector: string;
-    emailSelector: string;
-    passwordSelector: string;
-    confirmPasswordSelector: string;
-    submitBtnSelector: string;
-  };
-};
+    nameSelector: string
+    emailSelector: string
+    passwordSelector: string
+    confirmPasswordSelector: string
+    submitBtnSelector: string
+  }
+}
 
 export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
   const {
@@ -30,7 +30,7 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
     passwordSelector,
     confirmPasswordSelector,
     submitBtnSelector,
-  } = selectors;
+  } = selectors
   const schema = yup.object().shape({
     name: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -39,7 +39,7 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
       .string()
       .oneOf([yup.ref('password'), ''], 'Passwords must match')
       .required('Confirm Password is required'),
-  });
+  })
 
   const {
     setValue,
@@ -48,7 +48,7 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
     trigger,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
-  });
+  })
 
   const fields: CustomFormFields<FormData>[] = useMemo(
     () => [
@@ -78,11 +78,11 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
       },
     ],
     [confirmPasswordSelector, emailSelector, nameSelector, passwordSelector],
-  );
+  )
 
   const onSubmit = useCallback((data: FormData) => {
-    console.log(data); // You can handle form submission here
-  }, []);
+    console.log(data) // You can handle form submission here
+  }, [])
 
   const formSubmit = useMemo(
     () => ({
@@ -90,14 +90,14 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
       callback: handleSubmit(onSubmit),
     }),
     [submitBtnSelector, onSubmit, handleSubmit],
-  );
+  )
 
   useRegisterCrayonsFormFields<FormData>({
     fields,
     trigger,
     setValue,
     formSubmit,
-  });
+  })
 
-  return { errors };
-};
+  return { errors }
+}

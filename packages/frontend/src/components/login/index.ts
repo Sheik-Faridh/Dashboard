@@ -1,1 +1,1 @@
-export { default as LoginForm } from '@/components/login/form';
+export { default as LoginForm } from '@/components/login/form'

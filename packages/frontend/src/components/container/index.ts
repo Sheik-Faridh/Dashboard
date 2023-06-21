@@ -1,1 +1,1 @@
-export { default as AuthFormContainer } from './authform';
+export { default as AuthFormContainer } from './authform'

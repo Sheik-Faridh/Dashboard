@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import LogoImage from '@/assets/images/logo.webp';
-import { PropsWithChildren } from 'react';
+import styled from 'styled-components'
+import LogoImage from '@/assets/images/logo.webp'
+import { PropsWithChildren } from 'react'
 
 type AuthTemplateProps = {
-  image: string;
-};
+  image: string
+}
 
 const Container = styled.div`
   width: 100vw;
@@ -71,7 +71,7 @@ const Container = styled.div`
       height: 98%;
     }
   }
-`;
+`
 
 const AuthTemplate = ({
   children,
@@ -79,26 +79,26 @@ const AuthTemplate = ({
 }: PropsWithChildren<AuthTemplateProps>) => {
   return (
     <Container>
-      <div className="fw-bg-smoke-50 fw-flex fw-justify-center fw-items-center outer-wrapper">
-        <div className="fw-card-3 fw-p-20 fw-flex fw-gap-5 inner-wrapper">
-          <div className="form-outer-wrapper">
-            <div className="header-logo-wrapper fw-flex fw-items-center">
-              <div className="logo-wrapper">
-                <img src={LogoImage} alt="Logo" />
+      <div className='fw-bg-smoke-50 fw-flex fw-justify-center fw-items-center outer-wrapper'>
+        <div className='fw-card-3 fw-p-20 fw-flex fw-gap-5 inner-wrapper'>
+          <div className='form-outer-wrapper'>
+            <div className='header-logo-wrapper fw-flex fw-items-center'>
+              <div className='logo-wrapper'>
+                <img src={LogoImage} alt='Logo' />
               </div>
-              <span className="logo-name fw-type-h2">Space Desk</span>
+              <span className='logo-name fw-type-h2'>Space Desk</span>
             </div>
             {children}
           </div>
-          <div className="image-container fw-flex fw-items-center">
-            <div className="image-wrapper fw-card-2">
-              <img src={image} alt="Image" />
+          <div className='image-container fw-flex fw-items-center'>
+            <div className='image-wrapper fw-card-2'>
+              <img src={image} alt='Image' />
             </div>
           </div>
         </div>
       </div>
     </Container>
-  );
-};
+  )
+}
 
-export default AuthTemplate;
+export default AuthTemplate
