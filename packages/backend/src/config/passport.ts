@@ -4,7 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { models } from '@/database'
 import config from '@/config'
-import { InternalServerError } from '@/helpers/error'
+import { BadRequest, InternalServerError } from '@/helpers/error'
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } = config
 
@@ -15,18 +15,13 @@ passport.use(
       try {
         const user = await models.User.findOne({ where: { email }, raw: true })
 
-        if (!user)
-          return done(undefined, false, {
-            message: `Email ${email} not found.`,
-          })
+        if (!user) return done(new BadRequest(`Email ${email} not found.`))
 
         const match = await bcrypt.compare(password, user.password)
 
         if (match) return done(undefined, user)
 
-        return done(undefined, false, {
-          message: 'Invalid password.',
-        })
+        return done(new BadRequest('Invalid password.'))
       } catch (error) {
         return done(error)
       }
