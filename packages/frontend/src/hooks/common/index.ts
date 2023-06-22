@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import {
   Path,
   FieldValues,
@@ -7,6 +7,7 @@ import {
   PathValue,
 } from 'react-hook-form'
 import { CustomEvent, FieldType, CrayonsEventType } from '@/types/common'
+import { ToastController } from '@freshworks/crayons/react'
 
 export type CustomFormFields<T> = {
   name: Path<T>
@@ -61,4 +62,36 @@ export const useRegisterCrayonsFormFields = <T extends FieldValues>({
       formSubmitted = true
     })
   }, [fields, formSubmit, setValue, trigger])
+}
+
+export const useToast = () => {
+  const toast = useMemo(() => ToastController({ position: 'top-right' }), [])
+
+  const showMessage = useCallback(
+    (content: string, type: 'success' | 'error' | 'warning' | 'inprogress') =>
+      toast.trigger({ type, content }),
+    [toast],
+  )
+
+  const showError = useCallback(
+    (message: string) => showMessage(message, 'error'),
+    [showMessage],
+  )
+
+  const showSuccess = useCallback(
+    (message: string) => showMessage(message, 'success'),
+    [showMessage],
+  )
+
+  const showWarning = useCallback(
+    (message: string) => showMessage(message, 'warning'),
+    [showMessage],
+  )
+
+  const showInProgress = useCallback(
+    (message: string) => showMessage(message, 'inprogress'),
+    [showMessage],
+  )
+
+  return { showError, showSuccess, showWarning, showInProgress }
 }

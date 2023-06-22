@@ -2,15 +2,21 @@ import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { CrayonsEventType, FieldType } from '@/types/common'
+import {
+  APIErrorResponse,
+  CrayonsEventType,
+  FieldType,
+  LoginFormData,
+} from '@/types/common'
 import { passwordSchema } from '@/utils/form'
-import { CustomFormFields, useRegisterCrayonsFormFields } from '@/hooks/common'
-
-type FormData = {
-  email: string
-  password: string
-  rememberMe: boolean
-}
+import {
+  CustomFormFields,
+  useRegisterCrayonsFormFields,
+  useToast,
+} from '@/hooks/common'
+import { useLoginUserMutation } from '@/redux/services/auth'
+import { getErrorMessage, logError } from '@/utils'
+import { useNavigate } from 'react-router-dom'
 
 type UseLoginFormProps = {
   selectors: {
@@ -34,16 +40,23 @@ export const useLoginForm = ({ selectors }: UseLoginFormProps) => {
     rememberMe: yup.boolean(),
   })
 
+  const navigate = useNavigate()
+
+  const { showError } = useToast()
+
+  const [loginUser, { isLoading }] = useLoginUserMutation()
+
   const {
     setValue,
+    setError,
     handleSubmit,
     formState: { errors },
     trigger,
-  } = useForm<FormData>({
+  } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
   })
 
-  const fields: CustomFormFields<FormData>[] = useMemo(
+  const fields: CustomFormFields<LoginFormData>[] = useMemo(
     () => [
       {
         name: 'email',
@@ -67,9 +80,26 @@ export const useLoginForm = ({ selectors }: UseLoginFormProps) => {
     [emailSelector, passwordSelector, rememberMeSelector],
   )
 
-  const onSubmit = useCallback((data: FormData) => {
-    console.log(data) // You can handle form submission here
-  }, [])
+  const onSubmit = useCallback(
+    async (data: LoginFormData) => {
+      try {
+        await loginUser(data).unwrap()
+        navigate('/')
+      } catch (error) {
+        logError(error)
+        const errorMessage = getErrorMessage(
+          error as APIErrorResponse,
+          'failed to login. Please try again',
+        )
+        if (/password/i.test(errorMessage))
+          setError('password', { message: errorMessage })
+        else if (/email/i.test(errorMessage))
+          setError('email', { message: errorMessage })
+        else showError(errorMessage)
+      }
+    },
+    [loginUser, showError, navigate, setError],
+  )
 
   const formSubmit = useMemo(
     () => ({
@@ -79,12 +109,12 @@ export const useLoginForm = ({ selectors }: UseLoginFormProps) => {
     [submitBtnSelector, onSubmit, handleSubmit],
   )
 
-  useRegisterCrayonsFormFields<FormData>({
+  useRegisterCrayonsFormFields<LoginFormData>({
     fields,
     trigger,
     setValue,
     formSubmit,
   })
 
-  return { errors }
+  return { errors, isLoading }
 }

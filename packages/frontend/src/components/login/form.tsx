@@ -7,7 +7,7 @@ import { useLoginForm } from '@/hooks/login'
 import { getFormInputError, getFormInputState } from '@/utils/form'
 
 const Form = () => {
-  const { errors } = useLoginForm({
+  const { errors, isLoading } = useLoginForm({
     selectors: {
       emailSelector: '#email',
       passwordSelector: '#password',
@@ -63,7 +63,7 @@ const Form = () => {
             </Link>
           </div>
           <div className='btn-wrapper fw-flex'>
-            <FwButton id='login-submit-btn' color='primary'>
+            <FwButton id='login-submit-btn' color='primary' loading={isLoading}>
               Submit
             </FwButton>
           </div>

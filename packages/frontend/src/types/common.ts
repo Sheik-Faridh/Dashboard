@@ -19,3 +19,16 @@ export enum CrayonsEventType {
   InputChange = 'fwInput',
   CheckboxChange = 'fwChange',
 }
+
+export type LoginFormData = {
+  email: string
+  password: string
+  rememberMe: boolean
+}
+
+export type APIErrorResponse = {
+  status: number
+  data: {
+    message: string
+  }
+}
