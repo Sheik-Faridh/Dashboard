@@ -5,6 +5,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { models } from '@/database'
 import config from '@/config'
 import { BadRequest, InternalServerError } from '@/helpers/error'
+import { findUserByEmail } from '@/services/user'
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } = config
 
@@ -13,14 +14,10 @@ passport.use(
     { usernameField: 'email' },
     async (email, password, done) => {
       try {
-        const user = await models.User.findOne({ where: { email }, raw: true })
-
+        const user = await findUserByEmail(email)
         if (!user) return done(new BadRequest(`Email ${email} not found.`))
-
         const match = await bcrypt.compare(password, user.password)
-
         if (match) return done(undefined, user)
-
         return done(new BadRequest('Invalid password.'))
       } catch (error) {
         return done(error)

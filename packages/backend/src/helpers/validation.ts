@@ -10,8 +10,23 @@ const loginSchema = Joi.object({
     .required(),
 })
 
+const signUpSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string()
+    .min(8)
+    .max(16)
+    .pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()])/)
+    .required(),
+  confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+})
+
 const login: Partial<IValidation> = {
   body: loginSchema,
 }
 
-export { login }
+const signup: Partial<IValidation> = {
+  body: signUpSchema,
+}
+
+export { login, signup }

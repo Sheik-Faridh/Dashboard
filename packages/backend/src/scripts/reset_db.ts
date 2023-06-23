@@ -50,9 +50,10 @@ nameSpace.run(async () => {
     logger.info('Authenticated successfully')
     await migration.down({ to: 0 })
     await migration.up()
+    await seed.down({ to: 0 })
     await seed.up()
-    logger.info('Migration completed successfully')
+    logger.info('Reset DB completed successfully')
   } catch (error) {
-    logger.error('Migration Failed ' + error)
+    logger.error('Reset DB Failed ' + error)
   }
 })

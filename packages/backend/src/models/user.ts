@@ -6,13 +6,17 @@ export interface UserAttributes {
   name: string;
   email: string;
   password: string;
+  active?: number;
+  activationToken: string;
+  tokenExpiresOn: Date;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt?: Date;
 }
 
 export type UserPk = "id";
 export type UserId = User[UserPk];
-export type UserOptionalAttributes = "id" | "createdAt" | "updatedAt";
+export type UserOptionalAttributes = "id" | "active" | "createdAt" | "updatedAt" | "deletedAt";
 export type UserCreationAttributes = Optional<UserAttributes, UserOptionalAttributes>;
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
@@ -20,8 +24,12 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   name!: string;
   email!: string;
   password!: string;
+  active?: number;
+  activationToken!: string;
+  tokenExpiresOn!: Date;
   createdAt!: Date;
   updatedAt!: Date;
+  deletedAt?: Date;
 
 
   static initModel(sequelize: Sequelize.Sequelize): typeof User {
@@ -44,10 +52,24 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     password: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: 0
+    },
+    activationToken: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    tokenExpiresOn: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'users',
     timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "PRIMARY",

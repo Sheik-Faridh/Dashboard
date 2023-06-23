@@ -1,12 +1,16 @@
 import { Request, Response, NextFunction } from 'express'
 import * as http from 'http'
+import { randomBytes } from 'crypto'
 import logger from './logger'
+import config from '@/config'
+
+const { BYTESLENGTH } = config
 
 type CallbackFn = (
   req: Request,
   res: Response,
   next: NextFunction,
-) => Promise<void>
+) => Promise<void> | void
 
 export const asyncHandler =
   (fn: CallbackFn) => (req: Request, res: Response, next: NextFunction) => {
@@ -23,3 +27,11 @@ export const shutdown = (server: http.Server, code: number) => {
     })
   }
 }
+
+export const getRandomBytes = (): Promise<string> =>
+  new Promise((resolve, reject) =>
+    randomBytes(BYTESLENGTH, (err, buffer) => {
+      if (err) reject(err)
+      resolve(buffer.toString('hex'))
+    }),
+  )

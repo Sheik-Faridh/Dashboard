@@ -15,13 +15,7 @@ export default {
     charset: 'utf8mb4',
   },
   define: {
-    underscored: false,
-    underscoredAll: false,
-    charset: 'utf8',
-    timestamps: true,
-  },
-  additional: {
-    timestamps: true,
     paranoid: true,
+    timestamps: true,
   },
 } as Options

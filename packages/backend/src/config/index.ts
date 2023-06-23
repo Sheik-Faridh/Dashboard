@@ -19,6 +19,7 @@ type Config = {
   GOOGLE_CLIENT_ID: string
   GOOGLE_CLIENT_SECRET: string
   GOOGLE_CALLBACK_URL: string
+  BYTESLENGTH: number
 }
 
 // Load environment-specific variables based on the NODE_ENV value
@@ -48,4 +49,5 @@ export default {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
+  BYTESLENGTH: 48,
 } as Config
