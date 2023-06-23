@@ -28,7 +28,12 @@ router
 
 router
   .route('/google/callback')
-  .get(passport.authenticate('google', { failureRedirect: '/signin' }))
+  .get(
+    passport.authenticate('google', {
+      failureRedirect: '/signin',
+      successRedirect: '/',
+    }),
+  )
   .all(methodNotSupportedHandler)
 
 router.route('/logout').post(logoutController).all(methodNotSupportedHandler)

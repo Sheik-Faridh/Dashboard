@@ -20,6 +20,9 @@ type Config = {
   GOOGLE_CLIENT_SECRET: string
   GOOGLE_CALLBACK_URL: string
   BYTESLENGTH: number
+  MAIL_USERNAME: string
+  MAIL_PASSWORD: string
+  EMAIL_ID: string
 }
 
 // Load environment-specific variables based on the NODE_ENV value
@@ -49,5 +52,8 @@ export default {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
+  MAIL_USERNAME: process.env.MAIL_USERNAME,
+  MAIL_PASSWORD: process.env.MAIL_PASSWORD,
+  EMAIL_ID: `"SpaceDesk Support" <support@spacedesk.com>`,
   BYTESLENGTH: 48,
 } as Config
