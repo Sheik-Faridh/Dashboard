@@ -1,7 +1,8 @@
 'use strict'
 import bcrypt from 'bcrypt'
 import config from '@/config'
-const { SALT_ROUND } = config
+import { getRandomBytes } from '@/helpers/utils'
+const { SALT_ROUND, COOKIE_MAX_AGE } = config
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -11,6 +12,8 @@ module.exports = {
         name: 'Test User',
         email: 'test@gmail.com',
         password: await bcrypt.hash('Password@123', SALT_ROUND),
+        activationToken: await getRandomBytes(),
+        tokenExpiresOn: new Date(Date.now() + COOKIE_MAX_AGE * 1000),
         createdAt: new Date(),
         updatedAt: new Date(),
       },

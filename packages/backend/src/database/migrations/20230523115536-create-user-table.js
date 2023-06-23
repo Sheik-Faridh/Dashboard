@@ -23,12 +23,28 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      activationToken: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      tokenExpiresOn: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE,
+      },
+      deletedAt: {
+        allowNull: true,
         type: Sequelize.DATE,
       },
     })
