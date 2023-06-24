@@ -13,7 +13,7 @@ module.exports = {
         email: 'test@gmail.com',
         password: await bcrypt.hash('Password@123', SALT_ROUND),
         activationToken: await getRandomBytes(),
-        tokenExpiresOn: new Date(Date.now() + COOKIE_MAX_AGE * 1000),
+        tokenExpiresOn: new Date(Date.now() + COOKIE_MAX_AGE),
         createdAt: new Date(),
         updatedAt: new Date(),
       },

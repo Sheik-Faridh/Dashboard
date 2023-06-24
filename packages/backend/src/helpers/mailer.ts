@@ -4,7 +4,7 @@ import path from 'path'
 import config from '@/config'
 import logger from './logger'
 
-const { MAIL_PASSWORD, MAIL_USERNAME, EMAIL_ID } = config
+const { MAIL_PASSWORD, MAIL_USERNAME, EMAIL_ID, MAIL_HOST, MAIL_PORT } = config
 
 type SendMailArg = {
   templateName: string
@@ -14,7 +14,8 @@ type SendMailArg = {
 }
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: MAIL_HOST,
+  port: MAIL_PORT,
   auth: {
     user: MAIL_USERNAME,
     pass: MAIL_PASSWORD,
@@ -28,7 +29,7 @@ export const verifyTransporter = () => {
         logger.error(error)
         reject(error)
       } else {
-        logger.info('MAILER CONNECTION VERIFIED')
+        logger.info('Mail Connection verified')
         resolve(null)
       }
     })

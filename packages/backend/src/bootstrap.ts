@@ -7,7 +7,7 @@ const bootstrap = async () => {
   try {
     await db.authenticate()
     bindHooksToModels()
-    // await verifyTransporter()
+    await verifyTransporter()
     logger.info('Database Connection has been established successfully.')
   } catch (error) {
     logger.error(error)

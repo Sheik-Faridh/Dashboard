@@ -23,6 +23,8 @@ type Config = {
   MAIL_USERNAME: string
   MAIL_PASSWORD: string
   EMAIL_ID: string
+  MAIL_HOST: string
+  MAIL_PORT: number
 }
 
 // Load environment-specific variables based on the NODE_ENV value
@@ -48,7 +50,7 @@ export default {
   DB_HOST: process.env.DB_HOST,
   SESSION_SECRET: process.env.SESSION_SECRET,
   SALT_ROUND: 10,
-  COOKIE_MAX_AGE: 24 * 60 * 60,
+  COOKIE_MAX_AGE: 24 * 60 * 60 * 1000,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
@@ -56,4 +58,6 @@ export default {
   MAIL_PASSWORD: process.env.MAIL_PASSWORD,
   EMAIL_ID: `"SpaceDesk Support" <support@spacedesk.com>`,
   BYTESLENGTH: 48,
+  MAIL_HOST: process.env.MAIL_HOST,
+  MAIL_PORT: Number(process.env.MAIL_PORT),
 } as Config
