@@ -1,6 +1,6 @@
+import { PropsWithChildren } from 'react'
 import styled from 'styled-components'
 import LogoImage from '@/assets/images/logo.webp'
-import { PropsWithChildren } from 'react'
 
 type AuthTemplateProps = {
   image: string

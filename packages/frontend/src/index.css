@@ -1,3 +1,8 @@
+:root {
+  --sidebar-bg: #12344d;
+  --sidebar-icon-color: #fff;
+}
+
 * {
   box-sizing: border-box;
 }
