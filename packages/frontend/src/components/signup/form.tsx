@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { FwInput, FwButton } from '@freshworks/crayons/react'
 import { ReactComponent as GoogleIcon } from '@/assets/svg/google-icon.svg'
-import { AuthFormContainer } from '@/components/container'
-import Divider from '@/components/divider'
+import { AuthFormContainer } from '@/atoms/container'
+import { PasswordInput } from '@/atoms/form'
+import Divider from '@/atoms/divider'
 import { useSignupForm } from '@/hooks/signup'
 import { getFormInputError, getFormInputState } from '@/utils/form'
 
@@ -51,23 +52,17 @@ const Form = () => {
             required
             clearInput
           />
-          <FwInput
+          <PasswordInput
             id='password'
-            type='password'
             label='Password'
-            iconLeft='password'
-            placeholder='Enter password'
             state={getFormInputState(errors?.password)}
             errorText={getFormInputError(errors?.password)}
             required
             clearInput
           />
-          <FwInput
+          <PasswordInput
             id='confirm-password'
-            type='password'
             label='Confirm Password'
-            iconLeft='password'
-            placeholder='Enter password'
             state={getFormInputState(errors?.confirmPassword)}
             errorText={getFormInputError(errors?.confirmPassword)}
             required

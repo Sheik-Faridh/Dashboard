@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { FwInput, FwButton, FwCheckbox } from '@freshworks/crayons/react'
 import { ReactComponent as GoogleIcon } from '@/assets/svg/google-icon.svg'
-import { AuthFormContainer } from '@/components/container'
-import Divider from '@/components/divider'
+import { AuthFormContainer } from '@/atoms/container'
+import Divider from '@/atoms/divider'
+import { PasswordInput } from '@/atoms/form'
 import { useLoginForm } from '@/hooks/login'
 import { getFormInputError, getFormInputState } from '@/utils/form'
 
@@ -41,12 +42,9 @@ const Form = () => {
             required
             clearInput
           />
-          <FwInput
+          <PasswordInput
             id='password'
-            type='password'
             label='Password'
-            iconLeft='password'
-            placeholder='Enter your password'
             className='no-margin'
             hintText='Enter your account password'
             state={getFormInputState(errors?.password)}
@@ -58,7 +56,10 @@ const Form = () => {
             <FwCheckbox id='remember-me-checkbox'>
               <span>Remember Me</span>
             </FwCheckbox>
-            <Link className='fw-type-h7 fw-color-azure-800' to=''>
+            <Link
+              className='fw-type-h7 fw-color-azure-800'
+              to='/password/forgot'
+            >
               Forgot Password?
             </Link>
           </div>

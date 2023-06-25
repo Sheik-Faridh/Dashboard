@@ -1,11 +1,6 @@
+import { InputState } from '@/types/common'
 import { FieldError } from 'react-hook-form'
 import * as yup from 'yup'
-
-enum InputState {
-  Normal = 'normal',
-  Error = 'error',
-  Warning = 'warning',
-}
 
 export const passwordSchema = yup
   .string()

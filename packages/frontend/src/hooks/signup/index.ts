@@ -2,16 +2,20 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { passwordSchema } from '@/utils/form'
-import { CustomFormFields, useRegisterCrayonsFormFields } from '@/hooks/common'
-import { CrayonsEventType, FieldType } from '@/types/common'
+import {
+  CustomFormFields,
+  useRegisterCrayonsFormFields,
+  useToast,
+} from '@/hooks/common'
+import {
+  APIErrorResponse,
+  CrayonsEventType,
+  FieldType,
+  SignupFormData,
+} from '@/types/common'
 import { useCallback, useMemo } from 'react'
-
-type FormData = {
-  name: string
-  email: string
-  password: string
-  confirmPassword: string
-}
+import { useSignupUserMutation } from '@/redux/services/auth'
+import { getErrorMessage, logError } from '@/utils'
 
 type UseSignupFormProps = {
   selectors: {
@@ -41,16 +45,21 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
       .required('Confirm Password is required'),
   })
 
+  const { showError, showSuccess } = useToast()
+
+  const [signupUser, { isLoading }] = useSignupUserMutation()
+
   const {
     setValue,
     handleSubmit,
+    reset,
     formState: { errors },
     trigger,
-  } = useForm<FormData>({
+  } = useForm<SignupFormData>({
     resolver: yupResolver(schema),
   })
 
-  const fields: CustomFormFields<FormData>[] = useMemo(
+  const fields: CustomFormFields<SignupFormData>[] = useMemo(
     () => [
       {
         name: 'name',
@@ -80,9 +89,25 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
     [confirmPasswordSelector, emailSelector, nameSelector, passwordSelector],
   )
 
-  const onSubmit = useCallback((data: FormData) => {
-    console.log(data) // You can handle form submission here
-  }, [])
+  const onSubmit = useCallback(
+    async (data: SignupFormData) => {
+      try {
+        await signupUser(data).unwrap()
+        reset()
+        showSuccess(
+          'Email notification sent to your email address. Please verify the email address',
+        )
+      } catch (error) {
+        logError(error)
+        const errorMessage = getErrorMessage(
+          error as APIErrorResponse,
+          'failed to signup. Please try again',
+        )
+        showError(errorMessage)
+      }
+    },
+    [showError, showSuccess, signupUser, reset],
+  )
 
   const formSubmit = useMemo(
     () => ({
@@ -92,12 +117,12 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
     [submitBtnSelector, onSubmit, handleSubmit],
   )
 
-  useRegisterCrayonsFormFields<FormData>({
+  useRegisterCrayonsFormFields<SignupFormData>({
     fields,
     trigger,
     setValue,
     formSubmit,
   })
 
-  return { errors }
+  return { errors, isLoading }
 }

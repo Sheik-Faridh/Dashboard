@@ -9,16 +9,15 @@ type AuthTemplateProps = {
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
   & > .outer-wrapper {
     width: 100%;
     height: 100%;
-    & > .inner-wrapper {
-      width: 80%;
-      height: 90%;
-      max-width: 1900px;
-      max-height: 700px;
+    & > .fw-card-3 {
+      width: 40%;
+      margin: 20px;
       & > .form-outer-wrapper {
-        flex: 1.2 1 0;
+        width: 100%;
         & > .header-logo-wrapper {
           width: 100%;
           & > .logo-wrapper {
@@ -47,28 +46,31 @@ const Container = styled.div`
           }
         }
       }
-      & > .image-container {
-        flex: 1 1 0;
-        & > .image-wrapper {
-          border-radius: 50px;
-          padding: 0;
-          width: fit-content;
-          height: fit-content;
-          & img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50px;
-          }
+    }
+    & > .image-container {
+      width: 60%;
+      height: 100%;
+      & > .image-wrapper {
+        padding: 0;
+        width: calc(100% - 20px);
+        height: calc(100% - 40px);
+        & img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
       }
     }
   }
 
   @media only screen and (max-width: 1024px) {
-    & > .outer-wrapper > .inner-wrapper {
-      width: 98%;
-      height: 98%;
+    & > .outer-wrapper {
+      & > .fw-card-3 {
+        width: 50%;
+      }
+      & > .image-container {
+        width: 50%;
+      }
     }
   }
 `
@@ -80,7 +82,7 @@ const AuthTemplate = ({
   return (
     <Container>
       <div className='fw-bg-smoke-50 fw-flex fw-justify-center fw-items-center outer-wrapper'>
-        <div className='fw-card-3 fw-p-20 fw-flex fw-gap-5 inner-wrapper'>
+        <div className='fw-card-3 fw-p-20 fw-flex fw-gap-5'>
           <div className='form-outer-wrapper'>
             <div className='header-logo-wrapper fw-flex fw-items-center'>
               <div className='logo-wrapper'>
@@ -90,10 +92,10 @@ const AuthTemplate = ({
             </div>
             {children}
           </div>
-          <div className='image-container fw-flex fw-items-center'>
-            <div className='image-wrapper fw-card-2'>
-              <img src={image} alt='Image' />
-            </div>
+        </div>
+        <div className='image-container fw-flex fw-items-center'>
+          <div className='image-wrapper fw-card-2'>
+            <img src={image} alt='Image' />
           </div>
         </div>
       </div>

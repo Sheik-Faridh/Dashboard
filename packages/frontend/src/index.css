@@ -25,3 +25,11 @@ fw-checkbox span {
   position: relative;
   bottom: 3px;
 }
+
+a.no-underline {
+  text-decoration: none;
+}
+
+.pointer {
+  cursor: pointer;
+}

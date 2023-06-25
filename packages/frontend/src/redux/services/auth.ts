@@ -1,4 +1,4 @@
-import { LoginFormData } from '@/types/common'
+import { LoginFormData, SignupFormData } from '@/types/common'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const authApi = createApi({
@@ -13,6 +13,13 @@ export const authApi = createApi({
         body,
       }),
     }),
+    signupUser: build.mutation({
+      query: (body: SignupFormData) => ({
+        url: `signup`,
+        method: 'POST',
+        body,
+      }),
+    }),
     logoutUser: build.mutation({
       query: () => ({
         url: `logout`,
@@ -22,4 +29,8 @@ export const authApi = createApi({
   }),
 })
 
-export const { useLoginUserMutation, useLogoutUserMutation } = authApi
+export const {
+  useLoginUserMutation,
+  useLogoutUserMutation,
+  useSignupUserMutation,
+} = authApi
