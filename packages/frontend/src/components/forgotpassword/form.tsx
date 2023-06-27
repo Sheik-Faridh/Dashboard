@@ -1,6 +1,6 @@
-import { AuthFormContainer } from '@/atoms/container'
-import { FwButton, FwInput, FwIcon } from '@freshworks/crayons/react'
 import { Link } from 'react-router-dom'
+import { FwButton, FwInput, FwIcon } from '@freshworks/crayons/react'
+import { AuthFormContainer } from '@/atoms/container'
 
 const ForgotPasswordForm = () => {
   return (

@@ -93,7 +93,12 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
     async (data: SignupFormData) => {
       try {
         await signupUser(data).unwrap()
-        reset()
+        reset({
+          email: '',
+          name: '',
+          password: '',
+          confirmPassword: '',
+        })
         showSuccess(
           'Email notification sent to your email address. Please verify the email address',
         )
