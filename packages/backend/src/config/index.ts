@@ -25,6 +25,7 @@ type Config = {
   EMAIL_ID: string
   MAIL_HOST: string
   MAIL_PORT: number
+  CLIENT_HOST: string
 }
 
 // Load environment-specific variables based on the NODE_ENV value
@@ -60,4 +61,5 @@ export default {
   BYTESLENGTH: 48,
   MAIL_HOST: process.env.MAIL_HOST,
   MAIL_PORT: Number(process.env.MAIL_PORT),
+  CLIENT_HOST: process.env.CLIENT_HOST,
 } as Config

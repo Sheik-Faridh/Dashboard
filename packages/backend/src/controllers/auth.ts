@@ -1,10 +1,14 @@
+import { NextFunction, Request, Response } from 'express'
+import passport from 'passport'
+import config from '@/config'
+import { createUser, findUserByEmail } from '@/services/user'
 import { BadRequest } from '@/helpers/error'
 import { formatUserData } from '@/helpers/format'
 import { asyncHandler } from '@/helpers/utils'
-import { createUser, findUserByEmail } from '@/services/user'
+import { sendMail } from '@/helpers/mailer'
 import { HttpStatusCode } from '@/types/http_codes'
-import { NextFunction, Request, Response } from 'express'
-import passport from 'passport'
+
+const { CLIENT_HOST } = config
 
 export const loginController = asyncHandler(
   (req: Request, res: Response, next: NextFunction) => {
@@ -28,6 +32,15 @@ export const signupController = asyncHandler(
     const user = await findUserByEmail(email)
     if (user) next(new BadRequest(`Email ${email} already exist`))
     const newUser = await createUser({ name, email, password })
+    await sendMail({
+      templateName: 'verify_account',
+      recipient: email,
+      subject: 'Account Activation',
+      context: {
+        username: newUser.name,
+        activationLink: `${CLIENT_HOST}/verify/user/${newUser.activationToken}`,
+      },
+    })
     res.status(HttpStatusCode.Created).json({ data: formatUserData(newUser) })
   },
 )
