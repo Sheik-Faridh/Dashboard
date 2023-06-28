@@ -12,30 +12,20 @@ import passport from '@/config/passport'
 const router = express.Router()
 
 router
-  .route('/login')
-  .post(validate(login), loginController)
-  .all(methodNotSupportedHandler)
-
-router
-  .route('/signup')
-  .post(validate(signup), signupController)
-  .all(methodNotSupportedHandler)
-
-router
-  .route('/google')
-  .get(passport.authenticate('google', { scope: ['profile', 'email'] }))
-  .all(methodNotSupportedHandler)
-
-router
-  .route('/google/callback')
+  .post('/login', validate(login), loginController)
+  .post('/signup', validate(signup), signupController)
   .get(
+    '/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] }),
+  )
+  .get(
+    '/google/callback',
     passport.authenticate('google', {
       failureRedirect: '/signin',
       successRedirect: '/',
     }),
   )
-  .all(methodNotSupportedHandler)
-
-router.route('/logout').post(logoutController).all(methodNotSupportedHandler)
+  .post('/logout', logoutController)
+  .all('*', methodNotSupportedHandler)
 
 export default router
