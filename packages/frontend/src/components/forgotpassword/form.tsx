@@ -1,51 +1,44 @@
 import { Link } from 'react-router-dom'
-import { FwButton, FwInput, FwIcon } from '@freshworks/crayons/react'
+import { EnvelopeClosedIcon, ChevronLeftIcon } from '@radix-ui/react-icons'
 import { AuthFormContainer } from '@/atoms/container'
+import { TextField } from '@/atoms/form'
+import Button from '@/atoms/form/button'
 
 const ForgotPasswordForm = () => {
   return (
-    <AuthFormContainer className='fw-flex fw-justify-center'>
-      <div className='form-wrapper fw-card-3 fw-p-20'>
-        <label className='fw-type-h4 fw-color-smoke-700'>
+    <AuthFormContainer className='flex justify-center'>
+      <div className='form-wrapper p-4'>
+        <label className='text-lg font-bold text-slate-700'>
           Forgot Password? 🔒
         </label>
-        <label className='fw-type-h6 fw-color-smoke-300	fw-my-16'>
+        <label className='text-md text-slate-500 my-4'>
           Enter your email and we'll send you instructions to reset your
           password
         </label>
         <form>
-          <FwInput
-            id='forgotpassword'
+          <TextField
             type='email'
             label='Email'
-            iconLeft='email'
+            startIcon={<EnvelopeClosedIcon />}
             placeholder='Enter your email'
             hintText='Enter your email address associated with the account'
-            // state={getFormInputState(errors?.email)}
-            // errorText={getFormInputError(errors?.email)}
             required
-            clearInput
           />
-          <div className='btn-wrapper fw-flex'>
-            <FwButton
-              id='forgotpassword-submit-btn'
+          <div className='btn-wrapper flex'>
+            <Button
               color='primary'
               //   loading={isLoading}
             >
               Send Reset Link
-            </FwButton>
+            </Button>
           </div>
-          <div className='fw-flex fw-justify-center fw-my-16'>
-            <span className='fw-type-h7 fw-color-elephant-800'>
+          <div className='flex justify-center my-5'>
+            <span className='text-sm text-slate-400'>
               <Link
-                className='fw-type-h6 fw-color-azure-800 fw-pl-4 no-underline'
+                className='flex text-xs font-medium text-blue-600 hover:text-blue-800 pl-2'
                 to='/login'
               >
-                <FwIcon
-                  name='chevron-left'
-                  color='fw-color-azure-800'
-                  className='fw-mr-4'
-                />
+                <ChevronLeftIcon />
                 Back to Login
               </Link>
             </span>

@@ -1,40 +1,14 @@
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { passwordSchema } from '@/utils/form'
-import {
-  CustomFormFields,
-  useRegisterCrayonsFormFields,
-  useToast,
-} from '@/hooks/common'
-import {
-  APIErrorResponse,
-  CrayonsEventType,
-  FieldType,
-  SignupFormData,
-} from '@/types/common'
-import { useCallback, useMemo } from 'react'
+import { useToast } from '@/hooks/common'
+import { APIErrorResponse, SignupFormData } from '@/types/common'
 import { useSignupUserMutation } from '@/redux/services/auth'
 import { getErrorMessage, logError } from '@/utils'
 
-type UseSignupFormProps = {
-  selectors: {
-    nameSelector: string
-    emailSelector: string
-    passwordSelector: string
-    confirmPasswordSelector: string
-    submitBtnSelector: string
-  }
-}
-
-export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
-  const {
-    nameSelector,
-    emailSelector,
-    passwordSelector,
-    confirmPasswordSelector,
-    submitBtnSelector,
-  } = selectors
+export const useSignupForm = () => {
   const schema = yup.object().shape({
     name: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -50,44 +24,13 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
   const [signupUser, { isLoading }] = useSignupUserMutation()
 
   const {
-    setValue,
+    register,
     handleSubmit,
     reset,
     formState: { errors },
-    trigger,
   } = useForm<SignupFormData>({
     resolver: yupResolver(schema),
   })
-
-  const fields: CustomFormFields<SignupFormData>[] = useMemo(
-    () => [
-      {
-        name: 'name',
-        selector: nameSelector,
-        type: FieldType.Input,
-        event: CrayonsEventType.InputChange,
-      },
-      {
-        name: 'email',
-        selector: emailSelector,
-        type: FieldType.Input,
-        event: CrayonsEventType.InputChange,
-      },
-      {
-        name: 'password',
-        selector: passwordSelector,
-        type: FieldType.Input,
-        event: CrayonsEventType.InputChange,
-      },
-      {
-        name: 'confirmPassword',
-        selector: confirmPasswordSelector,
-        type: FieldType.Input,
-        event: CrayonsEventType.InputChange,
-      },
-    ],
-    [confirmPasswordSelector, emailSelector, nameSelector, passwordSelector],
-  )
 
   const onSubmit = useCallback(
     async (data: SignupFormData) => {
@@ -114,20 +57,5 @@ export const useSignupForm = ({ selectors }: UseSignupFormProps) => {
     [showError, showSuccess, signupUser, reset],
   )
 
-  const formSubmit = useMemo(
-    () => ({
-      selector: submitBtnSelector,
-      callback: handleSubmit(onSubmit),
-    }),
-    [submitBtnSelector, onSubmit, handleSubmit],
-  )
-
-  useRegisterCrayonsFormFields<SignupFormData>({
-    fields,
-    trigger,
-    setValue,
-    formSubmit,
-  })
-
-  return { errors, isLoading }
+  return { errors, isLoading, register, handleSubmit, onSubmit }
 }

@@ -1,83 +1,69 @@
 import { Link } from 'react-router-dom'
-import { FwInput, FwButton } from '@freshworks/crayons/react'
+import { EnvelopeClosedIcon, PersonIcon } from '@radix-ui/react-icons'
 import { ReactComponent as GoogleIcon } from '@/assets/svg/google-icon.svg'
 import { AuthFormContainer } from '@/atoms/container'
-import { PasswordInput } from '@/atoms/form'
+import { PasswordInput, TextField } from '@/atoms/form'
+import Button from '@/atoms/form/button'
 import Divider from '@/atoms/divider'
 import { useSignupForm } from '@/hooks/signup'
-import { getFormInputError, getFormInputState } from '@/utils/form'
+import { getFormInputError } from '@/utils/form'
 
 const Form = () => {
-  const { errors } = useSignupForm({
-    selectors: {
-      nameSelector: '#name',
-      emailSelector: '#email',
-      passwordSelector: '#password',
-      confirmPasswordSelector: '#confirm-password',
-      submitBtnSelector: '#signup-submit-btn',
-    },
-  })
+  const { errors, isLoading, register, handleSubmit, onSubmit } =
+    useSignupForm()
   return (
-    <AuthFormContainer className='fw-flex fw-justify-center'>
-      <div className='form-wrapper fw-card-3 fw-p-20'>
-        <label className='fw-type-h4 fw-color-smoke-700'>
+    <AuthFormContainer className='flex justify-center'>
+      <div className='form-wrapper p-4'>
+        <label className='text-lg font-bold text-slate-700'>
           Create your account
         </label>
-        <div className='oauth-button-wrapper fw-flex'>
-          <FwButton color='secondary'>
+        <div className='oauth-button-wrapper flex'>
+          <Button color='secondary'>
             <GoogleIcon />
             Sign up with Google
-          </FwButton>
+          </Button>
         </div>
         <Divider>or</Divider>
-        <form>
-          <FwInput
-            id='name'
-            type='name'
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
             label='User Name'
             placeholder='Enter your name'
-            state={getFormInputState(errors?.name)}
-            errorText={getFormInputError(errors?.name)}
+            startIcon={<PersonIcon />}
+            {...register('name')}
+            error={getFormInputError(errors?.name)}
             required
-            clearInput
           />
-          <FwInput
-            id='email'
+          <TextField
             type='email'
             label='Email'
-            iconLeft='email'
             placeholder='Enter your email'
-            state={getFormInputState(errors?.email)}
-            errorText={getFormInputError(errors?.email)}
+            startIcon={<EnvelopeClosedIcon />}
+            {...register('email')}
+            error={getFormInputError(errors?.email)}
             required
-            clearInput
           />
           <PasswordInput
-            id='password'
             label='Password'
-            state={getFormInputState(errors?.password)}
-            errorText={getFormInputError(errors?.password)}
+            {...register('password')}
+            error={getFormInputError(errors?.password)}
             required
-            clearInput
           />
           <PasswordInput
-            id='confirm-password'
             label='Confirm Password'
-            state={getFormInputState(errors?.confirmPassword)}
-            errorText={getFormInputError(errors?.confirmPassword)}
+            {...register('confirmPassword')}
+            error={getFormInputError(errors?.confirmPassword)}
             required
-            clearInput
           />
-          <div className='btn-wrapper fw-flex'>
-            <FwButton color='primary' id='signup-submit-btn'>
+          <div className='btn-wrapper flex'>
+            <Button type='submit' color='primary' loading={isLoading}>
               Submit
-            </FwButton>
+            </Button>
           </div>
-          <div className='fw-flex'>
-            <span className='fw-type-h7 fw-color-elephant-800'>
+          <div className='flex'>
+            <span className='text-sm text-slate-400'>
               Already have an account?
               <Link
-                className='fw-type-h7 fw-color-azure-800 fw-pl-4'
+                className='text-sm font-medium text-blue-600 hover:text-blue-800 pl-2'
                 to='/login'
               >
                 Login

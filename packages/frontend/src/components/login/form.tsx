@@ -1,78 +1,67 @@
 import { Link } from 'react-router-dom'
-import { FwInput, FwButton, FwCheckbox } from '@freshworks/crayons/react'
 import { ReactComponent as GoogleIcon } from '@/assets/svg/google-icon.svg'
+import { EnvelopeClosedIcon } from '@radix-ui/react-icons'
 import { AuthFormContainer } from '@/atoms/container'
+import Button from '@/atoms/form/button'
+import Checkbox from '@/atoms/form/checkbox'
 import Divider from '@/atoms/divider'
-import { PasswordInput } from '@/atoms/form'
+import { PasswordInput, TextField } from '@/atoms/form'
 import { useLoginForm } from '@/hooks/login'
-import { getFormInputError, getFormInputState } from '@/utils/form'
+import { getFormInputError } from '@/utils/form'
 
 const Form = () => {
-  const { errors, isLoading } = useLoginForm({
-    selectors: {
-      emailSelector: '#email',
-      passwordSelector: '#password',
-      submitBtnSelector: '#login-submit-btn',
-      rememberMeSelector: '#remember-me-checkbox',
-    },
-  })
+  const { errors, isLoading, handleSubmit, onSubmit, register } = useLoginForm()
   return (
-    <AuthFormContainer className='fw-flex fw-justify-center'>
-      <div className='form-wrapper fw-card-3 fw-p-20'>
-        <label className='fw-type-h4 fw-color-smoke-700'>
+    <AuthFormContainer className='flex justify-center'>
+      <div className='form-wrapper p-4'>
+        <label className='text-lg font-bold text-slate-700'>
           Log in to your account
         </label>
-        <div className='oauth-button-wrapper fw-flex'>
-          <FwButton color='secondary'>
+        <div className='oauth-button-wrapper flex'>
+          <Button color='secondary'>
             <GoogleIcon />
             Sign in with Google
-          </FwButton>
+          </Button>
         </div>
         <Divider>or</Divider>
-        <form>
-          <FwInput
-            id='email'
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
             type='email'
             label='Email'
-            iconLeft='email'
+            startIcon={<EnvelopeClosedIcon />}
             placeholder='Enter your email'
             hintText='Enter your email address associated with the account'
-            state={getFormInputState(errors?.email)}
-            errorText={getFormInputError(errors?.email)}
+            {...register('email')}
+            error={getFormInputError(errors?.email)}
             required
-            clearInput
           />
           <PasswordInput
-            id='password'
             label='Password'
             className='no-margin'
             hintText='Enter your account password'
-            state={getFormInputState(errors?.password)}
-            errorText={getFormInputError(errors?.password)}
+            {...register('password')}
+            error={getFormInputError(errors?.password)}
             required
-            clearInput
           />
-          <div className='line-wrapper fw-flex fw-justify-between'>
-            <FwCheckbox id='remember-me-checkbox'>
-              <span>Remember Me</span>
-            </FwCheckbox>
+          <div className='line-wrapper flex justify-between items-center'>
+            <Checkbox label='Remember Me' {...register('rememberMe')} />
             <Link
-              className='fw-type-h7 fw-color-azure-800'
+              className='text-xs font-medium text-blue-600 hover:text-blue-800'
               to='/password/forgot'
             >
               Forgot Password?
             </Link>
           </div>
-          <div className='btn-wrapper fw-flex'>
-            <FwButton id='login-submit-btn' color='primary' loading={isLoading}>
+          <div className='btn-wrapper flex'>
+            <Button type='submit' color='primary' loading={isLoading}>
               Submit
-            </FwButton>
+            </Button>
           </div>
-          <div className='fw-flex'>
-            <span className='fw-type-h7 fw-color-elephant-800'>
+          <div className='flex'>
+            <span className='text-sm text-slate-400'>
               Don't have an account?
               <Link
-                className='fw-type-h7 fw-color-azure-800 fw-pl-4'
+                className='text-xs font-medium text-blue-600 hover:text-blue-800 pl-2'
                 to='/signup'
               >
                 Create One

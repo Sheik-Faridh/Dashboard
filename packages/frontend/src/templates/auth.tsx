@@ -13,7 +13,7 @@ const Container = styled.div`
   & > .outer-wrapper {
     width: 100%;
     height: 100%;
-    & > .fw-card-3 {
+    & > div {
       width: 40%;
       margin: 20px;
       & > .form-outer-wrapper {
@@ -65,7 +65,7 @@ const Container = styled.div`
 
   @media only screen and (max-width: 1024px) {
     & > .outer-wrapper {
-      & > .fw-card-3 {
+      & > div {
         width: 50%;
       }
       & > .image-container {
@@ -80,11 +80,11 @@ const AuthTemplate = ({
   image,
 }: PropsWithChildren<AuthTemplateProps>) => {
   return (
-    <Container>
-      <div className='fw-bg-smoke-50 fw-flex fw-justify-center fw-items-center outer-wrapper'>
-        <div className='fw-card-3 fw-p-20 fw-flex fw-gap-5'>
+    <Container className='bg-slate-50'>
+      <div className='flex justify-center items-center outer-wrapper'>
+        <div className='shadow-2xl p-10 flex gap-5 bg-white'>
           <div className='form-outer-wrapper'>
-            <div className='header-logo-wrapper fw-flex fw-items-center'>
+            <div className='header-logo-wrapper flex items-center'>
               <div className='logo-wrapper'>
                 <img src={LogoImage} alt='Logo' />
               </div>
@@ -93,7 +93,7 @@ const AuthTemplate = ({
             {children}
           </div>
         </div>
-        <div className='image-container fw-flex fw-items-center'>
+        <div className='image-container flex items-center'>
           <div className='image-wrapper fw-card-2'>
             <img src={image} alt='Image' />
           </div>

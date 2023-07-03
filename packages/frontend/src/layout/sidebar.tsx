@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { FwTooltip } from '@freshworks/crayons/react'
+import Tooltip from '@/atoms/tooltip'
 import { sidebarList } from '@/constants'
 
 const Aside = styled.aside`
@@ -51,9 +51,9 @@ const Sidebar = () => {
           {sidebarList.map((list) => (
             <li key={list.name}>
               <Link to={list.href}>
-                <FwTooltip content={list.name} placement='right' hoist>
+                <Tooltip content={list.name} placement='right'>
                   {list.icon}
-                </FwTooltip>
+                </Tooltip>
               </Link>
             </li>
           ))}

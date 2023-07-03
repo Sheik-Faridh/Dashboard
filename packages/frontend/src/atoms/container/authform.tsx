@@ -11,17 +11,14 @@ const AuthFormContainer = styled.div`
     }
     & > .oauth-button-wrapper {
       margin: 20px 0 10px;
-      & > fw-button {
-        width: 100%;
-        & > svg {
-          width: 20px;
-          height: 20px;
-          margin-right: 10px;
-        }
+      & > button > svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
       }
     }
     & > form {
-      & > fw-input:not(.no-margin) {
+      & .text-field-control:not(.no-margin) {
         margin-bottom: 15px;
       }
       & > .line-wrapper {
@@ -29,9 +26,6 @@ const AuthFormContainer = styled.div`
       }
       & > .btn-wrapper {
         margin: 30px 0 10px;
-        & fw-button {
-          width: 100%;
-        }
       }
     }
   }

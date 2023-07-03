@@ -43,3 +43,16 @@ export const sidebarList: SideBarListType[] = [
     href: '/settings',
   },
 ]
+
+export const userMenuList = [
+  {
+    value: 'settings',
+    text: 'Settings',
+    graphicsProps: { name: 'settings' },
+  },
+  {
+    value: 'logout',
+    text: 'Logout',
+    graphicsProps: { name: 'reply' },
+  },
+]

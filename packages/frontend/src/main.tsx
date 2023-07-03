@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import App from './App.tsx'
 import { store } from '@/redux/store.ts'
-import '@freshworks/crayons/css/crayons-min.css'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

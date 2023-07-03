@@ -1,39 +1,15 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import {
-  APIErrorResponse,
-  CrayonsEventType,
-  FieldType,
-  LoginFormData,
-} from '@/types/common'
+import { APIErrorResponse, LoginFormData } from '@/types/common'
 import { passwordSchema } from '@/utils/form'
-import {
-  CustomFormFields,
-  useRegisterCrayonsFormFields,
-  useToast,
-} from '@/hooks/common'
+import { useToast } from '@/hooks/common'
 import { useLoginUserMutation } from '@/redux/services/auth'
 import { getErrorMessage, logError } from '@/utils'
 import { useNavigate } from 'react-router-dom'
 
-type UseLoginFormProps = {
-  selectors: {
-    emailSelector: string
-    passwordSelector: string
-    rememberMeSelector: string
-    submitBtnSelector: string
-  }
-}
-
-export const useLoginForm = ({ selectors }: UseLoginFormProps) => {
-  const {
-    emailSelector,
-    passwordSelector,
-    submitBtnSelector,
-    rememberMeSelector,
-  } = selectors
+export const useLoginForm = () => {
   const schema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
     password: passwordSchema,
@@ -47,38 +23,13 @@ export const useLoginForm = ({ selectors }: UseLoginFormProps) => {
   const [loginUser, { isLoading }] = useLoginUserMutation()
 
   const {
-    setValue,
+    register,
     setError,
     handleSubmit,
     formState: { errors },
-    trigger,
   } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
   })
-
-  const fields: CustomFormFields<LoginFormData>[] = useMemo(
-    () => [
-      {
-        name: 'email',
-        selector: emailSelector,
-        type: FieldType.Input,
-        event: CrayonsEventType.InputChange,
-      },
-      {
-        name: 'password',
-        selector: passwordSelector,
-        type: FieldType.Input,
-        event: CrayonsEventType.InputChange,
-      },
-      {
-        name: 'rememberMe',
-        selector: rememberMeSelector,
-        type: FieldType.Checkbox,
-        event: CrayonsEventType.CheckboxChange,
-      },
-    ],
-    [emailSelector, passwordSelector, rememberMeSelector],
-  )
 
   const onSubmit = useCallback(
     async (data: LoginFormData) => {
@@ -101,20 +52,5 @@ export const useLoginForm = ({ selectors }: UseLoginFormProps) => {
     [loginUser, showError, navigate, setError],
   )
 
-  const formSubmit = useMemo(
-    () => ({
-      selector: submitBtnSelector,
-      callback: handleSubmit(onSubmit),
-    }),
-    [submitBtnSelector, onSubmit, handleSubmit],
-  )
-
-  useRegisterCrayonsFormFields<LoginFormData>({
-    fields,
-    trigger,
-    setValue,
-    formSubmit,
-  })
-
-  return { errors, isLoading }
+  return { errors, isLoading, handleSubmit, onSubmit, register }
 }

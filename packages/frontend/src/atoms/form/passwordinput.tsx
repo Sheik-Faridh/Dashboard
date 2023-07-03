@@ -1,40 +1,45 @@
-import { InputHTMLAttributes, useState } from 'react'
-import { FwInput, FwIcon } from '@freshworks/crayons/react'
-import { InputState } from '@/types/common'
+import { Dispatch, SetStateAction, forwardRef, useState } from 'react'
+import { LockClosedIcon, EyeOpenIcon, EyeNoneIcon } from '@radix-ui/react-icons'
+import TextField, { TextFieldProps } from './textfield'
 
-interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string
-  iconLeft: string
-  hintText: string
-  state: InputState
-  errorText: string
-  clearInput: boolean
-}
-
-const PasswordInput = (props: Partial<PasswordInputProps>) => {
-  const {
-    iconLeft = 'password',
-    placeholder = 'Enter password',
-    ...rest
-  } = props
-
-  const [isPassword, setIsPassword] = useState(true)
-  return (
-    <FwInput
-      {...rest}
-      type={isPassword ? 'password' : 'text'}
-      iconLeft={iconLeft}
-      placeholder={placeholder}
-    >
-      <span
-        className='pointer'
-        slot='input-suffix'
-        onClick={() => setIsPassword((prevState) => !prevState)}
-      >
-        <FwIcon name={isPassword ? 'visible' : 'hidden'} />
-      </span>
-    </FwInput>
+const EndIcon = ({
+  isPassword,
+  setIsPassword,
+}: {
+  isPassword: boolean
+  setIsPassword: Dispatch<SetStateAction<boolean>>
+}) => {
+  return isPassword ? (
+    <EyeOpenIcon
+      className='cursor-pointer'
+      onClick={() => setIsPassword((prevState) => !prevState)}
+    />
+  ) : (
+    <EyeNoneIcon
+      className='cursor-pointer'
+      onClick={() => setIsPassword((prevState) => !prevState)}
+    />
   )
 }
+
+const PasswordInput = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
+  (props, ref) => {
+    const { placeholder = 'Enter password', ...rest } = props
+
+    const [isPassword, setIsPassword] = useState(true)
+    return (
+      <TextField
+        ref={ref}
+        {...rest}
+        type={isPassword ? 'password' : 'text'}
+        placeholder={placeholder}
+        startIcon={<LockClosedIcon />}
+        endIcon={
+          <EndIcon isPassword={isPassword} setIsPassword={setIsPassword} />
+        }
+      />
+    )
+  },
+)
 
 export default PasswordInput

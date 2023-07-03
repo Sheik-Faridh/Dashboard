@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import styled from 'styled-components'
+import { Toaster } from 'react-hot-toast'
 import LoginPage from '@/pages/login'
 import SignupPage from '@/pages/signup'
 import Home from '@/pages/home'
@@ -28,6 +29,12 @@ const App = () => {
           <Route path='/verify/user/:token' element={<VerifyUserPage />} />
         </Routes>
       </BrowserRouter>
+      <Toaster
+        toastOptions={{
+          duration: 4000,
+          position: 'top-right',
+        }}
+      />
     </Main>
   )
 }

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --sidebar-bg: #12344d;
   --sidebar-icon-color: #fff;
@@ -19,11 +23,6 @@ body {
   font-family: System stack, sans-serif;
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
-}
-
-fw-checkbox span {
-  position: relative;
-  bottom: 3px;
 }
 
 a.no-underline {
