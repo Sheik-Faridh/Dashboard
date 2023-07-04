@@ -1,9 +1,10 @@
-import classNames from 'classnames'
-import { ButtonHTMLAttributes, ReactNode, forwardRef } from 'react'
+import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { css, styled } from 'styled-components'
+import { Loader2Icon } from 'lucide-react'
+import classNames from 'classnames'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  loading: ReactNode
+  loading: boolean
   color: 'primary' | 'secondary' | 'danger' | 'link'
 }
 
@@ -62,11 +63,24 @@ const StyledButton = styled.button`
         background-color: rgb(235, 239, 243);
       }
     `}
+
+    &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `
 
 const Button = forwardRef<HTMLButtonElement, Partial<ButtonProps>>(
   (props, ref) => {
-    const { color = 'primary', type = 'button', className, ...rest } = props
+    const {
+      color = 'primary',
+      type = 'button',
+      className,
+      loading = false,
+      disabled = loading,
+      children,
+      ...rest
+    } = props
     return (
       <StyledButton
         className={classNames(
@@ -76,8 +90,15 @@ const Button = forwardRef<HTMLButtonElement, Partial<ButtonProps>>(
         color={color}
         type={type}
         ref={ref}
+        disabled={disabled}
         {...rest}
-      ></StyledButton>
+      >
+        {loading ? (
+          <Loader2Icon className='animate-spin w-[14px] h-[14px]' />
+        ) : (
+          children
+        )}
+      </StyledButton>
     )
   },
 )
