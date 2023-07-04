@@ -1,9 +1,11 @@
-import { FiSettings } from 'react-icons/fi'
-import { AiOutlineProject } from 'react-icons/ai'
-import { LuLayoutDashboard } from 'react-icons/lu'
-import { IoPersonOutline } from 'react-icons/io5'
-import { BsCalendar2X } from 'react-icons/bs'
-import { SiGoogleclassroom } from 'react-icons/si'
+import {
+  LayoutDashboardIcon,
+  UserIcon,
+  CalendarIcon,
+  GanttChartIcon,
+  PresentationIcon,
+  SettingsIcon,
+} from 'lucide-react'
 
 type SideBarListType = {
   name: string
@@ -14,32 +16,32 @@ type SideBarListType = {
 export const sidebarList: SideBarListType[] = [
   {
     name: 'Dashboard',
-    icon: <LuLayoutDashboard color='#fff' />,
+    icon: <LayoutDashboardIcon color='#fff' />,
     href: '/',
   },
   {
     name: 'Profile',
-    icon: <IoPersonOutline color='#fff' />,
+    icon: <UserIcon color='#fff' />,
     href: '/profile/me',
   },
   {
     name: 'Vacation',
-    icon: <BsCalendar2X color='#fff' />,
+    icon: <CalendarIcon color='#fff' />,
     href: '/vacation',
   },
   {
     name: 'Projects',
-    icon: <AiOutlineProject color='#fff' />,
+    icon: <GanttChartIcon color='#fff' />,
     href: '/projects',
   },
   {
     name: 'Training',
-    icon: <SiGoogleclassroom color='#fff' />,
+    icon: <PresentationIcon color='#fff' />,
     href: '/training',
   },
   {
     name: 'Settings',
-    icon: <FiSettings color='#fff' />,
+    icon: <SettingsIcon color='#fff' />,
     href: '/settings',
   },
 ]

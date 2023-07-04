@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, forwardRef, useState } from 'react'
-import { LockClosedIcon, EyeOpenIcon, EyeNoneIcon } from '@radix-ui/react-icons'
+import { KeyRoundIcon, EyeIcon, EyeOffIcon } from 'lucide-react'
 import TextField, { TextFieldProps } from './textfield'
 
 const EndIcon = ({
@@ -10,12 +10,12 @@ const EndIcon = ({
   setIsPassword: Dispatch<SetStateAction<boolean>>
 }) => {
   return isPassword ? (
-    <EyeOpenIcon
+    <EyeIcon
       className='cursor-pointer'
       onClick={() => setIsPassword((prevState) => !prevState)}
     />
   ) : (
-    <EyeNoneIcon
+    <EyeOffIcon
       className='cursor-pointer'
       onClick={() => setIsPassword((prevState) => !prevState)}
     />
@@ -33,7 +33,7 @@ const PasswordInput = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
         {...rest}
         type={isPassword ? 'password' : 'text'}
         placeholder={placeholder}
-        startIcon={<LockClosedIcon />}
+        startIcon={<KeyRoundIcon />}
         endIcon={
           <EndIcon isPassword={isPassword} setIsPassword={setIsPassword} />
         }

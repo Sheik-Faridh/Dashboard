@@ -16,13 +16,14 @@ export interface CustomTooltipProps extends TooltipProps {
 const Tooltip = (props: Partial<CustomTooltipProps>) => {
   const { children, content, placement = 'top' } = props
   return (
-    <Provider>
-      <Root>
+    <Provider delayDuration={0}>
+      <Root delayDuration={0}>
         <Trigger asChild>{children}</Trigger>
         <Portal>
           <Content
+            sideOffset={10}
             side={placement}
-            className='data-[side=top]:animate-slideDownAndFade'
+            className='border-elephant-800 bg-smoke-25 text-elephant-900 text-xs z-[30] font-semibold shadow-lg p-[3px] rounded data-[side=top]:animate-slideDownAndFade'
           >
             {content}
           </Content>

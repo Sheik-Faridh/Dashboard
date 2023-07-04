@@ -36,10 +36,11 @@ const TextFieldControl = styled.div`
     }
     & .input-prefix,
     & .input-suffix {
+      height: 16px;
       & svg {
         color: #12344d;
-        width: 12px;
-        height: 12px;
+        width: 16px;
+        height: 16px;
       }
     }
     & input {
@@ -70,7 +71,7 @@ const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
           <div className='text-left'>
             <label
               className={classNames(
-                'text-xs font-semibold text-slate-600 capitalize',
+                'text-xs font-semibold text-elephant-900 capitalize',
                 {
                   required,
                 },
@@ -84,15 +85,17 @@ const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
           className={classNames(
             'container flex items-center w-full relative rounded',
             {
-              'border-orange-600': !!warning,
-              'border-red-600': !!error,
+              'border-casablanca-900': !!warning,
+              'border-permission-800': !!error,
               normal: isNormal,
             },
           )}
         >
-          <div className='flex w-full mx-2'>
-            <div className='flex grow'>
-              <div className='flex items-center input-prefix'>{startIcon}</div>
+          <div className='flex w-full items-center mx-[8px]'>
+            <div className='flex grow items-center'>
+              <div className='flex items-center input-prefix px-[2px] bg-slate-100'>
+                {startIcon}
+              </div>
               <div className='flex items-center grow ms-2'>
                 <input
                   className='w-full text-sm h-6 leading-5 shadow-none tracking-normal font-medium cursor-text outline-0 resize-none'
@@ -102,18 +105,20 @@ const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
                 />
               </div>
             </div>
-            <div className='flex items-center ms-2'>{endIcon}</div>
+            <div className='flex items-center ms-2 input-suffix'>{endIcon}</div>
           </div>
         </div>
         <div className='text-left mt-0.5'>
           {isNormal && !!hintText && (
-            <span className='text-xs ps-0.5 text-slate-400'>{hintText}</span>
+            <span className='text-xs ps-0.5 text-smoke-300'>{hintText}</span>
           )}
           {!!error && (
-            <span className='text-xs ps-0.5 text-red-600'>{error}</span>
+            <span className='text-xs ps-0.5 text-permission-800'>{error}</span>
           )}
           {!!warning && (
-            <span className='text-xs ps-0.5 text-orange-600'>{warning}</span>
+            <span className='text-xs ps-0.5 text-casablanca-900'>
+              {warning}
+            </span>
           )}
         </div>
       </TextFieldControl>

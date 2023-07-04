@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ReactComponent as GoogleIcon } from '@/assets/svg/google-icon.svg'
-import { EnvelopeClosedIcon } from '@radix-ui/react-icons'
+import { MailIcon } from 'lucide-react'
 import { AuthFormContainer } from '@/atoms/container'
 import Button from '@/atoms/form/button'
 import Checkbox from '@/atoms/form/checkbox'
@@ -28,7 +28,7 @@ const Form = () => {
           <TextField
             type='email'
             label='Email'
-            startIcon={<EnvelopeClosedIcon />}
+            startIcon={<MailIcon />}
             placeholder='Enter your email'
             hintText='Enter your email address associated with the account'
             {...register('email')}
@@ -46,7 +46,7 @@ const Form = () => {
           <div className='line-wrapper flex justify-between items-center'>
             <Checkbox label='Remember Me' {...register('rememberMe')} />
             <Link
-              className='text-xs font-medium text-blue-600 hover:text-blue-800'
+              className='text-xs font-medium text-blue-600 hover:text-blue-800 hover:underline'
               to='/password/forgot'
             >
               Forgot Password?
@@ -61,7 +61,7 @@ const Form = () => {
             <span className='text-sm text-slate-400'>
               Don't have an account?
               <Link
-                className='text-xs font-medium text-blue-600 hover:text-blue-800 pl-2'
+                className='text-xs font-medium text-blue-600 hover:text-blue-800 hover:underline pl-2'
                 to='/signup'
               >
                 Create One

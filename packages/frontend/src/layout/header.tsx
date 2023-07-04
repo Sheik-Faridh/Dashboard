@@ -10,23 +10,17 @@ const Header = styled.header`
   right: 0;
   height: 3.6rem;
   z-index: 20;
-  & > .logo-wrapper {
-    display: inline-block;
-    width: 3.6rem;
-    height: 100%;
-    & img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-  }
 `
 
 const AppHeader = () => {
   return (
-    <Header className='fw-bg-smoke-25'>
-      <div className='logo-wrapper'>
-        <img src={LogoImage} alt='Logo' />
+    <Header className='bg-slate-50'>
+      <div className='inline-block w-[3.6rem] h-full'>
+        <img
+          src={LogoImage}
+          alt='Logo'
+          className='w-full h-full object-covers'
+        />
       </div>
       <Appbar />
     </Header>
