@@ -9,14 +9,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from '@/atoms/dropdown_menu'
+import { stringToHslColor } from '@/utils'
 
 const UserMenu = () => {
   return (
     <div className='user-menu'>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className='cursor-pointer'>
-            <AvatarFallback>SF</AvatarFallback>
+          <Avatar
+            className='cursor-pointer shadow-2xl'
+            style={{ background: stringToHslColor('SF') }}
+          >
+            <AvatarFallback className='text-white text-xs font-bold'>
+              SF
+            </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuPortal forceMount>
