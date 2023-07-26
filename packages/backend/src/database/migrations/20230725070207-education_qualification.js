@@ -3,47 +3,42 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return await queryInterface.createTable('Users', {
+    return await queryInterface.createTable('education_qualification', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
+      degree: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: Sequelize.STRING,
+      start_date: {
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      active: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      end_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
       },
-      activationToken: {
+      university: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      tokenExpiresOn: {
+      marks: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      createdAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      deletedAt: {
+      deleted_at: {
         allowNull: true,
         type: Sequelize.DATE,
       },
@@ -51,6 +46,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users')
+    await queryInterface.dropTable('education_qualification')
   },
 }

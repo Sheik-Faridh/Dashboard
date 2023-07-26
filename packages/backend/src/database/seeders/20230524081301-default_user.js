@@ -12,16 +12,16 @@ module.exports = {
         name: 'Test User',
         email: 'test@gmail.com',
         password: await bcrypt.hash('Password@123', SALT_ROUND),
-        activationToken: await getRandomBytes(),
-        tokenExpiresOn: new Date(Date.now() + COOKIE_MAX_AGE),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        activation_token: await getRandomBytes(),
+        token_expires_on: new Date(Date.now() + COOKIE_MAX_AGE),
+        created_at: new Date(),
+        updated_at: new Date(),
       },
     ]
-    await queryInterface.bulkInsert('Users', defaultUsers, {})
+    await queryInterface.bulkInsert('user', defaultUsers, {})
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Users', null, {})
+    await queryInterface.bulkDelete('user', null, {})
   },
 }

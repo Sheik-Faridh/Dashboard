@@ -17,5 +17,6 @@ export default {
   define: {
     paranoid: true,
     timestamps: true,
+    underscored: true,
   },
 } as Options
