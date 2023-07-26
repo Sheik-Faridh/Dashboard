@@ -78,9 +78,15 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      incharge_of: {
+      incharge_of_class: {
         type: Sequelize.INTEGER,
         references: { model: 'class', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      incharge_of_class_section: {
+        type: Sequelize.INTEGER,
+        references: { model: 'section', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
@@ -215,10 +221,22 @@ module.exports = {
 
     await queryInterface.addConstraint('faculty', {
       type: 'foreign key',
-      fields: ['incharge_of'],
-      name: 'fk_faculty_incharge_of',
+      fields: ['incharge_of_class'],
+      name: 'fk_faculty_incharge_of_class',
       references: {
         table: 'class',
+        field: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    })
+
+    await queryInterface.addConstraint('faculty', {
+      type: 'foreign key',
+      fields: ['incharge_of_class_section'],
+      name: 'fk_faculty_incharge_of_class_section',
+      references: {
+        table: 'section',
         field: 'id',
       },
       onUpdate: 'CASCADE',
@@ -296,7 +314,15 @@ module.exports = {
       'fk_faculty_work_experience',
     )
     // Remove the foreign key constraint first to avoid errors during rollback
-    await queryInterface.removeConstraint('faculty', 'fk_faculty_incharge_of')
+    await queryInterface.removeConstraint(
+      'faculty',
+      'fk_faculty_incharge_of_class',
+    )
+    // Remove the foreign key constraint first to avoid errors during rollback
+    await queryInterface.removeConstraint(
+      'faculty',
+      'fk_faculty_incharge_of_class_section',
+    )
     // Remove the foreign key constraint first to avoid errors during rollback
     await queryInterface.removeConstraint('faculty', 'fk_faculty_work_publish')
     // Remove the foreign key constraint first to avoid errors during rollback

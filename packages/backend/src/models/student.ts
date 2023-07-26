@@ -9,6 +9,7 @@ import type { CourseExamResult, CourseExamResultId } from './course_exam_result'
 import type { Department, DepartmentId } from './department';
 import type { Faculty, FacultyId } from './faculty';
 import type { ParentContact, ParentContactId } from './parent_contact';
+import type { Section, SectionId } from './section';
 import type { StudentAttendence, StudentAttendenceId } from './student_attendence';
 import type { StudentFee, StudentFeeId } from './student_fee';
 import type { StudentPromotion, StudentPromotionId } from './student_promotion';
@@ -25,8 +26,9 @@ export interface StudentAttributes {
   joinDate: string;
   relieveDate?: string;
   contactId?: number;
-  mentor: number;
-  class: number;
+  mentorId: number;
+  classId: number;
+  sectionId: number;
   workPublish?: number;
   certification?: number;
   achievement?: number;
@@ -51,8 +53,9 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
   joinDate!: string;
   relieveDate?: string;
   contactId?: number;
-  mentor!: number;
-  class!: number;
+  mentorId!: number;
+  classId!: number;
+  sectionId!: number;
   workPublish?: number;
   certification?: number;
   achievement?: number;
@@ -77,11 +80,11 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
   getCertificationCertification!: Sequelize.BelongsToGetAssociationMixin<Certification>;
   setCertificationCertification!: Sequelize.BelongsToSetAssociationMixin<Certification, CertificationId>;
   createCertificationCertification!: Sequelize.BelongsToCreateAssociationMixin<Certification>;
-  // Student belongsTo Class via class
-  classClass!: Class;
-  getClassClass!: Sequelize.BelongsToGetAssociationMixin<Class>;
-  setClassClass!: Sequelize.BelongsToSetAssociationMixin<Class, ClassId>;
-  createClassClass!: Sequelize.BelongsToCreateAssociationMixin<Class>;
+  // Student belongsTo Class via classId
+  class!: Class;
+  getClass!: Sequelize.BelongsToGetAssociationMixin<Class>;
+  setClass!: Sequelize.BelongsToSetAssociationMixin<Class, ClassId>;
+  createClass!: Sequelize.BelongsToCreateAssociationMixin<Class>;
   // Student belongsTo Contact via contactId
   contact!: Contact;
   getContact!: Sequelize.BelongsToGetAssociationMixin<Contact>;
@@ -92,11 +95,16 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
   getDepartment!: Sequelize.BelongsToGetAssociationMixin<Department>;
   setDepartment!: Sequelize.BelongsToSetAssociationMixin<Department, DepartmentId>;
   createDepartment!: Sequelize.BelongsToCreateAssociationMixin<Department>;
-  // Student belongsTo Faculty via mentor
-  mentorFaculty!: Faculty;
-  getMentorFaculty!: Sequelize.BelongsToGetAssociationMixin<Faculty>;
-  setMentorFaculty!: Sequelize.BelongsToSetAssociationMixin<Faculty, FacultyId>;
-  createMentorFaculty!: Sequelize.BelongsToCreateAssociationMixin<Faculty>;
+  // Student belongsTo Faculty via mentorId
+  mentor!: Faculty;
+  getMentor!: Sequelize.BelongsToGetAssociationMixin<Faculty>;
+  setMentor!: Sequelize.BelongsToSetAssociationMixin<Faculty, FacultyId>;
+  createMentor!: Sequelize.BelongsToCreateAssociationMixin<Faculty>;
+  // Student belongsTo Section via sectionId
+  section!: Section;
+  getSection!: Sequelize.BelongsToGetAssociationMixin<Section>;
+  setSection!: Sequelize.BelongsToSetAssociationMixin<Section, SectionId>;
+  createSection!: Sequelize.BelongsToCreateAssociationMixin<Section>;
   // Student hasMany CourseExamResult via studentId
   courseExamResults!: CourseExamResult[];
   getCourseExamResults!: Sequelize.HasManyGetAssociationsMixin<CourseExamResult>;
@@ -229,21 +237,32 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
       },
       field: 'contact_id'
     },
-    mentor: {
+    mentorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'faculty',
         key: 'id'
-      }
+      },
+      field: 'mentor_id'
     },
-    class: {
+    classId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'class',
         key: 'id'
-      }
+      },
+      field: 'class_id'
+    },
+    sectionId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'section',
+        key: 'id'
+      },
+      field: 'section_id'
     },
     workPublish: {
       type: DataTypes.INTEGER,
@@ -338,17 +357,24 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
         ]
       },
       {
-        name: "fk_student_mentor",
+        name: "fk_student_mentor_id",
         using: "BTREE",
         fields: [
-          { name: "mentor" },
+          { name: "mentor_id" },
         ]
       },
       {
-        name: "fk_student_class",
+        name: "fk_student_class_id",
         using: "BTREE",
         fields: [
-          { name: "class" },
+          { name: "class_id" },
+        ]
+      },
+      {
+        name: "fk_student_section_id",
+        using: "BTREE",
+        fields: [
+          { name: "section_id" },
         ]
       },
       {

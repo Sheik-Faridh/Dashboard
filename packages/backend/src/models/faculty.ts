@@ -13,6 +13,7 @@ import type { FacultyAttendence, FacultyAttendenceId } from './faculty_attendenc
 import type { FacultyPromotion, FacultyPromotionId } from './faculty_promotion';
 import type { FacultySalary, FacultySalaryId } from './faculty_salary';
 import type { SalaryHike, SalaryHikeId } from './salary_hike';
+import type { Section, SectionId } from './section';
 import type { Session, SessionId } from './session';
 import type { Student, StudentId } from './student';
 import type { Timetable, TimetableId } from './timetable';
@@ -35,7 +36,8 @@ export interface FacultyAttributes {
   reportingTo?: number;
   courseId?: number;
   workExperience?: number;
-  inchargeOf?: number;
+  inchargeOfClass?: number;
+  inchargeOfClassSection?: number;
   workPublish?: number;
   certification?: number;
   achievement?: number;
@@ -48,7 +50,7 @@ export interface FacultyAttributes {
 
 export type FacultyPk = "id";
 export type FacultyId = Faculty[FacultyPk];
-export type FacultyOptionalAttributes = "id" | "relieveDate" | "contactId" | "reportingTo" | "courseId" | "workExperience" | "inchargeOf" | "workPublish" | "certification" | "achievement" | "bankDetail" | "socialMediaPlatform" | "createdAt" | "updatedAt" | "deletedAt";
+export type FacultyOptionalAttributes = "id" | "relieveDate" | "contactId" | "reportingTo" | "courseId" | "workExperience" | "inchargeOfClass" | "inchargeOfClassSection" | "workPublish" | "certification" | "achievement" | "bankDetail" | "socialMediaPlatform" | "createdAt" | "updatedAt" | "deletedAt";
 export type FacultyCreationAttributes = Optional<FacultyAttributes, FacultyOptionalAttributes>;
 
 export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes> implements FacultyAttributes {
@@ -65,7 +67,8 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   reportingTo?: number;
   courseId?: number;
   workExperience?: number;
-  inchargeOf?: number;
+  inchargeOfClass?: number;
+  inchargeOfClassSection?: number;
   workPublish?: number;
   certification?: number;
   achievement?: number;
@@ -90,11 +93,11 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   getCertificationCertification!: Sequelize.BelongsToGetAssociationMixin<Certification>;
   setCertificationCertification!: Sequelize.BelongsToSetAssociationMixin<Certification, CertificationId>;
   createCertificationCertification!: Sequelize.BelongsToCreateAssociationMixin<Certification>;
-  // Faculty belongsTo Class via inchargeOf
-  inchargeOfClass!: Class;
-  getInchargeOfClass!: Sequelize.BelongsToGetAssociationMixin<Class>;
-  setInchargeOfClass!: Sequelize.BelongsToSetAssociationMixin<Class, ClassId>;
-  createInchargeOfClass!: Sequelize.BelongsToCreateAssociationMixin<Class>;
+  // Faculty belongsTo Class via inchargeOfClass
+  inchargeOfClassClass!: Class;
+  getInchargeOfClassClass!: Sequelize.BelongsToGetAssociationMixin<Class>;
+  setInchargeOfClassClass!: Sequelize.BelongsToSetAssociationMixin<Class, ClassId>;
+  createInchargeOfClassClass!: Sequelize.BelongsToCreateAssociationMixin<Class>;
   // Faculty belongsTo Contact via contactId
   contact!: Contact;
   getContact!: Sequelize.BelongsToGetAssociationMixin<Contact>;
@@ -192,7 +195,7 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   hasSession!: Sequelize.HasManyHasAssociationMixin<Session, SessionId>;
   hasSessions!: Sequelize.HasManyHasAssociationsMixin<Session, SessionId>;
   countSessions!: Sequelize.HasManyCountAssociationsMixin;
-  // Faculty hasMany Student via mentor
+  // Faculty hasMany Student via mentorId
   students!: Student[];
   getStudents!: Sequelize.HasManyGetAssociationsMixin<Student>;
   setStudents!: Sequelize.HasManySetAssociationsMixin<Student, StudentId>;
@@ -216,6 +219,11 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   hasTimetable!: Sequelize.HasManyHasAssociationMixin<Timetable, TimetableId>;
   hasTimetables!: Sequelize.HasManyHasAssociationsMixin<Timetable, TimetableId>;
   countTimetables!: Sequelize.HasManyCountAssociationsMixin;
+  // Faculty belongsTo Section via inchargeOfClassSection
+  inchargeOfClassSectionSection!: Section;
+  getInchargeOfClassSectionSection!: Sequelize.BelongsToGetAssociationMixin<Section>;
+  setInchargeOfClassSectionSection!: Sequelize.BelongsToSetAssociationMixin<Section, SectionId>;
+  createInchargeOfClassSectionSection!: Sequelize.BelongsToCreateAssociationMixin<Section>;
   // Faculty belongsTo User via userId
   user!: User;
   getUser!: Sequelize.BelongsToGetAssociationMixin<User>;
@@ -334,14 +342,23 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
       },
       field: 'work_experience'
     },
-    inchargeOf: {
+    inchargeOfClass: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: 'class',
         key: 'id'
       },
-      field: 'incharge_of'
+      field: 'incharge_of_class'
+    },
+    inchargeOfClassSection: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'section',
+        key: 'id'
+      },
+      field: 'incharge_of_class_section'
     },
     workPublish: {
       type: DataTypes.INTEGER,
@@ -464,10 +481,17 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
         ]
       },
       {
-        name: "fk_faculty_incharge_of",
+        name: "fk_faculty_incharge_of_class",
         using: "BTREE",
         fields: [
-          { name: "incharge_of" },
+          { name: "incharge_of_class" },
+        ]
+      },
+      {
+        name: "fk_faculty_incharge_of_class_section",
+        using: "BTREE",
+        fields: [
+          { name: "incharge_of_class_section" },
         ]
       },
       {

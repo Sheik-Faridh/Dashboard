@@ -49,17 +49,24 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      mentor: {
+      mentor_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'faculty', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      class: {
+      class_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'class', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      section_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'section', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
@@ -146,8 +153,8 @@ module.exports = {
 
     await queryInterface.addConstraint('student', {
       type: 'foreign key',
-      fields: ['mentor'],
-      name: 'fk_student_mentor',
+      fields: ['mentor_id'],
+      name: 'fk_student_mentor_id',
       references: {
         table: 'faculty',
         field: 'id',
@@ -158,10 +165,22 @@ module.exports = {
 
     await queryInterface.addConstraint('student', {
       type: 'foreign key',
-      fields: ['class'],
-      name: 'fk_student_class',
+      fields: ['class_id'],
+      name: 'fk_student_class_id',
       references: {
         table: 'class',
+        field: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    })
+
+    await queryInterface.addConstraint('student', {
+      type: 'foreign key',
+      fields: ['section_id'],
+      name: 'fk_student_section_id',
+      references: {
+        table: 'section',
         field: 'id',
       },
       onUpdate: 'CASCADE',
@@ -225,9 +244,11 @@ module.exports = {
     // Remove the foreign key constraint first to avoid errors during rollback
     await queryInterface.removeConstraint('student', 'fk_student_contact_id')
     // Remove the foreign key constraint first to avoid errors during rollback
-    await queryInterface.removeConstraint('student', 'fk_student_mentor')
+    await queryInterface.removeConstraint('student', 'fk_student_mentor_id')
     // Remove the foreign key constraint first to avoid errors during rollback
-    await queryInterface.removeConstraint('student', 'fk_student_class')
+    await queryInterface.removeConstraint('student', 'fk_student_class_id')
+    // Remove the foreign key constraint first to avoid errors during rollback
+    await queryInterface.removeConstraint('student', 'fk_student_section_id')
     // Remove the foreign key constraint first to avoid errors during rollback
     await queryInterface.removeConstraint('student', 'fk_student_work_publish')
     // Remove the foreign key constraint first to avoid errors during rollback

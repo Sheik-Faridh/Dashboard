@@ -2,6 +2,7 @@ import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { Exam, ExamId } from './exam';
 import type { Faculty, FacultyId } from './faculty';
+import type { Section, SectionId } from './section';
 import type { Session, SessionId } from './session';
 import type { Student, StudentId } from './student';
 import type { StudentPromotion, StudentPromotionId } from './student_promotion';
@@ -10,7 +11,7 @@ import type { Timetable, TimetableId } from './timetable';
 export interface ClassAttributes {
   id: number;
   name: string;
-  room: string;
+  room?: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
@@ -18,13 +19,13 @@ export interface ClassAttributes {
 
 export type ClassPk = "id";
 export type ClassId = Class[ClassPk];
-export type ClassOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type ClassOptionalAttributes = "id" | "room" | "createdAt" | "updatedAt" | "deletedAt";
 export type ClassCreationAttributes = Optional<ClassAttributes, ClassOptionalAttributes>;
 
 export class Class extends Model<ClassAttributes, ClassCreationAttributes> implements ClassAttributes {
   id!: number;
   name!: string;
-  room!: string;
+  room?: string;
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
@@ -41,7 +42,7 @@ export class Class extends Model<ClassAttributes, ClassCreationAttributes> imple
   hasExam!: Sequelize.HasManyHasAssociationMixin<Exam, ExamId>;
   hasExams!: Sequelize.HasManyHasAssociationsMixin<Exam, ExamId>;
   countExams!: Sequelize.HasManyCountAssociationsMixin;
-  // Class hasMany Faculty via inchargeOf
+  // Class hasMany Faculty via inchargeOfClass
   faculties!: Faculty[];
   getFaculties!: Sequelize.HasManyGetAssociationsMixin<Faculty>;
   setFaculties!: Sequelize.HasManySetAssociationsMixin<Faculty, FacultyId>;
@@ -53,6 +54,18 @@ export class Class extends Model<ClassAttributes, ClassCreationAttributes> imple
   hasFaculty!: Sequelize.HasManyHasAssociationMixin<Faculty, FacultyId>;
   hasFaculties!: Sequelize.HasManyHasAssociationsMixin<Faculty, FacultyId>;
   countFaculties!: Sequelize.HasManyCountAssociationsMixin;
+  // Class hasMany Section via classId
+  sections!: Section[];
+  getSections!: Sequelize.HasManyGetAssociationsMixin<Section>;
+  setSections!: Sequelize.HasManySetAssociationsMixin<Section, SectionId>;
+  addSection!: Sequelize.HasManyAddAssociationMixin<Section, SectionId>;
+  addSections!: Sequelize.HasManyAddAssociationsMixin<Section, SectionId>;
+  createSection!: Sequelize.HasManyCreateAssociationMixin<Section>;
+  removeSection!: Sequelize.HasManyRemoveAssociationMixin<Section, SectionId>;
+  removeSections!: Sequelize.HasManyRemoveAssociationsMixin<Section, SectionId>;
+  hasSection!: Sequelize.HasManyHasAssociationMixin<Section, SectionId>;
+  hasSections!: Sequelize.HasManyHasAssociationsMixin<Section, SectionId>;
+  countSections!: Sequelize.HasManyCountAssociationsMixin;
   // Class hasMany Session via classId
   sessions!: Session[];
   getSessions!: Sequelize.HasManyGetAssociationsMixin<Session>;
@@ -65,7 +78,7 @@ export class Class extends Model<ClassAttributes, ClassCreationAttributes> imple
   hasSession!: Sequelize.HasManyHasAssociationMixin<Session, SessionId>;
   hasSessions!: Sequelize.HasManyHasAssociationsMixin<Session, SessionId>;
   countSessions!: Sequelize.HasManyCountAssociationsMixin;
-  // Class hasMany Student via class
+  // Class hasMany Student via classId
   students!: Student[];
   getStudents!: Sequelize.HasManyGetAssociationsMixin<Student>;
   setStudents!: Sequelize.HasManySetAssociationsMixin<Student, StudentId>;
@@ -129,8 +142,7 @@ export class Class extends Model<ClassAttributes, ClassCreationAttributes> imple
     },
     room: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      unique: "room"
+      allowNull: true
     }
   }, {
     tableName: 'class',
@@ -151,14 +163,6 @@ export class Class extends Model<ClassAttributes, ClassCreationAttributes> imple
         using: "BTREE",
         fields: [
           { name: "name" },
-        ]
-      },
-      {
-        name: "room",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "room" },
         ]
       },
     ]

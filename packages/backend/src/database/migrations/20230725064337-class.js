@@ -17,8 +17,7 @@ module.exports = {
       },
       room: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
+        allowNull: true,
       },
       created_at: {
         allowNull: false,

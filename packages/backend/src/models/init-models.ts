@@ -51,6 +51,8 @@ import { SalaryGrade as _SalaryGrade } from "./salary_grade";
 import type { SalaryGradeAttributes, SalaryGradeCreationAttributes } from "./salary_grade";
 import { SalaryHike as _SalaryHike } from "./salary_hike";
 import type { SalaryHikeAttributes, SalaryHikeCreationAttributes } from "./salary_hike";
+import { Section as _Section } from "./section";
+import type { SectionAttributes, SectionCreationAttributes } from "./section";
 import { SequelizeMetum as _SequelizeMetum } from "./sequelize_metum";
 import type { SequelizeMetumAttributes, SequelizeMetumCreationAttributes } from "./sequelize_metum";
 import { Session as _Session } from "./session";
@@ -105,6 +107,7 @@ export {
   _RoleCommand as RoleCommand,
   _SalaryGrade as SalaryGrade,
   _SalaryHike as SalaryHike,
+  _Section as Section,
   _SequelizeMetum as SequelizeMetum,
   _Session as Session,
   _SocialMediaPlatform as SocialMediaPlatform,
@@ -173,6 +176,8 @@ export type {
   SalaryGradeCreationAttributes,
   SalaryHikeAttributes,
   SalaryHikeCreationAttributes,
+  SectionAttributes,
+  SectionCreationAttributes,
   SequelizeMetumAttributes,
   SequelizeMetumCreationAttributes,
   SessionAttributes,
@@ -228,6 +233,7 @@ export function initModels(sequelize: Sequelize) {
   const RoleCommand = _RoleCommand.initModel(sequelize);
   const SalaryGrade = _SalaryGrade.initModel(sequelize);
   const SalaryHike = _SalaryHike.initModel(sequelize);
+  const Section = _Section.initModel(sequelize);
   const SequelizeMetum = _SequelizeMetum.initModel(sequelize);
   const Session = _Session.initModel(sequelize);
   const SocialMediaPlatform = _SocialMediaPlatform.initModel(sequelize);
@@ -262,12 +268,14 @@ export function initModels(sequelize: Sequelize) {
   Certification.hasMany(Student, { as: "students", foreignKey: "certification"});
   Exam.belongsTo(Class, { as: "class", foreignKey: "classId"});
   Class.hasMany(Exam, { as: "exams", foreignKey: "classId"});
-  Faculty.belongsTo(Class, { as: "inchargeOfClass", foreignKey: "inchargeOf"});
-  Class.hasMany(Faculty, { as: "faculties", foreignKey: "inchargeOf"});
+  Faculty.belongsTo(Class, { as: "inchargeOfClassClass", foreignKey: "inchargeOfClass"});
+  Class.hasMany(Faculty, { as: "faculties", foreignKey: "inchargeOfClass"});
+  Section.belongsTo(Class, { as: "class", foreignKey: "classId"});
+  Class.hasMany(Section, { as: "sections", foreignKey: "classId"});
   Session.belongsTo(Class, { as: "class", foreignKey: "classId"});
   Class.hasMany(Session, { as: "sessions", foreignKey: "classId"});
-  Student.belongsTo(Class, { as: "classClass", foreignKey: "class"});
-  Class.hasMany(Student, { as: "students", foreignKey: "class"});
+  Student.belongsTo(Class, { as: "class", foreignKey: "classId"});
+  Class.hasMany(Student, { as: "students", foreignKey: "classId"});
   StudentPromotion.belongsTo(Class, { as: "promotedFromClass", foreignKey: "promotedFrom"});
   Class.hasMany(StudentPromotion, { as: "studentPromotions", foreignKey: "promotedFrom"});
   StudentPromotion.belongsTo(Class, { as: "promotedToClass", foreignKey: "promotedTo"});
@@ -320,8 +328,8 @@ export function initModels(sequelize: Sequelize) {
   Faculty.hasMany(SalaryHike, { as: "salaryHikes", foreignKey: "facultyId"});
   Session.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
   Faculty.hasMany(Session, { as: "sessions", foreignKey: "facultyId"});
-  Student.belongsTo(Faculty, { as: "mentorFaculty", foreignKey: "mentor"});
-  Faculty.hasMany(Student, { as: "students", foreignKey: "mentor"});
+  Student.belongsTo(Faculty, { as: "mentor", foreignKey: "mentorId"});
+  Faculty.hasMany(Student, { as: "students", foreignKey: "mentorId"});
   Timetable.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
   Faculty.hasMany(Timetable, { as: "timetables", foreignKey: "facultyId"});
   User.belongsTo(Organization, { as: "organization", foreignKey: "organizationId"});
@@ -336,6 +344,10 @@ export function initModels(sequelize: Sequelize) {
   Role.hasMany(UserRole, { as: "userRoles", foreignKey: "roleId"});
   FacultySalary.belongsTo(SalaryGrade, { as: "gradeLevel", foreignKey: "gradeLevelId"});
   SalaryGrade.hasMany(FacultySalary, { as: "facultySalaries", foreignKey: "gradeLevelId"});
+  Faculty.belongsTo(Section, { as: "inchargeOfClassSectionSection", foreignKey: "inchargeOfClassSection"});
+  Section.hasMany(Faculty, { as: "faculties", foreignKey: "inchargeOfClassSection"});
+  Student.belongsTo(Section, { as: "section", foreignKey: "sectionId"});
+  Section.hasMany(Student, { as: "students", foreignKey: "sectionId"});
   StudentAttendence.belongsTo(Session, { as: "session", foreignKey: "sessionId"});
   Session.hasMany(StudentAttendence, { as: "studentAttendences", foreignKey: "sessionId"});
   UserSocialMedium.belongsTo(SocialMediaPlatform, { as: "socialMediaPlatform", foreignKey: "socialMediaPlatformId"});
@@ -394,6 +406,7 @@ export function initModels(sequelize: Sequelize) {
     RoleCommand: RoleCommand,
     SalaryGrade: SalaryGrade,
     SalaryHike: SalaryHike,
+    Section: Section,
     SequelizeMetum: SequelizeMetum,
     Session: Session,
     SocialMediaPlatform: SocialMediaPlatform,
