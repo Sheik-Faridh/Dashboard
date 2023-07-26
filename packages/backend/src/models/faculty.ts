@@ -12,6 +12,8 @@ import type { Designation, DesignationId } from './designation';
 import type { FacultyAttendence, FacultyAttendenceId } from './faculty_attendence';
 import type { FacultyPromotion, FacultyPromotionId } from './faculty_promotion';
 import type { FacultySalary, FacultySalaryId } from './faculty_salary';
+import type { FacultyVacation, FacultyVacationId } from './faculty_vacation';
+import type { FacultyVacationRequest, FacultyVacationRequestId } from './faculty_vacation_request';
 import type { SalaryHike, SalaryHikeId } from './salary_hike';
 import type { Section, SectionId } from './section';
 import type { Session, SessionId } from './session';
@@ -171,6 +173,30 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   hasFacultySalary!: Sequelize.HasManyHasAssociationMixin<FacultySalary, FacultySalaryId>;
   hasFacultySalaries!: Sequelize.HasManyHasAssociationsMixin<FacultySalary, FacultySalaryId>;
   countFacultySalaries!: Sequelize.HasManyCountAssociationsMixin;
+  // Faculty hasMany FacultyVacation via facultyId
+  facultyVacations!: FacultyVacation[];
+  getFacultyVacations!: Sequelize.HasManyGetAssociationsMixin<FacultyVacation>;
+  setFacultyVacations!: Sequelize.HasManySetAssociationsMixin<FacultyVacation, FacultyVacationId>;
+  addFacultyVacation!: Sequelize.HasManyAddAssociationMixin<FacultyVacation, FacultyVacationId>;
+  addFacultyVacations!: Sequelize.HasManyAddAssociationsMixin<FacultyVacation, FacultyVacationId>;
+  createFacultyVacation!: Sequelize.HasManyCreateAssociationMixin<FacultyVacation>;
+  removeFacultyVacation!: Sequelize.HasManyRemoveAssociationMixin<FacultyVacation, FacultyVacationId>;
+  removeFacultyVacations!: Sequelize.HasManyRemoveAssociationsMixin<FacultyVacation, FacultyVacationId>;
+  hasFacultyVacation!: Sequelize.HasManyHasAssociationMixin<FacultyVacation, FacultyVacationId>;
+  hasFacultyVacations!: Sequelize.HasManyHasAssociationsMixin<FacultyVacation, FacultyVacationId>;
+  countFacultyVacations!: Sequelize.HasManyCountAssociationsMixin;
+  // Faculty hasMany FacultyVacationRequest via facultyId
+  facultyVacationRequests!: FacultyVacationRequest[];
+  getFacultyVacationRequests!: Sequelize.HasManyGetAssociationsMixin<FacultyVacationRequest>;
+  setFacultyVacationRequests!: Sequelize.HasManySetAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  addFacultyVacationRequest!: Sequelize.HasManyAddAssociationMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  addFacultyVacationRequests!: Sequelize.HasManyAddAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  createFacultyVacationRequest!: Sequelize.HasManyCreateAssociationMixin<FacultyVacationRequest>;
+  removeFacultyVacationRequest!: Sequelize.HasManyRemoveAssociationMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  removeFacultyVacationRequests!: Sequelize.HasManyRemoveAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  hasFacultyVacationRequest!: Sequelize.HasManyHasAssociationMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  hasFacultyVacationRequests!: Sequelize.HasManyHasAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  countFacultyVacationRequests!: Sequelize.HasManyCountAssociationsMixin;
   // Faculty hasMany SalaryHike via facultyId
   salaryHikes!: SalaryHike[];
   getSalaryHikes!: Sequelize.HasManyGetAssociationsMixin<SalaryHike>;

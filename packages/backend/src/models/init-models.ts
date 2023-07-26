@@ -37,6 +37,10 @@ import { FacultyPromotion as _FacultyPromotion } from "./faculty_promotion";
 import type { FacultyPromotionAttributes, FacultyPromotionCreationAttributes } from "./faculty_promotion";
 import { FacultySalary as _FacultySalary } from "./faculty_salary";
 import type { FacultySalaryAttributes, FacultySalaryCreationAttributes } from "./faculty_salary";
+import { FacultyVacation as _FacultyVacation } from "./faculty_vacation";
+import type { FacultyVacationAttributes, FacultyVacationCreationAttributes } from "./faculty_vacation";
+import { FacultyVacationRequest as _FacultyVacationRequest } from "./faculty_vacation_request";
+import type { FacultyVacationRequestAttributes, FacultyVacationRequestCreationAttributes } from "./faculty_vacation_request";
 import { Organization as _Organization } from "./organization";
 import type { OrganizationAttributes, OrganizationCreationAttributes } from "./organization";
 import { ParentContact as _ParentContact } from "./parent_contact";
@@ -100,6 +104,8 @@ export {
   _FacultyAttendence as FacultyAttendence,
   _FacultyPromotion as FacultyPromotion,
   _FacultySalary as FacultySalary,
+  _FacultyVacation as FacultyVacation,
+  _FacultyVacationRequest as FacultyVacationRequest,
   _Organization as Organization,
   _ParentContact as ParentContact,
   _Period as Period,
@@ -162,6 +168,10 @@ export type {
   FacultyPromotionCreationAttributes,
   FacultySalaryAttributes,
   FacultySalaryCreationAttributes,
+  FacultyVacationAttributes,
+  FacultyVacationCreationAttributes,
+  FacultyVacationRequestAttributes,
+  FacultyVacationRequestCreationAttributes,
   OrganizationAttributes,
   OrganizationCreationAttributes,
   ParentContactAttributes,
@@ -226,6 +236,8 @@ export function initModels(sequelize: Sequelize) {
   const FacultyAttendence = _FacultyAttendence.initModel(sequelize);
   const FacultyPromotion = _FacultyPromotion.initModel(sequelize);
   const FacultySalary = _FacultySalary.initModel(sequelize);
+  const FacultyVacation = _FacultyVacation.initModel(sequelize);
+  const FacultyVacationRequest = _FacultyVacationRequest.initModel(sequelize);
   const Organization = _Organization.initModel(sequelize);
   const ParentContact = _ParentContact.initModel(sequelize);
   const Period = _Period.initModel(sequelize);
@@ -324,6 +336,10 @@ export function initModels(sequelize: Sequelize) {
   Faculty.hasMany(FacultyPromotion, { as: "facultyPromotions", foreignKey: "facultyId"});
   FacultySalary.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
   Faculty.hasMany(FacultySalary, { as: "facultySalaries", foreignKey: "facultyId"});
+  FacultyVacation.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
+  Faculty.hasMany(FacultyVacation, { as: "facultyVacations", foreignKey: "facultyId"});
+  FacultyVacationRequest.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
+  Faculty.hasMany(FacultyVacationRequest, { as: "facultyVacationRequests", foreignKey: "facultyId"});
   SalaryHike.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
   Faculty.hasMany(SalaryHike, { as: "salaryHikes", foreignKey: "facultyId"});
   Session.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
@@ -399,6 +415,8 @@ export function initModels(sequelize: Sequelize) {
     FacultyAttendence: FacultyAttendence,
     FacultyPromotion: FacultyPromotion,
     FacultySalary: FacultySalary,
+    FacultyVacation: FacultyVacation,
+    FacultyVacationRequest: FacultyVacationRequest,
     Organization: Organization,
     ParentContact: ParentContact,
     Period: Period,
