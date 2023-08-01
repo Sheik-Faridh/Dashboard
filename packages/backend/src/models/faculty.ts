@@ -197,6 +197,18 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   hasFacultyVacationRequest!: Sequelize.HasManyHasAssociationMixin<FacultyVacationRequest, FacultyVacationRequestId>;
   hasFacultyVacationRequests!: Sequelize.HasManyHasAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
   countFacultyVacationRequests!: Sequelize.HasManyCountAssociationsMixin;
+  // Faculty hasMany FacultyVacationRequest via approvedBy
+  approvedByFacultyVacationRequests!: FacultyVacationRequest[];
+  getApprovedByFacultyVacationRequests!: Sequelize.HasManyGetAssociationsMixin<FacultyVacationRequest>;
+  setApprovedByFacultyVacationRequests!: Sequelize.HasManySetAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  addApprovedByFacultyVacationRequest!: Sequelize.HasManyAddAssociationMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  addApprovedByFacultyVacationRequests!: Sequelize.HasManyAddAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  createApprovedByFacultyVacationRequest!: Sequelize.HasManyCreateAssociationMixin<FacultyVacationRequest>;
+  removeApprovedByFacultyVacationRequest!: Sequelize.HasManyRemoveAssociationMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  removeApprovedByFacultyVacationRequests!: Sequelize.HasManyRemoveAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  hasApprovedByFacultyVacationRequest!: Sequelize.HasManyHasAssociationMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  hasApprovedByFacultyVacationRequests!: Sequelize.HasManyHasAssociationsMixin<FacultyVacationRequest, FacultyVacationRequestId>;
+  countApprovedByFacultyVacationRequests!: Sequelize.HasManyCountAssociationsMixin;
   // Faculty hasMany SalaryHike via facultyId
   salaryHikes!: SalaryHike[];
   getSalaryHikes!: Sequelize.HasManyGetAssociationsMixin<SalaryHike>;
@@ -209,6 +221,18 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   hasSalaryHike!: Sequelize.HasManyHasAssociationMixin<SalaryHike, SalaryHikeId>;
   hasSalaryHikes!: Sequelize.HasManyHasAssociationsMixin<SalaryHike, SalaryHikeId>;
   countSalaryHikes!: Sequelize.HasManyCountAssociationsMixin;
+  // Faculty hasMany SalaryHike via reviewerId
+  reviewerSalaryHikes!: SalaryHike[];
+  getReviewerSalaryHikes!: Sequelize.HasManyGetAssociationsMixin<SalaryHike>;
+  setReviewerSalaryHikes!: Sequelize.HasManySetAssociationsMixin<SalaryHike, SalaryHikeId>;
+  addReviewerSalaryHike!: Sequelize.HasManyAddAssociationMixin<SalaryHike, SalaryHikeId>;
+  addReviewerSalaryHikes!: Sequelize.HasManyAddAssociationsMixin<SalaryHike, SalaryHikeId>;
+  createReviewerSalaryHike!: Sequelize.HasManyCreateAssociationMixin<SalaryHike>;
+  removeReviewerSalaryHike!: Sequelize.HasManyRemoveAssociationMixin<SalaryHike, SalaryHikeId>;
+  removeReviewerSalaryHikes!: Sequelize.HasManyRemoveAssociationsMixin<SalaryHike, SalaryHikeId>;
+  hasReviewerSalaryHike!: Sequelize.HasManyHasAssociationMixin<SalaryHike, SalaryHikeId>;
+  hasReviewerSalaryHikes!: Sequelize.HasManyHasAssociationsMixin<SalaryHike, SalaryHikeId>;
+  countReviewerSalaryHikes!: Sequelize.HasManyCountAssociationsMixin;
   // Faculty hasMany Session via facultyId
   sessions!: Session[];
   getSessions!: Sequelize.HasManyGetAssociationsMixin<Session>;

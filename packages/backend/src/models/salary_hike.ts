@@ -8,6 +8,9 @@ export interface SalaryHikeAttributes {
   oldSalary: number;
   revisedSalary: number;
   effectiveFrom: Date;
+  reviewerId: number;
+  rating: number;
+  comment: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
@@ -24,6 +27,9 @@ export class SalaryHike extends Model<SalaryHikeAttributes, SalaryHikeCreationAt
   oldSalary!: number;
   revisedSalary!: number;
   effectiveFrom!: Date;
+  reviewerId!: number;
+  rating!: number;
+  comment!: string;
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
@@ -33,6 +39,11 @@ export class SalaryHike extends Model<SalaryHikeAttributes, SalaryHikeCreationAt
   getFaculty!: Sequelize.BelongsToGetAssociationMixin<Faculty>;
   setFaculty!: Sequelize.BelongsToSetAssociationMixin<Faculty, FacultyId>;
   createFaculty!: Sequelize.BelongsToCreateAssociationMixin<Faculty>;
+  // SalaryHike belongsTo Faculty via reviewerId
+  reviewer!: Faculty;
+  getReviewer!: Sequelize.BelongsToGetAssociationMixin<Faculty>;
+  setReviewer!: Sequelize.BelongsToSetAssociationMixin<Faculty, FacultyId>;
+  createReviewer!: Sequelize.BelongsToCreateAssociationMixin<Faculty>;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof SalaryHike {
     return sequelize.define('SalaryHike', {
@@ -65,6 +76,23 @@ export class SalaryHike extends Model<SalaryHikeAttributes, SalaryHikeCreationAt
       type: DataTypes.DATE,
       allowNull: false,
       field: 'effective_from'
+    },
+    reviewerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'faculty',
+        key: 'id'
+      },
+      field: 'reviewer_id'
+    },
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    comment: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     }
   }, {
     tableName: 'salary_hike',
@@ -84,6 +112,13 @@ export class SalaryHike extends Model<SalaryHikeAttributes, SalaryHikeCreationAt
         using: "BTREE",
         fields: [
           { name: "faculty_id" },
+        ]
+      },
+      {
+        name: "fk_salary_hike_reviewer_id",
+        using: "BTREE",
+        fields: [
+          { name: "reviewer_id" },
         ]
       },
     ]

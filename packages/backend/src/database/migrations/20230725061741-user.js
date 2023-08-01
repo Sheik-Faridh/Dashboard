@@ -41,6 +41,11 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
+      user_type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        values: ['Student', 'Faculty'],
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

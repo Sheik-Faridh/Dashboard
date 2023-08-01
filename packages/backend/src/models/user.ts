@@ -14,6 +14,7 @@ export interface UserAttributes {
   activationToken: string;
   tokenExpiresOn: Date;
   organizationId?: number;
+  userType: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
@@ -33,6 +34,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   activationToken!: string;
   tokenExpiresOn!: Date;
   organizationId?: number;
+  userType!: string;
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
@@ -123,6 +125,11 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
         key: 'id'
       },
       field: 'organization_id'
+    },
+    userType: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      field: 'user_type'
     }
   }, {
     tableName: 'user',

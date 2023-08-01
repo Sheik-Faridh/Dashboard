@@ -340,8 +340,12 @@ export function initModels(sequelize: Sequelize) {
   Faculty.hasMany(FacultyVacation, { as: "facultyVacations", foreignKey: "facultyId"});
   FacultyVacationRequest.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
   Faculty.hasMany(FacultyVacationRequest, { as: "facultyVacationRequests", foreignKey: "facultyId"});
+  FacultyVacationRequest.belongsTo(Faculty, { as: "approvedByFaculty", foreignKey: "approvedBy"});
+  Faculty.hasMany(FacultyVacationRequest, { as: "approvedByFacultyVacationRequests", foreignKey: "approvedBy"});
   SalaryHike.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
   Faculty.hasMany(SalaryHike, { as: "salaryHikes", foreignKey: "facultyId"});
+  SalaryHike.belongsTo(Faculty, { as: "reviewer", foreignKey: "reviewerId"});
+  Faculty.hasMany(SalaryHike, { as: "reviewerSalaryHikes", foreignKey: "reviewerId"});
   Session.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
   Faculty.hasMany(Session, { as: "sessions", foreignKey: "facultyId"});
   Student.belongsTo(Faculty, { as: "mentor", foreignKey: "mentorId"});

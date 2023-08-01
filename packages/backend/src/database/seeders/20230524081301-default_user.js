@@ -16,6 +16,7 @@ module.exports = {
         token_expires_on: new Date(Date.now() + COOKIE_MAX_AGE),
         created_at: new Date(),
         updated_at: new Date(),
+        user_type: 'Faculty',
       },
     ]
     await queryInterface.bulkInsert('user', defaultUsers, {})

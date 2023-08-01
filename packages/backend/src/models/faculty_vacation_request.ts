@@ -8,6 +8,10 @@ export interface FacultyVacationRequestAttributes {
   numberOfDay: number;
   startDate: Date;
   endDate: Date;
+  approvedBy: number;
+  remarks: string;
+  status: string;
+  leaveType: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
@@ -24,6 +28,10 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
   numberOfDay!: number;
   startDate!: Date;
   endDate!: Date;
+  approvedBy!: number;
+  remarks!: string;
+  status!: string;
+  leaveType!: string;
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
@@ -33,6 +41,11 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
   getFaculty!: Sequelize.BelongsToGetAssociationMixin<Faculty>;
   setFaculty!: Sequelize.BelongsToSetAssociationMixin<Faculty, FacultyId>;
   createFaculty!: Sequelize.BelongsToCreateAssociationMixin<Faculty>;
+  // FacultyVacationRequest belongsTo Faculty via approvedBy
+  approvedByFaculty!: Faculty;
+  getApprovedByFaculty!: Sequelize.BelongsToGetAssociationMixin<Faculty>;
+  setApprovedByFaculty!: Sequelize.BelongsToSetAssociationMixin<Faculty, FacultyId>;
+  createApprovedByFaculty!: Sequelize.BelongsToCreateAssociationMixin<Faculty>;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof FacultyVacationRequest {
     return sequelize.define('FacultyVacationRequest', {
@@ -65,6 +78,28 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
       type: DataTypes.DATE,
       allowNull: false,
       field: 'end_date'
+    },
+    approvedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'faculty',
+        key: 'id'
+      },
+      field: 'approved_by'
+    },
+    remarks: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    leaveType: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      field: 'leave_type'
     }
   }, {
     tableName: 'faculty_vacation_request',
@@ -84,6 +119,13 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
         using: "BTREE",
         fields: [
           { name: "faculty_id" },
+        ]
+      },
+      {
+        name: "fk_faculty_vacation_request_approved_by",
+        using: "BTREE",
+        fields: [
+          { name: "approved_by" },
         ]
       },
     ]

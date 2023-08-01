@@ -32,6 +32,30 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      approved_by: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'faculty', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      remarks: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        validate: {
+          len: [10, 300],
+        },
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        values: ['Pending', 'Approved', 'Rejected'],
+      },
+      leave_type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        values: ['Paid Leave', 'Loss Of Pay'],
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -57,6 +81,18 @@ module.exports = {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     })
+
+    await queryInterface.addConstraint('faculty_vacation_request', {
+      type: 'foreign key',
+      fields: ['approved_by'],
+      name: 'fk_faculty_vacation_request_approved_by',
+      references: {
+        table: 'faculty',
+        field: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    })
   },
 
   async down(queryInterface, Sequelize) {
@@ -64,6 +100,11 @@ module.exports = {
     await queryInterface.removeConstraint(
       'faculty_vacation_request',
       'fk_faculty_vacation_request_faculty_id',
+    )
+    // Remove the foreign key constraint first to avoid errors during rollback
+    await queryInterface.removeConstraint(
+      'faculty_vacation_request',
+      'fk_faculty_vacation_request_approved_by',
     )
 
     await queryInterface.dropTable('faculty_vacation_request')
