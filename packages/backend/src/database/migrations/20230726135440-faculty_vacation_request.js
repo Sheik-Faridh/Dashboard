@@ -46,6 +46,13 @@ module.exports = {
           len: [10, 300],
         },
       },
+      comment: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        validate: {
+          len: [10, 300],
+        },
+      },
       status: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -54,7 +61,13 @@ module.exports = {
       leave_type: {
         type: Sequelize.STRING,
         allowNull: false,
-        values: ['Paid Leave', 'Loss Of Pay'],
+        values: [
+          'Paid Leave',
+          'Loss Of Pay',
+          'Compensatory',
+          'Maternity',
+          'Paternity',
+        ],
       },
       created_at: {
         allowNull: false,

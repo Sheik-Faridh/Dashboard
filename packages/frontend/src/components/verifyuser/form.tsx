@@ -1,5 +1,5 @@
 import { AuthFormContainer } from '@/atoms/container'
-import Button from '@/atoms/form/button'
+import { Button } from '@/atoms/form'
 
 const VerifyUserForm = () => {
   return (

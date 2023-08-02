@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import { MailIcon, ChevronLeftIcon } from 'lucide-react'
 import { AuthFormContainer } from '@/atoms/container'
-import { TextField } from '@/atoms/form'
-import Button from '@/atoms/form/button'
+import { TextField, Button } from '@/atoms/form'
 
 const ForgotPasswordForm = () => {
   return (

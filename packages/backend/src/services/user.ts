@@ -9,9 +9,10 @@ export const createUser = async ({
   name,
   email,
   password,
+  userType,
 }: Pick<
   UserCreationAttributes,
-  'name' | 'email' | 'password'
+  'name' | 'email' | 'password' | 'userType'
 >): Promise<User> => {
   const activationToken = await getRandomBytes()
   const tokenExpiresOn = new Date(Date.now() + COOKIE_MAX_AGE * 1000)
@@ -21,6 +22,7 @@ export const createUser = async ({
     password,
     activationToken,
     tokenExpiresOn,
+    userType,
   })
 }
 

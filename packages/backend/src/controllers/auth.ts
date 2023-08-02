@@ -31,7 +31,12 @@ export const signupController = asyncHandler(
     const { name, email, password } = req.body
     const user = await findUserByEmail(email)
     if (user) next(new BadRequest(`Email ${email} already exist`))
-    const newUser = await createUser({ name, email, password })
+    const newUser = await createUser({
+      name,
+      email,
+      password,
+      userType: 'Student',
+    })
     await sendMail({
       templateName: 'verify_account',
       recipient: email,

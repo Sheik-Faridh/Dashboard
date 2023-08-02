@@ -10,6 +10,7 @@ export interface FacultyVacationRequestAttributes {
   endDate: Date;
   approvedBy: number;
   remarks: string;
+  comment: string;
   status: string;
   leaveType: string;
   createdAt: Date;
@@ -30,6 +31,7 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
   endDate!: Date;
   approvedBy!: number;
   remarks!: string;
+  comment!: string;
   status!: string;
   leaveType!: string;
   createdAt!: Date;
@@ -89,6 +91,10 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
       field: 'approved_by'
     },
     remarks: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    comment: {
       type: DataTypes.STRING(255),
       allowNull: false
     },

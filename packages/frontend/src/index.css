@@ -45,6 +45,8 @@ a.no-underline {
   text-decoration: none;
 }
 
-.pointer {
-  cursor: pointer;
+.required::after {
+  content: '*';
+  color: #f00;
+  padding: 0 2px;
 }

@@ -11,7 +11,7 @@ const TabsList = forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={classNames(
-      'inline-flex h-10 items-center justify-center rounded-md bg-smoke-100 p-1 text-elephant-900',
+      'inline-flex h-10 items-center justify-center rounded-md bg-smoke-50 p-1 text-elephant-900',
       className,
     )}
     {...props}
@@ -26,7 +26,7 @@ const TabsTrigger = forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={classNames(
-      'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm',
+      'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-smoke-50 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-azure-800 data-[state=active]:shadow-sm',
       className,
     )}
     {...props}
@@ -40,10 +40,7 @@ const TabsContent = forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    className={classNames(
-      'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-      className,
-    )}
+    className={classNames('mt-2 focus-visible:outline-none', className)}
     {...props}
   />
 ))

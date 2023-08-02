@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ChevronLeftIcon } from 'lucide-react'
 import { AuthFormContainer } from '@/atoms/container'
-import { PasswordInput } from '@/atoms/form'
-import Button from '@/atoms/form/button'
+import { PasswordInput, Button } from '@/atoms/form'
 import { useResetPasswordForm } from '@/hooks/resetpassword'
 import { getFormInputError } from '@/utils/form'
 

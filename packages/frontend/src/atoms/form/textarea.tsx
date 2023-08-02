@@ -1,17 +1,15 @@
-import { InputHTMLAttributes, ReactNode, forwardRef } from 'react'
+import { TextareaHTMLAttributes, forwardRef } from 'react'
 import { styled } from 'styled-components'
-import classNames from 'classnames'
 import HelpText, { HelptextProps } from '@/atoms/helptext'
+import classNames from 'classnames'
 
-export interface TextFieldProps
-  extends InputHTMLAttributes<HTMLInputElement>,
+export interface TextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement>,
     HelptextProps {
   label: string
-  startIcon: ReactNode
-  endIcon: ReactNode
 }
 
-const TextFieldControl = styled.div`
+const TextAreaControl = styled.div`
   & .container {
     background-color: rgb(255, 255, 255);
     transition: border 0.3s ease 0s;
@@ -27,39 +25,27 @@ const TextFieldControl = styled.div`
         box-shadow: rgb(44, 92, 197) 0px 0px 0px 2px;
       }
     }
-    & .input-prefix,
-    & .input-suffix {
-      height: 16px;
-      & svg {
-        color: #12344d;
-        width: 16px;
-        height: 16px;
-      }
-    }
-    & input {
+    & textarea {
       color: rgb(24, 50, 71);
       font-family: inherit;
     }
   }
 `
 
-const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
+const TextArea = forwardRef<HTMLTextAreaElement, Partial<TextAreaProps>>(
   (props, ref) => {
     const {
       label,
       error,
       warning,
-      className,
       hintText,
-      type = 'text',
-      startIcon = null,
-      endIcon = null,
+      className,
       required = false,
-      ...inputProps
+      ...textAreaProps
     } = props
     const isNormal = !!error || !!warning ? false : true
     return (
-      <TextFieldControl className={classNames('text-field-control', className)}>
+      <TextAreaControl className={classNames('text-area-control', className)}>
         {!!label && (
           <div className='text-left'>
             <label
@@ -86,29 +72,22 @@ const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
         >
           <div className='flex w-full items-center mx-[8px]'>
             <div className='flex grow items-center'>
-              {startIcon && (
-                <div className='flex items-center input-prefix px-[2px] bg-slate-100'>
-                  {startIcon}
-                </div>
-              )}
               <div className='flex items-center grow ms-2'>
-                <input
-                  className='w-full text-sm h-6 leading-5 shadow-none tracking-normal font-medium cursor-text outline-0 resize-none'
-                  type={type}
+                <textarea
+                  className='w-full text-sm min-h-[80px] leading-5 shadow-none tracking-normal font-medium cursor-text outline-0 resize-none'
                   ref={ref}
-                  {...inputProps}
+                  {...textAreaProps}
                 />
               </div>
             </div>
-            <div className='flex items-center ms-2 input-suffix'>{endIcon}</div>
           </div>
         </div>
         <HelpText error={error} warning={warning} hintText={hintText} />
-      </TextFieldControl>
+      </TextAreaControl>
     )
   },
 )
 
-TextField.displayName = 'TextField'
+TextArea.displayName = 'TextArea'
 
-export default TextField
+export default TextArea
