@@ -17,7 +17,7 @@ import HelpText from '@/atoms/helptext'
 
 const RequestForm = () => {
   return (
-    <form className='p-[20px] space-y-[10px] max-w-[700px]'>
+    <form className='p-[20px] space-y-[10px] w-full'>
       <div className='flex gap-[40px] w-full'>
         <div className='grow'>
           <DatePicker
@@ -139,7 +139,7 @@ const RequestForm = () => {
         />
       </div>
       <div className='flex items-center justify-center w-full relative top-[20px]'>
-        <Button color='primary' type='submit' className='w-[100px]'>
+        <Button color='primary' type='submit' className='!w-[100px]'>
           Submit
         </Button>
       </div>

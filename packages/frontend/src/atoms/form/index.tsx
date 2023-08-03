@@ -15,3 +15,4 @@ export {
   SelectItem,
   SelectSeparator,
 } from './select'
+export { default as Table } from './table'

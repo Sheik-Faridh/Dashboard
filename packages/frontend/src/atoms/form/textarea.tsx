@@ -17,6 +17,9 @@ const TextAreaControl = styled.div`
     border-style: solid;
     &.normal {
       border-color: rgb(207, 215, 223);
+      &:hover {
+        border-color: rgb(143, 147, 151);
+      }
       &:focus-within {
         outline: none;
         background: rgb(255, 255, 255);

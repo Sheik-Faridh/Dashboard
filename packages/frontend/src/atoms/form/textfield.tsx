@@ -19,6 +19,9 @@ const TextFieldControl = styled.div`
     border-style: solid;
     &.normal {
       border-color: rgb(207, 215, 223);
+      &:hover {
+        border-color: rgb(143, 147, 151);
+      }
       &:focus-within {
         outline: none;
         background: rgb(255, 255, 255);
@@ -76,7 +79,7 @@ const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
         )}
         <div
           className={classNames(
-            'container flex items-center w-full relative rounded',
+            'container flex items-center w-full relative rounded h-[29px]',
             {
               'border-casablanca-900': !!warning,
               'border-permission-800': !!error,

@@ -36,6 +36,9 @@ export default {
           800: '#005c3f',
         },
       },
+      boxShadow: {
+        inputShadow: 'rgb(44, 92, 197) 0px 0px 0px 2px',
+      },
     },
   },
   plugins: [],

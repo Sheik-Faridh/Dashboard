@@ -2976,6 +2976,18 @@ add-stream@^1.0.0:
   resolved "https://registry.yarnpkg.com/add-stream/-/add-stream-1.0.0.tgz#6a7990437ca736d5e1288db92bd3266d5f5cb2aa"
   integrity sha512-qQLMr+8o0WC4FZGQTcJiKBVC59JylcPSrTtk6usvmIDFUOCKegapy1VHQwRbFMOFyb/inzUVqHs+eMYKDM1YeQ==
 
+ag-grid-community@^30.0.6:
+  version "30.0.6"
+  resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-30.0.6.tgz#886996d9edcfea0eb80135adbb4aa8a79be93a8f"
+  integrity sha512-aMTJNXFDC00QxMaI0/V6M0GTzAtsXUvuxuld97S1Kqb4LvFNsycZlQ3/IcHW7JangRQZxAcwmSpBQBV/lcWoEg==
+
+ag-grid-react@^30.0.6:
+  version "30.0.6"
+  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-30.0.6.tgz#1767438a821ffe9408112b5379e24204dc7410ff"
+  integrity sha512-fWvf4DIyMihbuhvVlhO6pewXyOirEDgM73Pv6s9V1Ay4xp61Y/kdv2JFmkIwCV0NSpA5CKUeu1JFa5vmA/HVMw==
+  dependencies:
+    prop-types "^15.8.1"
+
 agent-base@6, agent-base@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-6.0.2.tgz#49fff58577cfee3f37176feab4c22e00f86d7f77"
@@ -6257,7 +6269,7 @@ long@^5.2.1:
   resolved "https://registry.yarnpkg.com/long/-/long-5.2.3.tgz#a3ba97f3877cf1d778eccbcb048525ebb77499e1"
   integrity sha512-lcHwpNoggQTObv5apGNCTdJrO69eHOZMi4BNC+rTLER8iHAqGrUVeLh/irVIM7zTw2bOXA8T6uNPeujwOLg/2Q==
 
-loose-envify@^1.0.0, loose-envify@^1.1.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -7713,6 +7725,15 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
+prop-types@^15.8.1:
+  version "15.8.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
+  integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.13.1"
+
 property-expr@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-2.0.5.tgz#278bdb15308ae16af3e3b9640024524f4dc02cb4"
@@ -7823,7 +7844,7 @@ react-hot-toast@^2.4.1:
   dependencies:
     goober "^2.1.10"
 
-react-is@^16.7.0:
+react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==

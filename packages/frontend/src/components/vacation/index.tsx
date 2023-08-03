@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/atoms/tabs'
 import RequestForm from './requestform'
+import TrackVacation from './trackvacation'
 
 const VacationDetails = () => {
   return (
@@ -14,19 +15,21 @@ const VacationDetails = () => {
           <span className='text-sm'>No of Loss of Pay Token</span>
         </div>
       </div>
-      <div className='flex justify-center p-[15px]'>
+      <div className='flex justify-center w-full p-[15px]'>
         <Tabs
           defaultValue='request'
-          className='px-[10px] py-[40px] rounded shadow-2xl'
+          className='w-full max-w-[800px] px-[10px] py-[40px] rounded shadow-2xl'
         >
           <TabsList className='grid w-full grid-cols-2'>
             <TabsTrigger value='request'>Request</TabsTrigger>
             <TabsTrigger value='track'>Track</TabsTrigger>
           </TabsList>
-          <TabsContent value='request'>
+          <TabsContent className='w-full' value='request'>
             <RequestForm />
           </TabsContent>
-          <TabsContent value='track'></TabsContent>
+          <TabsContent className='w-full' value='track'>
+            <TrackVacation />
+          </TabsContent>
         </Tabs>
       </div>
     </div>
