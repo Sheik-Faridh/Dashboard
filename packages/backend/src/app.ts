@@ -11,6 +11,8 @@ import { requestLogger } from '@/middleware/logger'
 import { errorHandler, notFoundHandler } from '@/middleware/error'
 import passport from '@/config/passport'
 import redisClient from '@/helpers/redis'
+import { isAuthenticated } from '@/middleware/auth'
+import { setUserSession } from '@/middleware/session'
 
 const { SESSION_SECRET, COOKIE_MAX_AGE, NODE_ENV } = config
 
@@ -47,7 +49,7 @@ app.use(passport.session())
 
 app.use(requestLogger)
 
-app.use('/api/v1', apiRouter)
+app.use('/api/v1', isAuthenticated, setUserSession, apiRouter)
 
 app.use(notFoundHandler)
 
