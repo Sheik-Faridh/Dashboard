@@ -67,7 +67,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     // Remove the foreign key constraint first to avoid errors during rollback
     await queryInterface.removeConstraint(
-      'user',
+      'user_social_media',
       'fk_user_social_media_platform_id',
     )
 
