@@ -53,21 +53,19 @@ module.exports = {
           len: [10, 300],
         },
       },
-      status: {
-        type: Sequelize.STRING,
+      status_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        values: ['Pending', 'Approved', 'Rejected'],
+        references: { model: 'vacation_status', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
-      leave_type: {
-        type: Sequelize.STRING,
+      leave_type_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        values: [
-          'Paid Leave',
-          'Loss Of Pay',
-          'Compensatory',
-          'Maternity',
-          'Paternity',
-        ],
+        references: { model: 'leave_type', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       created_at: {
         allowNull: false,
@@ -118,6 +116,30 @@ module.exports = {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     })
+
+    await queryInterface.addConstraint('faculty_vacation_request', {
+      type: 'foreign key',
+      fields: ['status_id'],
+      name: 'fk_faculty_vacation_request_status_id',
+      references: {
+        table: 'vacation_status',
+        field: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    })
+
+    await queryInterface.addConstraint('faculty_vacation_request', {
+      type: 'foreign key',
+      fields: ['leave_type_id'],
+      name: 'fk_faculty_vacation_request_leave_type_id',
+      references: {
+        table: 'leave_type',
+        field: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    })
   },
 
   async down(queryInterface, Sequelize) {
@@ -130,6 +152,16 @@ module.exports = {
     await queryInterface.removeConstraint(
       'faculty_vacation_request',
       'fk_faculty_vacation_request_approved_by',
+    )
+    // Remove the foreign key constraint first to avoid errors during rollback
+    await queryInterface.removeConstraint(
+      'faculty_vacation_request',
+      'fk_faculty_vacation_request_status_id',
+    )
+    // Remove the foreign key constraint first to avoid errors during rollback
+    await queryInterface.removeConstraint(
+      'faculty_vacation_request',
+      'fk_faculty_vacation_request_leave_type_id',
     )
 
     await queryInterface.dropTable('faculty_vacation_request')

@@ -29,10 +29,12 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      student_type: {
-        type: Sequelize.STRING,
+      student_type_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        values: ['Regular', 'Lateral Entry'],
+        references: { model: 'student_type', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       join_date: {
         type: Sequelize.DATEONLY,
@@ -153,6 +155,18 @@ module.exports = {
 
     await queryInterface.addConstraint('student', {
       type: 'foreign key',
+      fields: ['student_type_id'],
+      name: 'fk_student_student_type_id',
+      references: {
+        table: 'student_type',
+        field: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    })
+
+    await queryInterface.addConstraint('student', {
+      type: 'foreign key',
       fields: ['contact_id'],
       name: 'fk_student_contact_id',
       references: {
@@ -253,6 +267,11 @@ module.exports = {
     await queryInterface.removeConstraint('student', 'fk_student_user_id')
     // Remove the foreign key constraint first to avoid errors during rollback
     await queryInterface.removeConstraint('student', 'fk_student_department_id')
+    // Remove the foreign key constraint first to avoid errors during rollback
+    await queryInterface.removeConstraint(
+      'student',
+      'fk_student_student_type_id',
+    )
     // Remove the foreign key constraint first to avoid errors during rollback
     await queryInterface.removeConstraint('student', 'fk_student_contact_id')
     // Remove the foreign key constraint first to avoid errors during rollback

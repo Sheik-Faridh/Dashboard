@@ -36,10 +36,12 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      employment_type: {
-        type: Sequelize.STRING,
+      employment_type_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        values: ['Permanent', 'Temporary'],
+        references: { model: 'employment_type', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       hire_date: {
         type: Sequelize.DATEONLY,
@@ -185,6 +187,18 @@ module.exports = {
 
     await queryInterface.addConstraint('faculty', {
       type: 'foreign key',
+      fields: ['employment_type_id'],
+      name: 'fk_faculty_employment_type_id',
+      references: {
+        table: 'employment_type',
+        field: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    })
+
+    await queryInterface.addConstraint('faculty', {
+      type: 'foreign key',
       fields: ['contact_id'],
       name: 'fk_faculty_contact_id',
       references: {
@@ -313,6 +327,11 @@ module.exports = {
     await queryInterface.removeConstraint(
       'faculty',
       'fk_faculty_designation_id',
+    )
+    // Remove the foreign key constraint first to avoid errors during rollback
+    await queryInterface.removeConstraint(
+      'faculty',
+      'fk_faculty_employment_type_id',
     )
     // Remove the foreign key constraint first to avoid errors during rollback
     await queryInterface.removeConstraint('faculty', 'fk_faculty_contact_id')

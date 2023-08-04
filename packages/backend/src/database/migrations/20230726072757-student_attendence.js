@@ -24,10 +24,12 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      status: {
-        type: Sequelize.STRING,
+      status_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        values: ['Present', 'Absent'],
+        references: { model: 'attendence_status', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       created_at: {
         allowNull: false,
@@ -69,6 +71,18 @@ module.exports = {
 
     await queryInterface.addConstraint('student_attendence', {
       type: 'foreign key',
+      fields: ['status_id'],
+      name: 'fk_student_attendence_status_id',
+      references: {
+        table: 'attendence_status',
+        field: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    })
+
+    await queryInterface.addConstraint('student_attendence', {
+      type: 'foreign key',
       fields: ['session_id'],
       name: 'fk_student_attendence_session_id',
       references: {
@@ -85,6 +99,11 @@ module.exports = {
     await queryInterface.removeConstraint(
       'student_attendence',
       'fk_student_attendence_student_id',
+    )
+    // Remove the foreign key constraint first to avoid errors during rollback
+    await queryInterface.removeConstraint(
+      'student_attendence',
+      'fk_student_attendence_status_id',
     )
     // Remove the foreign key constraint first to avoid errors during rollback
     await queryInterface.removeConstraint(
