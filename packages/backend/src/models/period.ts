@@ -11,11 +11,14 @@ export interface PeriodAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type PeriodPk = "id";
 export type PeriodId = Period[PeriodPk];
-export type PeriodOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type PeriodOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type PeriodCreationAttributes = Optional<PeriodAttributes, PeriodOptionalAttributes>;
 
 export class Period extends Model<PeriodAttributes, PeriodCreationAttributes> implements PeriodAttributes {
@@ -26,6 +29,9 @@ export class Period extends Model<PeriodAttributes, PeriodCreationAttributes> im
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // Period hasMany Session via periodId
   sessions!: Session[];
@@ -73,6 +79,21 @@ export class Period extends Model<PeriodAttributes, PeriodCreationAttributes> im
       type: DataTypes.STRING(255),
       allowNull: false,
       field: 'end_time'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'period',

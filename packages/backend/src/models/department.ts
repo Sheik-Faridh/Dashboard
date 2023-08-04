@@ -10,11 +10,14 @@ export interface DepartmentAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type DepartmentPk = "id";
 export type DepartmentId = Department[DepartmentPk];
-export type DepartmentOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type DepartmentOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type DepartmentCreationAttributes = Optional<DepartmentAttributes, DepartmentOptionalAttributes>;
 
 export class Department extends Model<DepartmentAttributes, DepartmentCreationAttributes> implements DepartmentAttributes {
@@ -23,6 +26,9 @@ export class Department extends Model<DepartmentAttributes, DepartmentCreationAt
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // Department hasMany Course via departmentId
   courses!: Course[];
@@ -73,6 +79,21 @@ export class Department extends Model<DepartmentAttributes, DepartmentCreationAt
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: "name"
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'department',

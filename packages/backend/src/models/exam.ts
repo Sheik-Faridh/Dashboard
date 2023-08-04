@@ -13,11 +13,14 @@ export interface ExamAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type ExamPk = "id";
 export type ExamId = Exam[ExamPk];
-export type ExamOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type ExamOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type ExamCreationAttributes = Optional<ExamAttributes, ExamOptionalAttributes>;
 
 export class Exam extends Model<ExamAttributes, ExamCreationAttributes> implements ExamAttributes {
@@ -29,6 +32,9 @@ export class Exam extends Model<ExamAttributes, ExamCreationAttributes> implemen
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // Exam belongsTo Class via classId
   class!: Class;
@@ -88,6 +94,21 @@ export class Exam extends Model<ExamAttributes, ExamCreationAttributes> implemen
       type: DataTypes.DATE,
       allowNull: false,
       field: 'end_date'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'exam',

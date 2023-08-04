@@ -11,11 +11,14 @@ export interface FacultyAttendenceAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type FacultyAttendencePk = "id";
 export type FacultyAttendenceId = FacultyAttendence[FacultyAttendencePk];
-export type FacultyAttendenceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type FacultyAttendenceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type FacultyAttendenceCreationAttributes = Optional<FacultyAttendenceAttributes, FacultyAttendenceOptionalAttributes>;
 
 export class FacultyAttendence extends Model<FacultyAttendenceAttributes, FacultyAttendenceCreationAttributes> implements FacultyAttendenceAttributes {
@@ -27,6 +30,9 @@ export class FacultyAttendence extends Model<FacultyAttendenceAttributes, Facult
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // FacultyAttendence belongsTo Faculty via facultyId
   faculty!: Faculty;
@@ -64,6 +70,21 @@ export class FacultyAttendence extends Model<FacultyAttendenceAttributes, Facult
       type: DataTypes.STRING(255),
       allowNull: false,
       field: 'out_time'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'faculty_attendence',

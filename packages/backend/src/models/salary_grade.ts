@@ -10,11 +10,14 @@ export interface SalaryGradeAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type SalaryGradePk = "id";
 export type SalaryGradeId = SalaryGrade[SalaryGradePk];
-export type SalaryGradeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type SalaryGradeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type SalaryGradeCreationAttributes = Optional<SalaryGradeAttributes, SalaryGradeOptionalAttributes>;
 
 export class SalaryGrade extends Model<SalaryGradeAttributes, SalaryGradeCreationAttributes> implements SalaryGradeAttributes {
@@ -25,6 +28,9 @@ export class SalaryGrade extends Model<SalaryGradeAttributes, SalaryGradeCreatio
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // SalaryGrade hasMany FacultySalary via gradeLevelId
   facultySalaries!: FacultySalary[];
@@ -61,6 +67,21 @@ export class SalaryGrade extends Model<SalaryGradeAttributes, SalaryGradeCreatio
       type: DataTypes.INTEGER,
       allowNull: false,
       field: 'end_range'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'salary_grade',

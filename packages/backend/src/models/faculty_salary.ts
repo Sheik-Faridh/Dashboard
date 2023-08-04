@@ -11,11 +11,14 @@ export interface FacultySalaryAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type FacultySalaryPk = "id";
 export type FacultySalaryId = FacultySalary[FacultySalaryPk];
-export type FacultySalaryOptionalAttributes = "id" | "gradeLevelId" | "facultyId" | "createdAt" | "updatedAt" | "deletedAt";
+export type FacultySalaryOptionalAttributes = "id" | "gradeLevelId" | "facultyId" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type FacultySalaryCreationAttributes = Optional<FacultySalaryAttributes, FacultySalaryOptionalAttributes>;
 
 export class FacultySalary extends Model<FacultySalaryAttributes, FacultySalaryCreationAttributes> implements FacultySalaryAttributes {
@@ -26,6 +29,9 @@ export class FacultySalary extends Model<FacultySalaryAttributes, FacultySalaryC
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // FacultySalary belongsTo Faculty via facultyId
   faculty!: Faculty;
@@ -67,6 +73,21 @@ export class FacultySalary extends Model<FacultySalaryAttributes, FacultySalaryC
     salary: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'faculty_salary',

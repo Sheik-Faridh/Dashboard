@@ -11,11 +11,14 @@ export interface UserSocialMediumAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type UserSocialMediumPk = "id";
 export type UserSocialMediumId = UserSocialMedium[UserSocialMediumPk];
-export type UserSocialMediumOptionalAttributes = "id" | "socialMediaPlatformId" | "createdAt" | "updatedAt" | "deletedAt";
+export type UserSocialMediumOptionalAttributes = "id" | "socialMediaPlatformId" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type UserSocialMediumCreationAttributes = Optional<UserSocialMediumAttributes, UserSocialMediumOptionalAttributes>;
 
 export class UserSocialMedium extends Model<UserSocialMediumAttributes, UserSocialMediumCreationAttributes> implements UserSocialMediumAttributes {
@@ -25,6 +28,9 @@ export class UserSocialMedium extends Model<UserSocialMediumAttributes, UserSoci
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // UserSocialMedium belongsTo SocialMediaPlatform via socialMediaPlatformId
   socialMediaPlatform!: SocialMediaPlatform;
@@ -77,6 +83,21 @@ export class UserSocialMedium extends Model<UserSocialMediumAttributes, UserSoci
         key: 'id'
       },
       field: 'social_media_platform_id'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'user_social_media',

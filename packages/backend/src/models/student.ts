@@ -13,6 +13,7 @@ import type { Section, SectionId } from './section';
 import type { StudentAttendence, StudentAttendenceId } from './student_attendence';
 import type { StudentFee, StudentFeeId } from './student_fee';
 import type { StudentPromotion, StudentPromotionId } from './student_promotion';
+import type { StudentType, StudentTypeId } from './student_type';
 import type { User, UserId } from './user';
 import type { UserSocialMedium, UserSocialMediumId } from './user_social_medium';
 import type { WorkPublish, WorkPublishId } from './work_publish';
@@ -22,7 +23,7 @@ export interface StudentAttributes {
   rollNumber: string;
   userId: number;
   departmentId: number;
-  studentType: string;
+  studentTypeId: number;
   joinDate: string;
   relieveDate?: string;
   contactId?: number;
@@ -37,11 +38,14 @@ export interface StudentAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type StudentPk = "id";
 export type StudentId = Student[StudentPk];
-export type StudentOptionalAttributes = "id" | "relieveDate" | "contactId" | "workPublish" | "certification" | "achievement" | "bankDetail" | "socialMediaPlatform" | "createdAt" | "updatedAt" | "deletedAt";
+export type StudentOptionalAttributes = "id" | "relieveDate" | "contactId" | "workPublish" | "certification" | "achievement" | "bankDetail" | "socialMediaPlatform" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type StudentCreationAttributes = Optional<StudentAttributes, StudentOptionalAttributes>;
 
 export class Student extends Model<StudentAttributes, StudentCreationAttributes> implements StudentAttributes {
@@ -49,7 +53,7 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
   rollNumber!: string;
   userId!: number;
   departmentId!: number;
-  studentType!: string;
+  studentTypeId!: number;
   joinDate!: string;
   relieveDate?: string;
   contactId?: number;
@@ -64,6 +68,9 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // Student belongsTo Achievement via achievement
   achievementAchievement!: Achievement;
@@ -165,6 +172,11 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
   hasStudentPromotion!: Sequelize.HasManyHasAssociationMixin<StudentPromotion, StudentPromotionId>;
   hasStudentPromotions!: Sequelize.HasManyHasAssociationsMixin<StudentPromotion, StudentPromotionId>;
   countStudentPromotions!: Sequelize.HasManyCountAssociationsMixin;
+  // Student belongsTo StudentType via studentTypeId
+  studentType!: StudentType;
+  getStudentType!: Sequelize.BelongsToGetAssociationMixin<StudentType>;
+  setStudentType!: Sequelize.BelongsToSetAssociationMixin<StudentType, StudentTypeId>;
+  createStudentType!: Sequelize.BelongsToCreateAssociationMixin<StudentType>;
   // Student belongsTo User via userId
   user!: User;
   getUser!: Sequelize.BelongsToGetAssociationMixin<User>;
@@ -213,10 +225,14 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
       },
       field: 'department_id'
     },
-    studentType: {
-      type: DataTypes.STRING(255),
+    studentTypeId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'student_type'
+      references: {
+        model: 'student_type',
+        key: 'id'
+      },
+      field: 'student_type_id'
     },
     joinDate: {
       type: DataTypes.DATEONLY,
@@ -306,6 +322,21 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
         key: 'id'
       },
       field: 'social_media_platform'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'student',
@@ -347,6 +378,13 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
         using: "BTREE",
         fields: [
           { name: "department_id" },
+        ]
+      },
+      {
+        name: "fk_student_student_type_id",
+        using: "BTREE",
+        fields: [
+          { name: "student_type_id" },
         ]
       },
       {

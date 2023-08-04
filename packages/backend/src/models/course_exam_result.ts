@@ -13,11 +13,14 @@ export interface CourseExamResultAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type CourseExamResultPk = "id";
 export type CourseExamResultId = CourseExamResult[CourseExamResultPk];
-export type CourseExamResultOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type CourseExamResultOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type CourseExamResultCreationAttributes = Optional<CourseExamResultAttributes, CourseExamResultOptionalAttributes>;
 
 export class CourseExamResult extends Model<CourseExamResultAttributes, CourseExamResultCreationAttributes> implements CourseExamResultAttributes {
@@ -29,6 +32,9 @@ export class CourseExamResult extends Model<CourseExamResultAttributes, CourseEx
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // CourseExamResult belongsTo CourseExam via courseExamId
   courseExam!: CourseExam;
@@ -85,6 +91,21 @@ export class CourseExamResult extends Model<CourseExamResultAttributes, CourseEx
       type: DataTypes.INTEGER,
       allowNull: false,
       field: 'mark_scored'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'course_exam_result',

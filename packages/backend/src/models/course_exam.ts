@@ -17,11 +17,14 @@ export interface CourseExamAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type CourseExamPk = "id";
 export type CourseExamId = CourseExam[CourseExamPk];
-export type CourseExamOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type CourseExamOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type CourseExamCreationAttributes = Optional<CourseExamAttributes, CourseExamOptionalAttributes>;
 
 export class CourseExam extends Model<CourseExamAttributes, CourseExamCreationAttributes> implements CourseExamAttributes {
@@ -37,6 +40,9 @@ export class CourseExam extends Model<CourseExamAttributes, CourseExamCreationAt
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // CourseExam belongsTo Course via courseId
   course!: Course;
@@ -115,6 +121,21 @@ export class CourseExam extends Model<CourseExamAttributes, CourseExamCreationAt
       type: DataTypes.INTEGER,
       allowNull: false,
       field: 'minimum_mark'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'course_exam',

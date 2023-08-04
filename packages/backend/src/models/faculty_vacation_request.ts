@@ -1,6 +1,8 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { Faculty, FacultyId } from './faculty';
+import type { LeaveType, LeaveTypeId } from './leave_type';
+import type { VacationStatus, VacationStatusId } from './vacation_status';
 
 export interface FacultyVacationRequestAttributes {
   id: number;
@@ -11,16 +13,19 @@ export interface FacultyVacationRequestAttributes {
   approvedBy: number;
   remarks: string;
   comment: string;
-  status: string;
-  leaveType: string;
+  statusId: number;
+  leaveTypeId: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type FacultyVacationRequestPk = "id";
 export type FacultyVacationRequestId = FacultyVacationRequest[FacultyVacationRequestPk];
-export type FacultyVacationRequestOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type FacultyVacationRequestOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type FacultyVacationRequestCreationAttributes = Optional<FacultyVacationRequestAttributes, FacultyVacationRequestOptionalAttributes>;
 
 export class FacultyVacationRequest extends Model<FacultyVacationRequestAttributes, FacultyVacationRequestCreationAttributes> implements FacultyVacationRequestAttributes {
@@ -32,11 +37,14 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
   approvedBy!: number;
   remarks!: string;
   comment!: string;
-  status!: string;
-  leaveType!: string;
+  statusId!: number;
+  leaveTypeId!: number;
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // FacultyVacationRequest belongsTo Faculty via facultyId
   faculty!: Faculty;
@@ -48,6 +56,16 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
   getApprovedByFaculty!: Sequelize.BelongsToGetAssociationMixin<Faculty>;
   setApprovedByFaculty!: Sequelize.BelongsToSetAssociationMixin<Faculty, FacultyId>;
   createApprovedByFaculty!: Sequelize.BelongsToCreateAssociationMixin<Faculty>;
+  // FacultyVacationRequest belongsTo LeaveType via leaveTypeId
+  leaveType!: LeaveType;
+  getLeaveType!: Sequelize.BelongsToGetAssociationMixin<LeaveType>;
+  setLeaveType!: Sequelize.BelongsToSetAssociationMixin<LeaveType, LeaveTypeId>;
+  createLeaveType!: Sequelize.BelongsToCreateAssociationMixin<LeaveType>;
+  // FacultyVacationRequest belongsTo VacationStatus via statusId
+  status!: VacationStatus;
+  getStatus!: Sequelize.BelongsToGetAssociationMixin<VacationStatus>;
+  setStatus!: Sequelize.BelongsToSetAssociationMixin<VacationStatus, VacationStatusId>;
+  createStatus!: Sequelize.BelongsToCreateAssociationMixin<VacationStatus>;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof FacultyVacationRequest {
     return sequelize.define('FacultyVacationRequest', {
@@ -98,14 +116,38 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    status: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    leaveType: {
-      type: DataTypes.STRING(255),
+    statusId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'leave_type'
+      references: {
+        model: 'vacation_status',
+        key: 'id'
+      },
+      field: 'status_id'
+    },
+    leaveTypeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'leave_type',
+        key: 'id'
+      },
+      field: 'leave_type_id'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'faculty_vacation_request',
@@ -132,6 +174,20 @@ export class FacultyVacationRequest extends Model<FacultyVacationRequestAttribut
         using: "BTREE",
         fields: [
           { name: "approved_by" },
+        ]
+      },
+      {
+        name: "fk_faculty_vacation_request_status_id",
+        using: "BTREE",
+        fields: [
+          { name: "status_id" },
+        ]
+      },
+      {
+        name: "fk_faculty_vacation_request_leave_type_id",
+        using: "BTREE",
+        fields: [
+          { name: "leave_type_id" },
         ]
       },
     ]

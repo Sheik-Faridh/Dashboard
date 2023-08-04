@@ -3,6 +3,8 @@ import { Achievement as _Achievement } from "./achievement";
 import type { AchievementAttributes, AchievementCreationAttributes } from "./achievement";
 import { Attachment as _Attachment } from "./attachment";
 import type { AttachmentAttributes, AttachmentCreationAttributes } from "./attachment";
+import { AttendenceStatus as _AttendenceStatus } from "./attendence_status";
+import type { AttendenceStatusAttributes, AttendenceStatusCreationAttributes } from "./attendence_status";
 import { BankDetail as _BankDetail } from "./bank_detail";
 import type { BankDetailAttributes, BankDetailCreationAttributes } from "./bank_detail";
 import { Certification as _Certification } from "./certification";
@@ -25,6 +27,8 @@ import { Designation as _Designation } from "./designation";
 import type { DesignationAttributes, DesignationCreationAttributes } from "./designation";
 import { EducationQualification as _EducationQualification } from "./education_qualification";
 import type { EducationQualificationAttributes, EducationQualificationCreationAttributes } from "./education_qualification";
+import { EmploymentType as _EmploymentType } from "./employment_type";
+import type { EmploymentTypeAttributes, EmploymentTypeCreationAttributes } from "./employment_type";
 import { Exam as _Exam } from "./exam";
 import type { ExamAttributes, ExamCreationAttributes } from "./exam";
 import { ExamName as _ExamName } from "./exam_name";
@@ -41,6 +45,8 @@ import { FacultyVacation as _FacultyVacation } from "./faculty_vacation";
 import type { FacultyVacationAttributes, FacultyVacationCreationAttributes } from "./faculty_vacation";
 import { FacultyVacationRequest as _FacultyVacationRequest } from "./faculty_vacation_request";
 import type { FacultyVacationRequestAttributes, FacultyVacationRequestCreationAttributes } from "./faculty_vacation_request";
+import { LeaveType as _LeaveType } from "./leave_type";
+import type { LeaveTypeAttributes, LeaveTypeCreationAttributes } from "./leave_type";
 import { Organization as _Organization } from "./organization";
 import type { OrganizationAttributes, OrganizationCreationAttributes } from "./organization";
 import { ParentContact as _ParentContact } from "./parent_contact";
@@ -71,6 +77,8 @@ import { StudentFee as _StudentFee } from "./student_fee";
 import type { StudentFeeAttributes, StudentFeeCreationAttributes } from "./student_fee";
 import { StudentPromotion as _StudentPromotion } from "./student_promotion";
 import type { StudentPromotionAttributes, StudentPromotionCreationAttributes } from "./student_promotion";
+import { StudentType as _StudentType } from "./student_type";
+import type { StudentTypeAttributes, StudentTypeCreationAttributes } from "./student_type";
 import { Timetable as _Timetable } from "./timetable";
 import type { TimetableAttributes, TimetableCreationAttributes } from "./timetable";
 import { User as _User } from "./user";
@@ -79,6 +87,8 @@ import { UserRole as _UserRole } from "./user_role";
 import type { UserRoleAttributes, UserRoleCreationAttributes } from "./user_role";
 import { UserSocialMedium as _UserSocialMedium } from "./user_social_medium";
 import type { UserSocialMediumAttributes, UserSocialMediumCreationAttributes } from "./user_social_medium";
+import { VacationStatus as _VacationStatus } from "./vacation_status";
+import type { VacationStatusAttributes, VacationStatusCreationAttributes } from "./vacation_status";
 import { WorkExperience as _WorkExperience } from "./work_experience";
 import type { WorkExperienceAttributes, WorkExperienceCreationAttributes } from "./work_experience";
 import { WorkPublish as _WorkPublish } from "./work_publish";
@@ -87,6 +97,7 @@ import type { WorkPublishAttributes, WorkPublishCreationAttributes } from "./wor
 export {
   _Achievement as Achievement,
   _Attachment as Attachment,
+  _AttendenceStatus as AttendenceStatus,
   _BankDetail as BankDetail,
   _Certification as Certification,
   _Class as Class,
@@ -98,6 +109,7 @@ export {
   _Department as Department,
   _Designation as Designation,
   _EducationQualification as EducationQualification,
+  _EmploymentType as EmploymentType,
   _Exam as Exam,
   _ExamName as ExamName,
   _Faculty as Faculty,
@@ -106,6 +118,7 @@ export {
   _FacultySalary as FacultySalary,
   _FacultyVacation as FacultyVacation,
   _FacultyVacationRequest as FacultyVacationRequest,
+  _LeaveType as LeaveType,
   _Organization as Organization,
   _ParentContact as ParentContact,
   _Period as Period,
@@ -121,10 +134,12 @@ export {
   _StudentAttendence as StudentAttendence,
   _StudentFee as StudentFee,
   _StudentPromotion as StudentPromotion,
+  _StudentType as StudentType,
   _Timetable as Timetable,
   _User as User,
   _UserRole as UserRole,
   _UserSocialMedium as UserSocialMedium,
+  _VacationStatus as VacationStatus,
   _WorkExperience as WorkExperience,
   _WorkPublish as WorkPublish,
 };
@@ -134,6 +149,8 @@ export type {
   AchievementCreationAttributes,
   AttachmentAttributes,
   AttachmentCreationAttributes,
+  AttendenceStatusAttributes,
+  AttendenceStatusCreationAttributes,
   BankDetailAttributes,
   BankDetailCreationAttributes,
   CertificationAttributes,
@@ -156,6 +173,8 @@ export type {
   DesignationCreationAttributes,
   EducationQualificationAttributes,
   EducationQualificationCreationAttributes,
+  EmploymentTypeAttributes,
+  EmploymentTypeCreationAttributes,
   ExamAttributes,
   ExamCreationAttributes,
   ExamNameAttributes,
@@ -172,6 +191,8 @@ export type {
   FacultyVacationCreationAttributes,
   FacultyVacationRequestAttributes,
   FacultyVacationRequestCreationAttributes,
+  LeaveTypeAttributes,
+  LeaveTypeCreationAttributes,
   OrganizationAttributes,
   OrganizationCreationAttributes,
   ParentContactAttributes,
@@ -202,6 +223,8 @@ export type {
   StudentFeeCreationAttributes,
   StudentPromotionAttributes,
   StudentPromotionCreationAttributes,
+  StudentTypeAttributes,
+  StudentTypeCreationAttributes,
   TimetableAttributes,
   TimetableCreationAttributes,
   UserAttributes,
@@ -210,6 +233,8 @@ export type {
   UserRoleCreationAttributes,
   UserSocialMediumAttributes,
   UserSocialMediumCreationAttributes,
+  VacationStatusAttributes,
+  VacationStatusCreationAttributes,
   WorkExperienceAttributes,
   WorkExperienceCreationAttributes,
   WorkPublishAttributes,
@@ -219,6 +244,7 @@ export type {
 export function initModels(sequelize: Sequelize) {
   const Achievement = _Achievement.initModel(sequelize);
   const Attachment = _Attachment.initModel(sequelize);
+  const AttendenceStatus = _AttendenceStatus.initModel(sequelize);
   const BankDetail = _BankDetail.initModel(sequelize);
   const Certification = _Certification.initModel(sequelize);
   const Class = _Class.initModel(sequelize);
@@ -230,6 +256,7 @@ export function initModels(sequelize: Sequelize) {
   const Department = _Department.initModel(sequelize);
   const Designation = _Designation.initModel(sequelize);
   const EducationQualification = _EducationQualification.initModel(sequelize);
+  const EmploymentType = _EmploymentType.initModel(sequelize);
   const Exam = _Exam.initModel(sequelize);
   const ExamName = _ExamName.initModel(sequelize);
   const Faculty = _Faculty.initModel(sequelize);
@@ -238,6 +265,7 @@ export function initModels(sequelize: Sequelize) {
   const FacultySalary = _FacultySalary.initModel(sequelize);
   const FacultyVacation = _FacultyVacation.initModel(sequelize);
   const FacultyVacationRequest = _FacultyVacationRequest.initModel(sequelize);
+  const LeaveType = _LeaveType.initModel(sequelize);
   const Organization = _Organization.initModel(sequelize);
   const ParentContact = _ParentContact.initModel(sequelize);
   const Period = _Period.initModel(sequelize);
@@ -253,10 +281,12 @@ export function initModels(sequelize: Sequelize) {
   const StudentAttendence = _StudentAttendence.initModel(sequelize);
   const StudentFee = _StudentFee.initModel(sequelize);
   const StudentPromotion = _StudentPromotion.initModel(sequelize);
+  const StudentType = _StudentType.initModel(sequelize);
   const Timetable = _Timetable.initModel(sequelize);
   const User = _User.initModel(sequelize);
   const UserRole = _UserRole.initModel(sequelize);
   const UserSocialMedium = _UserSocialMedium.initModel(sequelize);
+  const VacationStatus = _VacationStatus.initModel(sequelize);
   const WorkExperience = _WorkExperience.initModel(sequelize);
   const WorkPublish = _WorkPublish.initModel(sequelize);
 
@@ -270,6 +300,8 @@ export function initModels(sequelize: Sequelize) {
   Attachment.hasMany(Certification, { as: "certifications", foreignKey: "attachmentId"});
   WorkPublish.belongsTo(Attachment, { as: "attachment", foreignKey: "attachmentId"});
   Attachment.hasMany(WorkPublish, { as: "workPublishes", foreignKey: "attachmentId"});
+  StudentAttendence.belongsTo(AttendenceStatus, { as: "status", foreignKey: "statusId"});
+  AttendenceStatus.hasMany(StudentAttendence, { as: "studentAttendences", foreignKey: "statusId"});
   Faculty.belongsTo(BankDetail, { as: "bankDetailBankDetail", foreignKey: "bankDetail"});
   BankDetail.hasMany(Faculty, { as: "faculties", foreignKey: "bankDetail"});
   Student.belongsTo(BankDetail, { as: "bankDetailBankDetail", foreignKey: "bankDetail"});
@@ -322,6 +354,8 @@ export function initModels(sequelize: Sequelize) {
   Designation.hasMany(FacultyPromotion, { as: "facultyPromotions", foreignKey: "oldDesignationId"});
   FacultyPromotion.belongsTo(Designation, { as: "newDesignation", foreignKey: "newDesignationId"});
   Designation.hasMany(FacultyPromotion, { as: "newDesignationFacultyPromotions", foreignKey: "newDesignationId"});
+  Faculty.belongsTo(EmploymentType, { as: "employmentType", foreignKey: "employmentTypeId"});
+  EmploymentType.hasMany(Faculty, { as: "faculties", foreignKey: "employmentTypeId"});
   CourseExam.belongsTo(Exam, { as: "exam", foreignKey: "examId"});
   Exam.hasMany(CourseExam, { as: "courseExams", foreignKey: "examId"});
   Exam.belongsTo(ExamName, { as: "examName", foreignKey: "examNameId"});
@@ -352,6 +386,8 @@ export function initModels(sequelize: Sequelize) {
   Faculty.hasMany(Student, { as: "students", foreignKey: "mentorId"});
   Timetable.belongsTo(Faculty, { as: "faculty", foreignKey: "facultyId"});
   Faculty.hasMany(Timetable, { as: "timetables", foreignKey: "facultyId"});
+  FacultyVacationRequest.belongsTo(LeaveType, { as: "leaveType", foreignKey: "leaveTypeId"});
+  LeaveType.hasMany(FacultyVacationRequest, { as: "facultyVacationRequests", foreignKey: "leaveTypeId"});
   User.belongsTo(Organization, { as: "organization", foreignKey: "organizationId"});
   Organization.hasMany(User, { as: "users", foreignKey: "organizationId"});
   Session.belongsTo(Period, { as: "period", foreignKey: "periodId"});
@@ -382,6 +418,8 @@ export function initModels(sequelize: Sequelize) {
   Student.hasMany(StudentFee, { as: "studentFees", foreignKey: "studentId"});
   StudentPromotion.belongsTo(Student, { as: "student", foreignKey: "studentId"});
   Student.hasMany(StudentPromotion, { as: "studentPromotions", foreignKey: "studentId"});
+  Student.belongsTo(StudentType, { as: "studentType", foreignKey: "studentTypeId"});
+  StudentType.hasMany(Student, { as: "students", foreignKey: "studentTypeId"});
   Faculty.belongsTo(User, { as: "user", foreignKey: "userId"});
   User.hasMany(Faculty, { as: "faculties", foreignKey: "userId"});
   Student.belongsTo(User, { as: "user", foreignKey: "userId"});
@@ -392,6 +430,8 @@ export function initModels(sequelize: Sequelize) {
   UserSocialMedium.hasMany(Faculty, { as: "faculties", foreignKey: "socialMediaPlatform"});
   Student.belongsTo(UserSocialMedium, { as: "socialMediaPlatformUserSocialMedium", foreignKey: "socialMediaPlatform"});
   UserSocialMedium.hasMany(Student, { as: "students", foreignKey: "socialMediaPlatform"});
+  FacultyVacationRequest.belongsTo(VacationStatus, { as: "status", foreignKey: "statusId"});
+  VacationStatus.hasMany(FacultyVacationRequest, { as: "facultyVacationRequests", foreignKey: "statusId"});
   Faculty.belongsTo(WorkExperience, { as: "workExperienceWorkExperience", foreignKey: "workExperience"});
   WorkExperience.hasMany(Faculty, { as: "faculties", foreignKey: "workExperience"});
   Faculty.belongsTo(WorkPublish, { as: "workPublishWorkPublish", foreignKey: "workPublish"});
@@ -402,6 +442,7 @@ export function initModels(sequelize: Sequelize) {
   return {
     Achievement: Achievement,
     Attachment: Attachment,
+    AttendenceStatus: AttendenceStatus,
     BankDetail: BankDetail,
     Certification: Certification,
     Class: Class,
@@ -413,6 +454,7 @@ export function initModels(sequelize: Sequelize) {
     Department: Department,
     Designation: Designation,
     EducationQualification: EducationQualification,
+    EmploymentType: EmploymentType,
     Exam: Exam,
     ExamName: ExamName,
     Faculty: Faculty,
@@ -421,6 +463,7 @@ export function initModels(sequelize: Sequelize) {
     FacultySalary: FacultySalary,
     FacultyVacation: FacultyVacation,
     FacultyVacationRequest: FacultyVacationRequest,
+    LeaveType: LeaveType,
     Organization: Organization,
     ParentContact: ParentContact,
     Period: Period,
@@ -436,10 +479,12 @@ export function initModels(sequelize: Sequelize) {
     StudentAttendence: StudentAttendence,
     StudentFee: StudentFee,
     StudentPromotion: StudentPromotion,
+    StudentType: StudentType,
     Timetable: Timetable,
     User: User,
     UserRole: UserRole,
     UserSocialMedium: UserSocialMedium,
+    VacationStatus: VacationStatus,
     WorkExperience: WorkExperience,
     WorkPublish: WorkPublish,
   };

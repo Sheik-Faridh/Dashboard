@@ -2,12 +2,9 @@ import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { Faculty, FacultyId } from './faculty';
 
-export interface WorkExperienceAttributes {
+export interface EmploymentTypeAttributes {
   id: number;
-  companyName: string;
-  designation: string;
-  startDate: string;
-  endDate: string;
+  name: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
@@ -16,17 +13,14 @@ export interface WorkExperienceAttributes {
   deletedBy?: number;
 }
 
-export type WorkExperiencePk = "id";
-export type WorkExperienceId = WorkExperience[WorkExperiencePk];
-export type WorkExperienceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
-export type WorkExperienceCreationAttributes = Optional<WorkExperienceAttributes, WorkExperienceOptionalAttributes>;
+export type EmploymentTypePk = "id";
+export type EmploymentTypeId = EmploymentType[EmploymentTypePk];
+export type EmploymentTypeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type EmploymentTypeCreationAttributes = Optional<EmploymentTypeAttributes, EmploymentTypeOptionalAttributes>;
 
-export class WorkExperience extends Model<WorkExperienceAttributes, WorkExperienceCreationAttributes> implements WorkExperienceAttributes {
+export class EmploymentType extends Model<EmploymentTypeAttributes, EmploymentTypeCreationAttributes> implements EmploymentTypeAttributes {
   id!: number;
-  companyName!: string;
-  designation!: string;
-  startDate!: string;
-  endDate!: string;
+  name!: string;
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
@@ -34,7 +28,7 @@ export class WorkExperience extends Model<WorkExperienceAttributes, WorkExperien
   updatedBy!: number;
   deletedBy?: number;
 
-  // WorkExperience hasMany Faculty via workExperience
+  // EmploymentType hasMany Faculty via employmentTypeId
   faculties!: Faculty[];
   getFaculties!: Sequelize.HasManyGetAssociationsMixin<Faculty>;
   setFaculties!: Sequelize.HasManySetAssociationsMixin<Faculty, FacultyId>;
@@ -47,32 +41,18 @@ export class WorkExperience extends Model<WorkExperienceAttributes, WorkExperien
   hasFaculties!: Sequelize.HasManyHasAssociationsMixin<Faculty, FacultyId>;
   countFaculties!: Sequelize.HasManyCountAssociationsMixin;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof WorkExperience {
-    return sequelize.define('WorkExperience', {
+  static initModel(sequelize: Sequelize.Sequelize): typeof EmploymentType {
+    return sequelize.define('EmploymentType', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    companyName: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      field: 'company_name'
-    },
-    designation: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    startDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-      field: 'start_date'
-    },
-    endDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-      field: 'end_date'
+      unique: "name"
     },
     createdBy: {
       type: DataTypes.INTEGER,
@@ -90,7 +70,7 @@ export class WorkExperience extends Model<WorkExperienceAttributes, WorkExperien
       field: 'deleted_by'
     }
   }, {
-    tableName: 'work_experience',
+    tableName: 'employment_type',
     timestamps: true,
     paranoid: true,
     indexes: [
@@ -102,7 +82,15 @@ export class WorkExperience extends Model<WorkExperienceAttributes, WorkExperien
           { name: "id" },
         ]
       },
+      {
+        name: "name",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "name" },
+        ]
+      },
     ]
-  }) as typeof WorkExperience;
+  }) as typeof EmploymentType;
   }
 }

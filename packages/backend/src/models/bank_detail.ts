@@ -12,11 +12,14 @@ export interface BankDetailAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type BankDetailPk = "id";
 export type BankDetailId = BankDetail[BankDetailPk];
-export type BankDetailOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type BankDetailOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type BankDetailCreationAttributes = Optional<BankDetailAttributes, BankDetailOptionalAttributes>;
 
 export class BankDetail extends Model<BankDetailAttributes, BankDetailCreationAttributes> implements BankDetailAttributes {
@@ -28,6 +31,9 @@ export class BankDetail extends Model<BankDetailAttributes, BankDetailCreationAt
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // BankDetail hasMany Faculty via bankDetail
   faculties!: Faculty[];
@@ -81,6 +87,21 @@ export class BankDetail extends Model<BankDetailAttributes, BankDetailCreationAt
     ifsc: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'bank_detail',

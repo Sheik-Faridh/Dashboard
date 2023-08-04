@@ -9,6 +9,7 @@ import type { Course, CourseId } from './course';
 import type { CourseExamResult, CourseExamResultId } from './course_exam_result';
 import type { Department, DepartmentId } from './department';
 import type { Designation, DesignationId } from './designation';
+import type { EmploymentType, EmploymentTypeId } from './employment_type';
 import type { FacultyAttendence, FacultyAttendenceId } from './faculty_attendence';
 import type { FacultyPromotion, FacultyPromotionId } from './faculty_promotion';
 import type { FacultySalary, FacultySalaryId } from './faculty_salary';
@@ -30,7 +31,7 @@ export interface FacultyAttributes {
   userId: number;
   departmentId: number;
   designationId: number;
-  employmentType: string;
+  employmentTypeId: number;
   hireDate: string;
   relieveDate?: string;
   yearsOfExperience: number;
@@ -48,11 +49,14 @@ export interface FacultyAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type FacultyPk = "id";
 export type FacultyId = Faculty[FacultyPk];
-export type FacultyOptionalAttributes = "id" | "relieveDate" | "contactId" | "reportingTo" | "courseId" | "workExperience" | "inchargeOfClass" | "inchargeOfClassSection" | "workPublish" | "certification" | "achievement" | "bankDetail" | "socialMediaPlatform" | "createdAt" | "updatedAt" | "deletedAt";
+export type FacultyOptionalAttributes = "id" | "relieveDate" | "contactId" | "reportingTo" | "courseId" | "workExperience" | "inchargeOfClass" | "inchargeOfClassSection" | "workPublish" | "certification" | "achievement" | "bankDetail" | "socialMediaPlatform" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type FacultyCreationAttributes = Optional<FacultyAttributes, FacultyOptionalAttributes>;
 
 export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes> implements FacultyAttributes {
@@ -61,7 +65,7 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   userId!: number;
   departmentId!: number;
   designationId!: number;
-  employmentType!: string;
+  employmentTypeId!: number;
   hireDate!: string;
   relieveDate?: string;
   yearsOfExperience!: number;
@@ -79,6 +83,9 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // Faculty belongsTo Achievement via achievement
   achievementAchievement!: Achievement;
@@ -120,6 +127,11 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   getDesignation!: Sequelize.BelongsToGetAssociationMixin<Designation>;
   setDesignation!: Sequelize.BelongsToSetAssociationMixin<Designation, DesignationId>;
   createDesignation!: Sequelize.BelongsToCreateAssociationMixin<Designation>;
+  // Faculty belongsTo EmploymentType via employmentTypeId
+  employmentType!: EmploymentType;
+  getEmploymentType!: Sequelize.BelongsToGetAssociationMixin<EmploymentType>;
+  setEmploymentType!: Sequelize.BelongsToSetAssociationMixin<EmploymentType, EmploymentTypeId>;
+  createEmploymentType!: Sequelize.BelongsToCreateAssociationMixin<EmploymentType>;
   // Faculty hasMany CourseExamResult via evaluatedBy
   courseExamResults!: CourseExamResult[];
   getCourseExamResults!: Sequelize.HasManyGetAssociationsMixin<CourseExamResult>;
@@ -336,10 +348,14 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
       },
       field: 'designation_id'
     },
-    employmentType: {
-      type: DataTypes.STRING(255),
+    employmentTypeId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'employment_type'
+      references: {
+        model: 'employment_type',
+        key: 'id'
+      },
+      field: 'employment_type_id'
     },
     hireDate: {
       type: DataTypes.DATEONLY,
@@ -452,6 +468,21 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
         key: 'id'
       },
       field: 'social_media_platform'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'faculty',
@@ -500,6 +531,13 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
         using: "BTREE",
         fields: [
           { name: "designation_id" },
+        ]
+      },
+      {
+        name: "fk_faculty_employment_type_id",
+        using: "BTREE",
+        fields: [
+          { name: "employment_type_id" },
         ]
       },
       {

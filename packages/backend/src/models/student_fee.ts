@@ -13,11 +13,14 @@ export interface StudentFeeAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type StudentFeePk = "id";
 export type StudentFeeId = StudentFee[StudentFeePk];
-export type StudentFeeOptionalAttributes = "id" | "receiptNumber" | "createdAt" | "updatedAt" | "deletedAt";
+export type StudentFeeOptionalAttributes = "id" | "receiptNumber" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type StudentFeeCreationAttributes = Optional<StudentFeeAttributes, StudentFeeOptionalAttributes>;
 
 export class StudentFee extends Model<StudentFeeAttributes, StudentFeeCreationAttributes> implements StudentFeeAttributes {
@@ -31,6 +34,9 @@ export class StudentFee extends Model<StudentFeeAttributes, StudentFeeCreationAt
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // StudentFee belongsTo Student via studentId
   student!: Student;
@@ -77,6 +83,21 @@ export class StudentFee extends Model<StudentFeeAttributes, StudentFeeCreationAt
       type: DataTypes.STRING(255),
       allowNull: true,
       field: 'receipt_number'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'student_fee',

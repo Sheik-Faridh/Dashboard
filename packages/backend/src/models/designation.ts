@@ -9,11 +9,14 @@ export interface DesignationAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type DesignationPk = "id";
 export type DesignationId = Designation[DesignationPk];
-export type DesignationOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type DesignationOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type DesignationCreationAttributes = Optional<DesignationAttributes, DesignationOptionalAttributes>;
 
 export class Designation extends Model<DesignationAttributes, DesignationCreationAttributes> implements DesignationAttributes {
@@ -22,6 +25,9 @@ export class Designation extends Model<DesignationAttributes, DesignationCreatio
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // Designation hasMany Faculty via designationId
   faculties!: Faculty[];
@@ -72,6 +78,21 @@ export class Designation extends Model<DesignationAttributes, DesignationCreatio
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: "name"
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'designation',

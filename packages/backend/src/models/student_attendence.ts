@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
+import type { AttendenceStatus, AttendenceStatusId } from './attendence_status';
 import type { Session, SessionId } from './session';
 import type { Student, StudentId } from './student';
 
@@ -7,26 +8,37 @@ export interface StudentAttendenceAttributes {
   id: number;
   sessionId: number;
   studentId: number;
-  status: string;
+  statusId: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type StudentAttendencePk = "id";
 export type StudentAttendenceId = StudentAttendence[StudentAttendencePk];
-export type StudentAttendenceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type StudentAttendenceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type StudentAttendenceCreationAttributes = Optional<StudentAttendenceAttributes, StudentAttendenceOptionalAttributes>;
 
 export class StudentAttendence extends Model<StudentAttendenceAttributes, StudentAttendenceCreationAttributes> implements StudentAttendenceAttributes {
   id!: number;
   sessionId!: number;
   studentId!: number;
-  status!: string;
+  statusId!: number;
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
+  // StudentAttendence belongsTo AttendenceStatus via statusId
+  status!: AttendenceStatus;
+  getStatus!: Sequelize.BelongsToGetAssociationMixin<AttendenceStatus>;
+  setStatus!: Sequelize.BelongsToSetAssociationMixin<AttendenceStatus, AttendenceStatusId>;
+  createStatus!: Sequelize.BelongsToCreateAssociationMixin<AttendenceStatus>;
   // StudentAttendence belongsTo Session via sessionId
   session!: Session;
   getSession!: Sequelize.BelongsToGetAssociationMixin<Session>;
@@ -64,9 +76,29 @@ export class StudentAttendence extends Model<StudentAttendenceAttributes, Studen
       },
       field: 'student_id'
     },
-    status: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+    statusId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'attendence_status',
+        key: 'id'
+      },
+      field: 'status_id'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'student_attendence',
@@ -86,6 +118,13 @@ export class StudentAttendence extends Model<StudentAttendenceAttributes, Studen
         using: "BTREE",
         fields: [
           { name: "student_id" },
+        ]
+      },
+      {
+        name: "fk_student_attendence_status_id",
+        using: "BTREE",
+        fields: [
+          { name: "status_id" },
         ]
       },
       {

@@ -9,11 +9,14 @@ export interface FacultyVacationAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type FacultyVacationPk = "id";
 export type FacultyVacationId = FacultyVacation[FacultyVacationPk];
-export type FacultyVacationOptionalAttributes = "id" | "numberOfPaidLeave" | "createdAt" | "updatedAt" | "deletedAt";
+export type FacultyVacationOptionalAttributes = "id" | "numberOfPaidLeave" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type FacultyVacationCreationAttributes = Optional<FacultyVacationAttributes, FacultyVacationOptionalAttributes>;
 
 export class FacultyVacation extends Model<FacultyVacationAttributes, FacultyVacationCreationAttributes> implements FacultyVacationAttributes {
@@ -23,6 +26,9 @@ export class FacultyVacation extends Model<FacultyVacationAttributes, FacultyVac
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // FacultyVacation belongsTo Faculty via facultyId
   faculty!: Faculty;
@@ -52,6 +58,21 @@ export class FacultyVacation extends Model<FacultyVacationAttributes, FacultyVac
       allowNull: false,
       defaultValue: 0,
       field: 'number_of_paid_leave'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'faculty_vacation',

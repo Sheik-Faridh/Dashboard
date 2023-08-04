@@ -8,11 +8,14 @@ export interface ExamNameAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type ExamNamePk = "id";
 export type ExamNameId = ExamName[ExamNamePk];
-export type ExamNameOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type ExamNameOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type ExamNameCreationAttributes = Optional<ExamNameAttributes, ExamNameOptionalAttributes>;
 
 export class ExamName extends Model<ExamNameAttributes, ExamNameCreationAttributes> implements ExamNameAttributes {
@@ -21,6 +24,9 @@ export class ExamName extends Model<ExamNameAttributes, ExamNameCreationAttribut
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // ExamName hasMany Exam via examNameId
   exams!: Exam[];
@@ -47,6 +53,21 @@ export class ExamName extends Model<ExamNameAttributes, ExamNameCreationAttribut
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: "name"
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'exam_name',

@@ -10,11 +10,14 @@ export interface RoleCommandAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type RoleCommandPk = "id";
 export type RoleCommandId = RoleCommand[RoleCommandPk];
-export type RoleCommandOptionalAttributes = "id" | "roleId" | "commandId" | "createdAt" | "updatedAt" | "deletedAt";
+export type RoleCommandOptionalAttributes = "id" | "roleId" | "commandId" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type RoleCommandCreationAttributes = Optional<RoleCommandAttributes, RoleCommandOptionalAttributes>;
 
 export class RoleCommand extends Model<RoleCommandAttributes, RoleCommandCreationAttributes> implements RoleCommandAttributes {
@@ -24,6 +27,9 @@ export class RoleCommand extends Model<RoleCommandAttributes, RoleCommandCreatio
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // RoleCommand belongsTo Command via commandId
   command!: Command;
@@ -61,6 +67,21 @@ export class RoleCommand extends Model<RoleCommandAttributes, RoleCommandCreatio
         key: 'id'
       },
       field: 'command_id'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'role_command',

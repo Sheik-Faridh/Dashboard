@@ -14,11 +14,14 @@ export interface ParentContactAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type ParentContactPk = "id";
 export type ParentContactId = ParentContact[ParentContactPk];
-export type ParentContactOptionalAttributes = "id" | "fatherName" | "fatherContactNumber" | "motherName" | "motherContactNumber" | "guardianName" | "guardianContactNumber" | "createdAt" | "updatedAt" | "deletedAt";
+export type ParentContactOptionalAttributes = "id" | "fatherName" | "fatherContactNumber" | "motherName" | "motherContactNumber" | "guardianName" | "guardianContactNumber" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type ParentContactCreationAttributes = Optional<ParentContactAttributes, ParentContactOptionalAttributes>;
 
 export class ParentContact extends Model<ParentContactAttributes, ParentContactCreationAttributes> implements ParentContactAttributes {
@@ -33,6 +36,9 @@ export class ParentContact extends Model<ParentContactAttributes, ParentContactC
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // ParentContact belongsTo Student via studentId
   student!: Student;
@@ -86,6 +92,21 @@ export class ParentContact extends Model<ParentContactAttributes, ParentContactC
       type: DataTypes.STRING(255),
       allowNull: true,
       field: 'guardian_contact_number'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'parent_contact',

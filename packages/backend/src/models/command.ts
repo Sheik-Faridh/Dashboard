@@ -8,11 +8,14 @@ export interface CommandAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type CommandPk = "id";
 export type CommandId = Command[CommandPk];
-export type CommandOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type CommandOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type CommandCreationAttributes = Optional<CommandAttributes, CommandOptionalAttributes>;
 
 export class Command extends Model<CommandAttributes, CommandCreationAttributes> implements CommandAttributes {
@@ -21,6 +24,9 @@ export class Command extends Model<CommandAttributes, CommandCreationAttributes>
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // Command hasMany RoleCommand via commandId
   roleCommands!: RoleCommand[];
@@ -47,6 +53,21 @@ export class Command extends Model<CommandAttributes, CommandCreationAttributes>
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: "name"
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'command',

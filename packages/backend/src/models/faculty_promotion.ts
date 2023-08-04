@@ -11,11 +11,14 @@ export interface FacultyPromotionAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type FacultyPromotionPk = "id";
 export type FacultyPromotionId = FacultyPromotion[FacultyPromotionPk];
-export type FacultyPromotionOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type FacultyPromotionOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type FacultyPromotionCreationAttributes = Optional<FacultyPromotionAttributes, FacultyPromotionOptionalAttributes>;
 
 export class FacultyPromotion extends Model<FacultyPromotionAttributes, FacultyPromotionCreationAttributes> implements FacultyPromotionAttributes {
@@ -26,6 +29,9 @@ export class FacultyPromotion extends Model<FacultyPromotionAttributes, FacultyP
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
   // FacultyPromotion belongsTo Designation via oldDesignationId
   oldDesignation!: Designation;
@@ -77,6 +83,21 @@ export class FacultyPromotion extends Model<FacultyPromotionAttributes, FacultyP
         key: 'id'
       },
       field: 'faculty_id'
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'faculty_promotion',

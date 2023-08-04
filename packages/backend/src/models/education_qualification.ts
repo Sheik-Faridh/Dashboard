@@ -11,11 +11,14 @@ export interface EducationQualificationAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy?: number;
 }
 
 export type EducationQualificationPk = "id";
 export type EducationQualificationId = EducationQualification[EducationQualificationPk];
-export type EducationQualificationOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt";
+export type EducationQualificationOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
 export type EducationQualificationCreationAttributes = Optional<EducationQualificationAttributes, EducationQualificationOptionalAttributes>;
 
 export class EducationQualification extends Model<EducationQualificationAttributes, EducationQualificationCreationAttributes> implements EducationQualificationAttributes {
@@ -28,6 +31,9 @@ export class EducationQualification extends Model<EducationQualificationAttribut
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
+  createdBy!: number;
+  updatedBy!: number;
+  deletedBy?: number;
 
 
   static initModel(sequelize: Sequelize.Sequelize): typeof EducationQualification {
@@ -59,6 +65,21 @@ export class EducationQualification extends Model<EducationQualificationAttribut
     marks: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'created_by'
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'updated_by'
+    },
+    deletedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'deleted_by'
     }
   }, {
     tableName: 'education_qualification',
