@@ -11,14 +11,14 @@ export interface AttachmentAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type AttachmentPk = "id";
 export type AttachmentId = Attachment[AttachmentPk];
-export type AttachmentOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type AttachmentOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type AttachmentCreationAttributes = Optional<AttachmentAttributes, AttachmentOptionalAttributes>;
 
 export class Attachment extends Model<AttachmentAttributes, AttachmentCreationAttributes> implements AttachmentAttributes {
@@ -28,8 +28,8 @@ export class Attachment extends Model<AttachmentAttributes, AttachmentCreationAt
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Attachment hasMany Achievement via attachmentId
@@ -87,12 +87,12 @@ export class Attachment extends Model<AttachmentAttributes, AttachmentCreationAt
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

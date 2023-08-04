@@ -16,14 +16,14 @@ export interface SessionAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type SessionPk = "id";
 export type SessionId = Session[SessionPk];
-export type SessionOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type SessionOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type SessionCreationAttributes = Optional<SessionAttributes, SessionOptionalAttributes>;
 
 export class Session extends Model<SessionAttributes, SessionCreationAttributes> implements SessionAttributes {
@@ -36,8 +36,8 @@ export class Session extends Model<SessionAttributes, SessionCreationAttributes>
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Session belongsTo Class via classId
@@ -123,12 +123,12 @@ export class Session extends Model<SessionAttributes, SessionCreationAttributes>
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

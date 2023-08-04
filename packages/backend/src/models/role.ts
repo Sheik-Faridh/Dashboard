@@ -9,14 +9,14 @@ export interface RoleAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type RolePk = "id";
 export type RoleId = Role[RolePk];
-export type RoleOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type RoleOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type RoleCreationAttributes = Optional<RoleAttributes, RoleOptionalAttributes>;
 
 export class Role extends Model<RoleAttributes, RoleCreationAttributes> implements RoleAttributes {
@@ -25,8 +25,8 @@ export class Role extends Model<RoleAttributes, RoleCreationAttributes> implemen
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Role hasMany RoleCommand via roleId
@@ -69,12 +69,12 @@ export class Role extends Model<RoleAttributes, RoleCreationAttributes> implemen
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

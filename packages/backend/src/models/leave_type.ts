@@ -8,14 +8,14 @@ export interface LeaveTypeAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type LeaveTypePk = "id";
 export type LeaveTypeId = LeaveType[LeaveTypePk];
-export type LeaveTypeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type LeaveTypeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type LeaveTypeCreationAttributes = Optional<LeaveTypeAttributes, LeaveTypeOptionalAttributes>;
 
 export class LeaveType extends Model<LeaveTypeAttributes, LeaveTypeCreationAttributes> implements LeaveTypeAttributes {
@@ -24,8 +24,8 @@ export class LeaveType extends Model<LeaveTypeAttributes, LeaveTypeCreationAttri
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // LeaveType hasMany FacultyVacationRequest via leaveTypeId
@@ -56,12 +56,12 @@ export class LeaveType extends Model<LeaveTypeAttributes, LeaveTypeCreationAttri
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

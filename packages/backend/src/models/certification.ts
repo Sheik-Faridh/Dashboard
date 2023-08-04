@@ -11,14 +11,14 @@ export interface CertificationAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type CertificationPk = "id";
 export type CertificationId = Certification[CertificationPk];
-export type CertificationOptionalAttributes = "id" | "attachmentId" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type CertificationOptionalAttributes = "id" | "attachmentId" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type CertificationCreationAttributes = Optional<CertificationAttributes, CertificationOptionalAttributes>;
 
 export class Certification extends Model<CertificationAttributes, CertificationCreationAttributes> implements CertificationAttributes {
@@ -28,8 +28,8 @@ export class Certification extends Model<CertificationAttributes, CertificationC
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Certification belongsTo Attachment via attachmentId
@@ -85,12 +85,12 @@ export class Certification extends Model<CertificationAttributes, CertificationC
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

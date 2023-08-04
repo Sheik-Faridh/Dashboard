@@ -15,14 +15,14 @@ export interface ClassAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type ClassPk = "id";
 export type ClassId = Class[ClassPk];
-export type ClassOptionalAttributes = "id" | "room" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type ClassOptionalAttributes = "id" | "room" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type ClassCreationAttributes = Optional<ClassAttributes, ClassOptionalAttributes>;
 
 export class Class extends Model<ClassAttributes, ClassCreationAttributes> implements ClassAttributes {
@@ -32,8 +32,8 @@ export class Class extends Model<ClassAttributes, ClassCreationAttributes> imple
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Class hasMany Exam via classId
@@ -152,12 +152,12 @@ export class Class extends Model<ClassAttributes, ClassCreationAttributes> imple
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

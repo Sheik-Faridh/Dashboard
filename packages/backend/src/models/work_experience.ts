@@ -11,14 +11,14 @@ export interface WorkExperienceAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type WorkExperiencePk = "id";
 export type WorkExperienceId = WorkExperience[WorkExperiencePk];
-export type WorkExperienceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type WorkExperienceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type WorkExperienceCreationAttributes = Optional<WorkExperienceAttributes, WorkExperienceOptionalAttributes>;
 
 export class WorkExperience extends Model<WorkExperienceAttributes, WorkExperienceCreationAttributes> implements WorkExperienceAttributes {
@@ -30,8 +30,8 @@ export class WorkExperience extends Model<WorkExperienceAttributes, WorkExperien
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // WorkExperience hasMany Faculty via workExperience
@@ -76,12 +76,12 @@ export class WorkExperience extends Model<WorkExperienceAttributes, WorkExperien
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

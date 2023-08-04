@@ -12,14 +12,14 @@ export interface StudentAttendenceAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type StudentAttendencePk = "id";
 export type StudentAttendenceId = StudentAttendence[StudentAttendencePk];
-export type StudentAttendenceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type StudentAttendenceOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type StudentAttendenceCreationAttributes = Optional<StudentAttendenceAttributes, StudentAttendenceOptionalAttributes>;
 
 export class StudentAttendence extends Model<StudentAttendenceAttributes, StudentAttendenceCreationAttributes> implements StudentAttendenceAttributes {
@@ -30,8 +30,8 @@ export class StudentAttendence extends Model<StudentAttendenceAttributes, Studen
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // StudentAttendence belongsTo AttendenceStatus via statusId
@@ -87,12 +87,12 @@ export class StudentAttendence extends Model<StudentAttendenceAttributes, Studen
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

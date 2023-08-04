@@ -12,14 +12,14 @@ export interface SectionAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type SectionPk = "id";
 export type SectionId = Section[SectionPk];
-export type SectionOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type SectionOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type SectionCreationAttributes = Optional<SectionAttributes, SectionOptionalAttributes>;
 
 export class Section extends Model<SectionAttributes, SectionCreationAttributes> implements SectionAttributes {
@@ -30,8 +30,8 @@ export class Section extends Model<SectionAttributes, SectionCreationAttributes>
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Section belongsTo Class via classId
@@ -92,12 +92,12 @@ export class Section extends Model<SectionAttributes, SectionCreationAttributes>
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

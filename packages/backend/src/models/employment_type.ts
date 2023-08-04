@@ -8,14 +8,14 @@ export interface EmploymentTypeAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type EmploymentTypePk = "id";
 export type EmploymentTypeId = EmploymentType[EmploymentTypePk];
-export type EmploymentTypeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type EmploymentTypeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type EmploymentTypeCreationAttributes = Optional<EmploymentTypeAttributes, EmploymentTypeOptionalAttributes>;
 
 export class EmploymentType extends Model<EmploymentTypeAttributes, EmploymentTypeCreationAttributes> implements EmploymentTypeAttributes {
@@ -24,8 +24,8 @@ export class EmploymentType extends Model<EmploymentTypeAttributes, EmploymentTy
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // EmploymentType hasMany Faculty via employmentTypeId
@@ -56,12 +56,12 @@ export class EmploymentType extends Model<EmploymentTypeAttributes, EmploymentTy
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

@@ -10,14 +10,14 @@ export interface UserRoleAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type UserRolePk = "id";
 export type UserRoleId = UserRole[UserRolePk];
-export type UserRoleOptionalAttributes = "id" | "roleId" | "userId" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type UserRoleOptionalAttributes = "id" | "roleId" | "userId" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type UserRoleCreationAttributes = Optional<UserRoleAttributes, UserRoleOptionalAttributes>;
 
 export class UserRole extends Model<UserRoleAttributes, UserRoleCreationAttributes> implements UserRoleAttributes {
@@ -27,8 +27,8 @@ export class UserRole extends Model<UserRoleAttributes, UserRoleCreationAttribut
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // UserRole belongsTo Role via roleId
@@ -70,12 +70,12 @@ export class UserRole extends Model<UserRoleAttributes, UserRoleCreationAttribut
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

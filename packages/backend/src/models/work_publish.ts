@@ -13,14 +13,14 @@ export interface WorkPublishAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type WorkPublishPk = "id";
 export type WorkPublishId = WorkPublish[WorkPublishPk];
-export type WorkPublishOptionalAttributes = "id" | "link" | "attachmentId" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type WorkPublishOptionalAttributes = "id" | "link" | "attachmentId" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type WorkPublishCreationAttributes = Optional<WorkPublishAttributes, WorkPublishOptionalAttributes>;
 
 export class WorkPublish extends Model<WorkPublishAttributes, WorkPublishCreationAttributes> implements WorkPublishAttributes {
@@ -32,8 +32,8 @@ export class WorkPublish extends Model<WorkPublishAttributes, WorkPublishCreatio
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // WorkPublish belongsTo Attachment via attachmentId
@@ -97,12 +97,12 @@ export class WorkPublish extends Model<WorkPublishAttributes, WorkPublishCreatio
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

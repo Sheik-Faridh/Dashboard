@@ -18,14 +18,14 @@ export interface ContactAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type ContactPk = "id";
 export type ContactId = Contact[ContactPk];
-export type ContactOptionalAttributes = "id" | "telephone" | "address2" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type ContactOptionalAttributes = "id" | "telephone" | "address2" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type ContactCreationAttributes = Optional<ContactAttributes, ContactOptionalAttributes>;
 
 export class Contact extends Model<ContactAttributes, ContactCreationAttributes> implements ContactAttributes {
@@ -43,8 +43,8 @@ export class Contact extends Model<ContactAttributes, ContactCreationAttributes>
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Contact hasMany Faculty via contactId
@@ -124,12 +124,12 @@ export class Contact extends Model<ContactAttributes, ContactCreationAttributes>
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

@@ -8,14 +8,14 @@ export interface OrganizationAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type OrganizationPk = "id";
 export type OrganizationId = Organization[OrganizationPk];
-export type OrganizationOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type OrganizationOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type OrganizationCreationAttributes = Optional<OrganizationAttributes, OrganizationOptionalAttributes>;
 
 export class Organization extends Model<OrganizationAttributes, OrganizationCreationAttributes> implements OrganizationAttributes {
@@ -24,8 +24,8 @@ export class Organization extends Model<OrganizationAttributes, OrganizationCrea
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Organization hasMany User via organizationId
@@ -56,12 +56,12 @@ export class Organization extends Model<OrganizationAttributes, OrganizationCrea
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

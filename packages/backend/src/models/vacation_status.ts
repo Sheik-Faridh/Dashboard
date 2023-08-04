@@ -8,14 +8,14 @@ export interface VacationStatusAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type VacationStatusPk = "id";
 export type VacationStatusId = VacationStatus[VacationStatusPk];
-export type VacationStatusOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type VacationStatusOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type VacationStatusCreationAttributes = Optional<VacationStatusAttributes, VacationStatusOptionalAttributes>;
 
 export class VacationStatus extends Model<VacationStatusAttributes, VacationStatusCreationAttributes> implements VacationStatusAttributes {
@@ -24,8 +24,8 @@ export class VacationStatus extends Model<VacationStatusAttributes, VacationStat
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // VacationStatus hasMany FacultyVacationRequest via statusId
@@ -56,12 +56,12 @@ export class VacationStatus extends Model<VacationStatusAttributes, VacationStat
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

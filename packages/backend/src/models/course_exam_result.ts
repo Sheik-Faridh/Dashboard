@@ -13,14 +13,14 @@ export interface CourseExamResultAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type CourseExamResultPk = "id";
 export type CourseExamResultId = CourseExamResult[CourseExamResultPk];
-export type CourseExamResultOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type CourseExamResultOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type CourseExamResultCreationAttributes = Optional<CourseExamResultAttributes, CourseExamResultOptionalAttributes>;
 
 export class CourseExamResult extends Model<CourseExamResultAttributes, CourseExamResultCreationAttributes> implements CourseExamResultAttributes {
@@ -32,8 +32,8 @@ export class CourseExamResult extends Model<CourseExamResultAttributes, CourseEx
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // CourseExamResult belongsTo CourseExam via courseExamId
@@ -94,12 +94,12 @@ export class CourseExamResult extends Model<CourseExamResultAttributes, CourseEx
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

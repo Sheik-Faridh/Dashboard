@@ -8,14 +8,14 @@ export interface SocialMediaPlatformAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type SocialMediaPlatformPk = "id";
 export type SocialMediaPlatformId = SocialMediaPlatform[SocialMediaPlatformPk];
-export type SocialMediaPlatformOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type SocialMediaPlatformOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type SocialMediaPlatformCreationAttributes = Optional<SocialMediaPlatformAttributes, SocialMediaPlatformOptionalAttributes>;
 
 export class SocialMediaPlatform extends Model<SocialMediaPlatformAttributes, SocialMediaPlatformCreationAttributes> implements SocialMediaPlatformAttributes {
@@ -24,8 +24,8 @@ export class SocialMediaPlatform extends Model<SocialMediaPlatformAttributes, So
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // SocialMediaPlatform hasMany UserSocialMedium via socialMediaPlatformId
@@ -56,12 +56,12 @@ export class SocialMediaPlatform extends Model<SocialMediaPlatformAttributes, So
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

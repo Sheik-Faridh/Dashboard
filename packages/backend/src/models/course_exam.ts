@@ -17,14 +17,14 @@ export interface CourseExamAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type CourseExamPk = "id";
 export type CourseExamId = CourseExam[CourseExamPk];
-export type CourseExamOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type CourseExamOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type CourseExamCreationAttributes = Optional<CourseExamAttributes, CourseExamOptionalAttributes>;
 
 export class CourseExam extends Model<CourseExamAttributes, CourseExamCreationAttributes> implements CourseExamAttributes {
@@ -40,8 +40,8 @@ export class CourseExam extends Model<CourseExamAttributes, CourseExamCreationAt
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // CourseExam belongsTo Course via courseId
@@ -124,12 +124,12 @@ export class CourseExam extends Model<CourseExamAttributes, CourseExamCreationAt
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

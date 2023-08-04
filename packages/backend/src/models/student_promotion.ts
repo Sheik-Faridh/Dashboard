@@ -11,14 +11,14 @@ export interface StudentPromotionAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type StudentPromotionPk = "id";
 export type StudentPromotionId = StudentPromotion[StudentPromotionPk];
-export type StudentPromotionOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type StudentPromotionOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type StudentPromotionCreationAttributes = Optional<StudentPromotionAttributes, StudentPromotionOptionalAttributes>;
 
 export class StudentPromotion extends Model<StudentPromotionAttributes, StudentPromotionCreationAttributes> implements StudentPromotionAttributes {
@@ -29,8 +29,8 @@ export class StudentPromotion extends Model<StudentPromotionAttributes, StudentP
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // StudentPromotion belongsTo Class via promotedFrom
@@ -86,12 +86,12 @@ export class StudentPromotion extends Model<StudentPromotionAttributes, StudentP
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

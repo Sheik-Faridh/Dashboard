@@ -14,14 +14,14 @@ export interface SalaryHikeAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type SalaryHikePk = "id";
 export type SalaryHikeId = SalaryHike[SalaryHikePk];
-export type SalaryHikeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type SalaryHikeOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type SalaryHikeCreationAttributes = Optional<SalaryHikeAttributes, SalaryHikeOptionalAttributes>;
 
 export class SalaryHike extends Model<SalaryHikeAttributes, SalaryHikeCreationAttributes> implements SalaryHikeAttributes {
@@ -36,8 +36,8 @@ export class SalaryHike extends Model<SalaryHikeAttributes, SalaryHikeCreationAt
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // SalaryHike belongsTo Faculty via facultyId
@@ -102,12 +102,12 @@ export class SalaryHike extends Model<SalaryHikeAttributes, SalaryHikeCreationAt
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

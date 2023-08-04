@@ -14,14 +14,14 @@ export interface TimetableAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type TimetablePk = "id";
 export type TimetableId = Timetable[TimetablePk];
-export type TimetableOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type TimetableOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type TimetableCreationAttributes = Optional<TimetableAttributes, TimetableOptionalAttributes>;
 
 export class Timetable extends Model<TimetableAttributes, TimetableCreationAttributes> implements TimetableAttributes {
@@ -33,8 +33,8 @@ export class Timetable extends Model<TimetableAttributes, TimetableCreationAttri
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Timetable belongsTo Class via classId
@@ -104,12 +104,12 @@ export class Timetable extends Model<TimetableAttributes, TimetableCreationAttri
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

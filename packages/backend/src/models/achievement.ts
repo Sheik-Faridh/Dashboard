@@ -12,14 +12,14 @@ export interface AchievementAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type AchievementPk = "id";
 export type AchievementId = Achievement[AchievementPk];
-export type AchievementOptionalAttributes = "id" | "attachmentId" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type AchievementOptionalAttributes = "id" | "attachmentId" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type AchievementCreationAttributes = Optional<AchievementAttributes, AchievementOptionalAttributes>;
 
 export class Achievement extends Model<AchievementAttributes, AchievementCreationAttributes> implements AchievementAttributes {
@@ -30,8 +30,8 @@ export class Achievement extends Model<AchievementAttributes, AchievementCreatio
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Achievement hasMany Faculty via achievement
@@ -91,12 +91,12 @@ export class Achievement extends Model<AchievementAttributes, AchievementCreatio
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

@@ -11,14 +11,14 @@ export interface EducationQualificationAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type EducationQualificationPk = "id";
 export type EducationQualificationId = EducationQualification[EducationQualificationPk];
-export type EducationQualificationOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type EducationQualificationOptionalAttributes = "id" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type EducationQualificationCreationAttributes = Optional<EducationQualificationAttributes, EducationQualificationOptionalAttributes>;
 
 export class EducationQualification extends Model<EducationQualificationAttributes, EducationQualificationCreationAttributes> implements EducationQualificationAttributes {
@@ -31,8 +31,8 @@ export class EducationQualification extends Model<EducationQualificationAttribut
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
 
@@ -68,12 +68,12 @@ export class EducationQualification extends Model<EducationQualificationAttribut
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {

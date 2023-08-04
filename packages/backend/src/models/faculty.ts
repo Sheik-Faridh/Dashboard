@@ -49,14 +49,14 @@ export interface FacultyAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-  createdBy: number;
-  updatedBy: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 }
 
 export type FacultyPk = "id";
 export type FacultyId = Faculty[FacultyPk];
-export type FacultyOptionalAttributes = "id" | "relieveDate" | "contactId" | "reportingTo" | "courseId" | "workExperience" | "inchargeOfClass" | "inchargeOfClassSection" | "workPublish" | "certification" | "achievement" | "bankDetail" | "socialMediaPlatform" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy";
+export type FacultyOptionalAttributes = "id" | "relieveDate" | "contactId" | "reportingTo" | "courseId" | "workExperience" | "inchargeOfClass" | "inchargeOfClassSection" | "workPublish" | "certification" | "achievement" | "bankDetail" | "socialMediaPlatform" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy";
 export type FacultyCreationAttributes = Optional<FacultyAttributes, FacultyOptionalAttributes>;
 
 export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes> implements FacultyAttributes {
@@ -83,8 +83,8 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
   createdAt!: Date;
   updatedAt!: Date;
   deletedAt?: Date;
-  createdBy!: number;
-  updatedBy!: number;
+  createdBy?: number;
+  updatedBy?: number;
   deletedBy?: number;
 
   // Faculty belongsTo Achievement via achievement
@@ -471,12 +471,12 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
     },
     createdBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'created_by'
     },
     updatedBy: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'updated_by'
     },
     deletedBy: {
