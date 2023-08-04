@@ -1,9 +1,5 @@
 import express from 'express'
-import {
-  loginController,
-  logoutController,
-  signupController,
-} from '@/controllers/auth'
+import * as AuthController from '@/controllers/auth'
 import { methodNotSupportedHandler } from '@/middleware/error'
 import { validate } from '@/middleware/validator'
 import { login, signup } from '@/helpers/validation'
@@ -12,8 +8,8 @@ import passport from '@/config/passport'
 const router = express.Router()
 
 router
-  .post('/login', validate(login), loginController)
-  .post('/signup', validate(signup), signupController)
+  .post('/login', validate(login), AuthController.login)
+  .post('/signup', validate(signup), AuthController.signup)
   .get(
     '/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }),
@@ -25,7 +21,7 @@ router
       successRedirect: '/',
     }),
   )
-  .post('/logout', logoutController)
+  .post('/logout', AuthController.logout)
   .all('*', methodNotSupportedHandler)
 
 export default router

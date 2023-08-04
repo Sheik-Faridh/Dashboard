@@ -10,7 +10,7 @@ import { HttpStatusCode } from '@/types/http_codes'
 
 const { CLIENT_HOST } = config
 
-export const loginController = asyncHandler(
+export const login = asyncHandler(
   (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate(
       'local',
@@ -26,7 +26,7 @@ export const loginController = asyncHandler(
   },
 )
 
-export const signupController = asyncHandler(
+export const signup = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { name, email, password } = req.body
     const user = await findUserByEmail(email)
@@ -46,11 +46,13 @@ export const signupController = asyncHandler(
         activationLink: `${CLIENT_HOST}/verify/user/${newUser.activationToken}`,
       },
     })
-    res.status(HttpStatusCode.Created).json({ data: formatUserData(newUser) })
+    return res
+      .status(HttpStatusCode.Created)
+      .json({ data: formatUserData(newUser) })
   },
 )
 
-export const logoutController = asyncHandler(
+export const logout = asyncHandler(
   (req: Request, res: Response, next: NextFunction) => {
     req.logout(function (err) {
       if (err) next(err)

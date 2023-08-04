@@ -10,7 +10,7 @@ type CallbackFn = (
   req: Request,
   res: Response,
   next: NextFunction,
-) => Promise<void> | void
+) => Promise<Response> | Promise<void> | void
 
 export const asyncHandler =
   (fn: CallbackFn) => (req: Request, res: Response, next: NextFunction) => {
