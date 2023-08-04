@@ -16,6 +16,8 @@ module.exports = {
         token_expires_on: new Date(Date.now() + COOKIE_MAX_AGE),
         created_at: new Date(),
         updated_at: new Date(),
+        created_by: 0,
+        updated_by: 0,
         user_type: 'Faculty',
       },
     ]
