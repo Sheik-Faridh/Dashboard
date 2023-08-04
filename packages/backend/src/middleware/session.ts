@@ -1,4 +1,4 @@
-import { setUserIdToSession } from '@/database/cls'
+import namespace, { setUserIdToSession } from '@/database/cls'
 import { Request, Response, NextFunction } from 'express'
 
 export const setUserSession = (
@@ -6,6 +6,8 @@ export const setUserSession = (
   res: Response,
   next: NextFunction,
 ) => {
-  if (req.user?.id) setUserIdToSession(req.user.id)
-  next()
+  namespace.run(() => {
+    if (req.user?.id) setUserIdToSession(req.user?.id)
+    next()
+  })
 }
