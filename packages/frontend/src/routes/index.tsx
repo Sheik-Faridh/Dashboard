@@ -1,26 +1,30 @@
+import { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import LoginPage from '@/pages/login'
-import SignupPage from '@/pages/signup'
-import Home from '@/pages/home'
-import ForgotPasswordPage from '@/pages/forgotpassword'
-import ResetPasswordPage from '@/pages/resetpassword'
-import VerifyUserPage from '@/pages/verifyuser'
-import VacationPage from '@/pages/vacation'
 import { useAppRoutes } from '@/hooks/common'
 
+const LoginPage = lazy(() => import('@/pages/login'))
+const SignupPage = lazy(() => import('@/pages/signup'))
+const HomePage = lazy(() => import('@/pages/home'))
+const ForgotPasswordPage = lazy(() => import('@/pages/forgotpassword'))
+const ResetPasswordPage = lazy(() => import('@/pages/resetpassword'))
+const VerifyUserPage = lazy(() => import('@/pages/verifyuser'))
+const VacationPage = lazy(() => import('@/pages/vacation'))
+
 const AppRoutes = () => {
-  const { fetchingUser } = useAppRoutes()
+  const { fetchingData } = useAppRoutes()
 
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/signup' element={<SignupPage />} />
-      <Route path='/password/forgot' element={<ForgotPasswordPage />} />
-      <Route path='/password/reset/:token' element={<ResetPasswordPage />} />
-      <Route path='/verify/user/:token' element={<VerifyUserPage />} />
-      <Route path='/vacation' element={<VacationPage />} />
-    </Routes>
+    <Suspense>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<SignupPage />} />
+        <Route path='/password/forgot' element={<ForgotPasswordPage />} />
+        <Route path='/password/reset/:token' element={<ResetPasswordPage />} />
+        <Route path='/verify/user/:token' element={<VerifyUserPage />} />
+        <Route path='/vacation' element={<VacationPage />} />
+      </Routes>
+    </Suspense>
   )
 }
 

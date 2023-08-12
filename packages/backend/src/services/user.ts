@@ -5,8 +5,32 @@ import config from '@/config'
 import { getRandomBytes } from '@/helpers/utils'
 import { API_CONSTANTS } from '@/constants/app'
 import { USER_FIELDS_TO_BE_INCLUDED } from '@/constants/user'
+import { formatUserData } from '@/helpers/format'
 
 const { COOKIE_MAX_AGE } = config
+
+export const getUserPayload = async ({
+  name,
+  email,
+  password,
+  userType,
+  active = 0,
+}: Pick<
+  UserCreationAttributes,
+  'name' | 'email' | 'password' | 'userType' | 'active'
+>) => {
+  const activationToken = await getRandomBytes()
+  const tokenExpiresOn = new Date(Date.now() + COOKIE_MAX_AGE * 1000)
+  return {
+    name,
+    email,
+    password,
+    activationToken,
+    tokenExpiresOn,
+    userType,
+    active,
+  }
+}
 
 export const createUser = async ({
   name,
@@ -17,16 +41,8 @@ export const createUser = async ({
   UserCreationAttributes,
   'name' | 'email' | 'password' | 'userType'
 >): Promise<User> => {
-  const activationToken = await getRandomBytes()
-  const tokenExpiresOn = new Date(Date.now() + COOKIE_MAX_AGE * 1000)
-  return await models.User.create({
-    name,
-    email,
-    password,
-    activationToken,
-    tokenExpiresOn,
-    userType,
-  })
+  const payload = await getUserPayload({ name, email, password, userType })
+  return await models.User.create(payload)
 }
 
 export const findUserByEmail = (email: string, raw = true) =>
@@ -38,7 +54,10 @@ export const findUserById = (id: number, raw = true) =>
 export const getPaginatedUsers = async (
   limit: number,
   cursor: string | null,
-): Promise<{ data: Partial<User>[]; nextCursor: string | null }> => {
+): Promise<{
+  data: Partial<ReturnType<typeof formatUserData>>[]
+  nextCursor: string | null
+}> => {
   const options: FindOptions<UserAttributes> = {
     attributes: {
       include: USER_FIELDS_TO_BE_INCLUDED,
@@ -59,5 +78,5 @@ export const getPaginatedUsers = async (
   const users = await models.User.findAll(options)
   const nextCursor = users.length ? `${users[users.length - 1].id}` : null
 
-  return { data: users, nextCursor }
+  return { data: users.map((user) => formatUserData(user)), nextCursor }
 }

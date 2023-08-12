@@ -1,7 +1,8 @@
-import { InputHTMLAttributes, ReactNode, forwardRef } from 'react'
+import { InputHTMLAttributes, ReactNode, forwardRef, useRef } from 'react'
 import { styled } from 'styled-components'
 import classNames from 'classnames'
 import HelpText, { HelptextProps } from '@/atoms/helptext'
+import { Loader2Icon, XIcon } from 'lucide-react'
 
 export interface TextFieldProps
   extends InputHTMLAttributes<HTMLInputElement>,
@@ -9,6 +10,8 @@ export interface TextFieldProps
   label: string
   startIcon: ReactNode
   endIcon: ReactNode
+  loading: boolean
+  clear: boolean
 }
 
 const TextFieldControl = styled.div`
@@ -58,9 +61,26 @@ const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
       startIcon = null,
       endIcon = null,
       required = false,
+      loading = false,
+      clear = false,
       ...inputProps
     } = props
     const isNormal = !!error || !!warning ? false : true
+    const containerRef = useRef<HTMLDivElement | null>(null)
+
+    const handleClear = () => {
+      const inputEle = containerRef?.current?.querySelector('input')
+      if (inputEle) {
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+          window?.HTMLInputElement?.prototype,
+          'value',
+        )?.set
+        nativeInputValueSetter?.call(inputEle, '')
+        const event = new Event('input', { bubbles: true })
+        inputEle.dispatchEvent(event)
+      }
+    }
+
     return (
       <TextFieldControl className={classNames('text-field-control', className)}>
         {!!label && (
@@ -87,7 +107,7 @@ const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
             },
           )}
         >
-          <div className='flex w-full items-center mx-[8px]'>
+          <div className='flex w-full items-center mx-[8px]' ref={containerRef}>
             <div className='flex grow items-center'>
               {startIcon && (
                 <div className='flex items-center input-prefix px-[2px] bg-slate-100'>
@@ -103,7 +123,17 @@ const TextField = forwardRef<HTMLInputElement, Partial<TextFieldProps>>(
                 />
               </div>
             </div>
+            {loading && (
+              <div className='flex items-center ms-2 input-suffix'>
+                <Loader2Icon className='animate-spin !text-azure-800' />
+              </div>
+            )}
             <div className='flex items-center ms-2 input-suffix'>{endIcon}</div>
+            {clear && inputProps.value && (
+              <div className='flex items-center ms-2 input-suffix'>
+                <XIcon onClick={handleClear} />
+              </div>
+            )}
           </div>
         </div>
         <HelpText error={error} warning={warning} hintText={hintText} />

@@ -5,7 +5,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { models } from '@/database'
 import config from '@/config'
 import { BadRequest, InternalServerError } from '@/helpers/error'
-import { findUserByEmail, findUserById } from '@/services/user'
+import { findUserByEmail, findUserById, getUserPayload } from '@/services/user'
 import { formatUserData } from '@/helpers/format'
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } = config
@@ -36,12 +36,18 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        const defaultPayload = await getUserPayload({
+          name: profile?.name?.givenName ?? '',
+          email: profile?.emails?.[0]?.value ?? '',
+          password: accessToken,
+          userType: 'Student',
+          active: 1,
+        })
         const [user] = await models.User.findOrCreate({
           where: {
-            password: accessToken,
-            name: profile?.name?.givenName,
             email: profile?.emails?.[0]?.value,
           },
+          defaults: defaultPayload,
         })
         done(null, formatUserData(user))
       } catch (error) {

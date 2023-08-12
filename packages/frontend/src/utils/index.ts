@@ -22,3 +22,11 @@ export const stringToHslColor = (str: string, s = 50, l = 50) => {
 
 export const getBlackListedUrl = () =>
   routesWithNoAuth.some((route) => window.location.href.includes(route))
+
+export const getFirstCharacterFromName = (name: string) => {
+  const nameList = name.split(' ')
+
+  if (nameList.length === 1) return nameList[0][0]
+
+  return `${nameList[0][0]}${nameList[nameList.length - 1][0]}`
+}

@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import Skeleton from '@/atoms/skeleton'
 import Tooltip from '@/atoms/tooltip'
 import { sidebarList } from '@/constants'
+import { useTypedSelector } from '@/redux/store'
 
 const Aside = styled.aside`
   position: fixed;
@@ -44,17 +46,22 @@ const Aside = styled.aside`
 `
 
 const Sidebar = () => {
+  const user = useTypedSelector((state) => state.user.user)
   return (
     <Aside>
       <nav>
         <ul>
           {sidebarList.map((list) => (
             <li key={list.name}>
-              <Link to={list.href}>
-                <Tooltip content={list.name} placement='right'>
-                  {list.icon}
-                </Tooltip>
-              </Link>
+              {!user ? (
+                <Skeleton className='w-[1.5rem] h-[1.5rem] !bg-cyan-900' />
+              ) : (
+                <Link to={list.href}>
+                  <Tooltip content={list.name} placement='right'>
+                    {list.icon}
+                  </Tooltip>
+                </Link>
+              )}
             </li>
           ))}
         </ul>

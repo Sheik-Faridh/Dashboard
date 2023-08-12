@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useAppDispatch, useTypedSelector } from '@/redux/store'
@@ -19,30 +19,21 @@ export const useToast = () => {
 }
 
 export const useAppRoutes = () => {
-  const user = useTypedSelector((state) => state.user.user)
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  const mountedRef = useRef(false)
 
-  const [trigger, result] = useLazyLoggedInUserQuery()
-
-  const { status, data } = result
+  const [trigger] = useLazyLoggedInUserQuery()
 
   useEffect(() => {
-    !user && trigger(undefined, true)
-  }, [user, trigger])
+    if (!mountedRef.current) {
+      trigger(undefined, true)
+      mountedRef.current = true
+    }
 
-  useEffect(() => {
-    if (!data && status === QueryStatus.rejected && !getBlackListedUrl())
-      navigate('/login')
-  }, [data, navigate, status])
+    return () => {
+      mountedRef.current = false
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  useEffect(() => {
-    if (data && !user) dispatch(setUser(data.data))
-  }, [data, user, dispatch])
-
-  useEffect(() => {
-    if (user && getBlackListedUrl()) navigate('/')
-  }, [user, navigate])
-
-  return { fetchingUser: status === QueryStatus.pending }
+  return {}
 }

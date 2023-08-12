@@ -1,13 +1,16 @@
 import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { APIErrorResponse, LoginFormData } from '@/types/common'
+import { APIErrorResponse, APIResponse, LoginFormData } from '@/types/common'
 import { passwordSchema } from '@/utils/form'
 import { useToast } from '@/hooks/common'
 import { useLoginUserMutation } from '@/redux/services/auth'
 import { getErrorMessage, logError } from '@/utils'
-import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '@/redux/store'
+import { setUser } from '@/redux/slice/user'
+import { User } from '@/types/user'
 
 export const useLoginForm = () => {
   const schema = yup.object().shape({
@@ -16,6 +19,7 @@ export const useLoginForm = () => {
     rememberMe: yup.boolean(),
   })
 
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const { showError } = useToast()
@@ -37,7 +41,8 @@ export const useLoginForm = () => {
   const onSubmit = useCallback(
     async (data: LoginFormData) => {
       try {
-        await loginUser(data).unwrap()
+        const res = (await loginUser(data).unwrap()) as APIResponse<User>
+        dispatch(setUser(res.data))
         navigate('/')
       } catch (error) {
         logError(error)
@@ -52,7 +57,7 @@ export const useLoginForm = () => {
         else showError(errorMessage)
       }
     },
-    [loginUser, showError, navigate, setError],
+    [loginUser, showError, navigate, setError, dispatch],
   )
 
   return { errors, isLoading, handleSubmit, onSubmit, register }
