@@ -1,12 +1,14 @@
-import { fetchBaseQuery } from '@reduxjs/toolkit/query'
-import type {
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
+import {
+  fetchBaseQuery,
+  type BaseQueryFn,
+  type FetchArgs,
+  type FetchBaseQueryError,
 } from '@reduxjs/toolkit/query'
+import { getBlackListedUrl } from '@/utils'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
+  credentials: 'include',
 })
 
 const customBaseQuery: BaseQueryFn<
@@ -15,7 +17,13 @@ const customBaseQuery: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions)
-  if (result.error && result.error.status === 401)
+  const isBlackListedUrl = getBlackListedUrl()
+  if (
+    !isBlackListedUrl &&
+    !api.endpoint.includes('/auth') &&
+    result.error &&
+    result.error.status === 401
+  )
     window.location.href = '/login'
   return result
 }

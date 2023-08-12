@@ -17,3 +17,5 @@ export type APIErrorResponse = {
     message: string
   }
 }
+
+export type APIResponse<T> = { data: T }

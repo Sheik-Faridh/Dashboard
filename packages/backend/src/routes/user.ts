@@ -6,7 +6,8 @@ const router = express.Router()
 
 router
   .get('/', UserController.getAllUsers)
-  .get('/id', UserController.getUserById)
+  .get('/me', UserController.getLoggedInUser)
+  .get('/:id', UserController.getUserById)
   .all('*', methodNotSupportedHandler)
 
 export default router

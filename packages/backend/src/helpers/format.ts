@@ -1,6 +1,24 @@
-import { UserCreationAttributes } from '@/models/user'
+import { User } from '@/models/user'
 
-export const formatUserData = (user: UserCreationAttributes) => {
-  const { id, name, email, active, createdAt, updatedAt } = user
-  return { id, name, email, active, createdAt, updatedAt }
+export const formatUserData = (user: User) => {
+  const {
+    id,
+    name,
+    email,
+    active,
+    userType,
+    organizationId,
+    createdAt,
+    updatedAt,
+  } = user
+  return {
+    id,
+    name,
+    email,
+    active: !!active,
+    userType,
+    organizationId,
+    createdAt,
+    updatedAt,
+  }
 }

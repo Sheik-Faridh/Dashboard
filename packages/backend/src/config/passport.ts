@@ -5,7 +5,8 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { models } from '@/database'
 import config from '@/config'
 import { BadRequest, InternalServerError } from '@/helpers/error'
-import { findUserByEmail } from '@/services/user'
+import { findUserByEmail, findUserById } from '@/services/user'
+import { formatUserData } from '@/helpers/format'
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } = config
 
@@ -17,7 +18,7 @@ passport.use(
         const user = await findUserByEmail(email)
         if (!user) return done(new BadRequest(`Email ${email} not found.`))
         const match = await bcrypt.compare(password, user.password)
-        if (match) return done(undefined, user)
+        if (match) return done(undefined, formatUserData(user))
         return done(new BadRequest('Invalid password.'))
       } catch (error) {
         return done(error)
@@ -42,7 +43,7 @@ passport.use(
             email: profile?.emails?.[0]?.value,
           },
         })
-        done(null, user)
+        done(null, formatUserData(user))
       } catch (error) {
         return done(new InternalServerError('Internal Server Error'))
       }
@@ -56,9 +57,9 @@ passport.serializeUser((user, cb) => {
 
 passport.deserializeUser<number>(async (id, done) => {
   try {
-    const user = await models.User.findByPk(id)
+    const user = await findUserById(id)
     if (!user) return done('User not found')
-    return done(undefined, user)
+    return done(undefined, formatUserData(user))
   } catch (error) {
     done(error)
   }

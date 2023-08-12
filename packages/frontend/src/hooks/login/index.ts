@@ -29,6 +29,9 @@ export const useLoginForm = () => {
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      rememberMe: false,
+    },
   })
 
   const onSubmit = useCallback(

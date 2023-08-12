@@ -8,6 +8,7 @@ const loginSchema = Joi.object({
     .max(16)
     .pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()])/)
     .required(),
+  rememberMe: Joi.boolean(),
 })
 
 const signUpSchema = Joi.object({

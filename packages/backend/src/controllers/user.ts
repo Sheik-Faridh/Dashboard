@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from 'express'
 import { asyncHandler } from '@/helpers/utils'
 import { HttpStatusCode } from '@/types/http_codes'
 import { findUserById, getPaginatedUsers } from '@/services/user'
+import { BadRequest, NotFoundRequest } from '@/helpers/error'
+import { formatUserData } from '@/helpers/format'
 
 export const getAllUsers = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -19,8 +21,18 @@ export const getUserById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params
 
+    if (!id) throw new BadRequest('Invalid User ID')
+
     const user = await findUserById(+id)
 
-    return res.status(HttpStatusCode.Ok).json({ data: user })
+    if (!user) throw new NotFoundRequest('User not found')
+
+    return res.status(HttpStatusCode.Ok).json({ data: formatUserData(user) })
+  },
+)
+
+export const getLoggedInUser = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    return res.status(HttpStatusCode.Ok).json({ data: req.user })
   },
 )

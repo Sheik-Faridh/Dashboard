@@ -6,6 +6,7 @@ import {
   PresentationIcon,
   SettingsIcon,
 } from 'lucide-react'
+import { DefaultToastOptions } from 'react-hot-toast'
 
 type SideBarListType = {
   name: string
@@ -57,4 +58,17 @@ export const userMenuList = [
     text: 'Logout',
     graphicsProps: { name: 'reply' },
   },
+]
+
+export const toastOptions = {
+  duration: 4000,
+  position: 'top-right',
+} as DefaultToastOptions
+
+export const routesWithNoAuth = [
+  '/login',
+  '/signup',
+  '/password/forgot',
+  '/password/reset',
+  '/verify/user',
 ]

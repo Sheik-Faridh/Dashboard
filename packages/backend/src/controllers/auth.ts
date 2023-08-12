@@ -19,7 +19,7 @@ export const login = asyncHandler(
         if (!user) return next(new BadRequest('User not Found'))
         req.logIn(user, function (err) {
           if (err) next(err)
-          res.status(HttpStatusCode.Ok).json({ data: formatUserData(user) })
+          res.status(HttpStatusCode.Ok).json({ data: user })
         })
       },
     )(req, res, next)

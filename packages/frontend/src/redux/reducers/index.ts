@@ -1,5 +1,7 @@
-import { authApi } from '@/redux//services/auth'
+import user from '@/redux/slice/user'
+import { api } from '@/redux/services/api'
 
 export default {
-  [authApi.reducerPath]: authApi.reducer,
+  [api.reducerPath]: api.reducer,
+  user,
 }
