@@ -5,6 +5,12 @@ import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
 const Container = styled.div`
+  & .ag-root-wrapper {
+    border: none;
+  }
+  & .ag-header {
+    border: none;
+  }
   & .ag-header-row {
     height: 30px !important;
   }
@@ -20,7 +26,7 @@ const NoRowDataComponent = () => {
 
 const Table = (props: AgGridReactProps) => {
   return (
-    <Container className='ag-theme-alpine w-full h-full'>
+    <Container className='ag-theme-alpine w-full h-full shadow-lg'>
       <AgGridReact
         animateRows
         noRowsOverlayComponent={NoRowDataComponent}
