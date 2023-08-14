@@ -11,7 +11,7 @@ const VerifyUserPage = lazy(() => import('@/pages/verifyuser'))
 const VacationPage = lazy(() => import('@/pages/vacation'))
 
 const AppRoutes = () => {
-  const { fetchingData } = useAppRoutes()
+  useAppRoutes()
 
   return (
     <Suspense>

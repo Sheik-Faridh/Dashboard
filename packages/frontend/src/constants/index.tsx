@@ -14,6 +14,8 @@ type SideBarListType = {
   href: string
 }
 
+export const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+
 export const sidebarList: SideBarListType[] = [
   {
     name: 'Dashboard',

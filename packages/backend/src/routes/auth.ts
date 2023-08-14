@@ -3,9 +3,12 @@ import * as AuthController from '@/controllers/auth'
 import { methodNotSupportedHandler } from '@/middleware/error'
 import { validate } from '@/middleware/validator'
 import { login, signup } from '@/helpers/validation'
+import config from '@/config'
 import passport from '@/config/passport'
 
 const router = express.Router()
+
+const { CLIENT_HOST } = config
 
 router
   .post('/login', validate(login), AuthController.login)
@@ -17,8 +20,8 @@ router
   .get(
     '/google/callback',
     passport.authenticate('google', {
-      failureRedirect: '/signin',
-      successRedirect: '/',
+      failureRedirect: `${CLIENT_HOST}/signup`,
+      successRedirect: `${CLIENT_HOST}/`,
     }),
   )
   .post('/logout', AuthController.logout)

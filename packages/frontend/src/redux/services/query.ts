@@ -5,9 +5,10 @@ import {
   type FetchBaseQueryError,
 } from '@reduxjs/toolkit/query'
 import { getBlackListedUrl } from '@/utils'
+import { apiBaseUrl } from '@/constants'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
+  baseUrl: `${apiBaseUrl}/api/v1`,
   credentials: 'include',
 })
 

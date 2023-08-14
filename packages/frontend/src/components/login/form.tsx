@@ -6,9 +6,15 @@ import Divider from '@/atoms/divider'
 import { PasswordInput, TextField, Button, Checkbox } from '@/atoms/form'
 import { useLoginForm } from '@/hooks/login'
 import { getFormInputError } from '@/utils/form'
+import { apiBaseUrl } from '@/constants'
 
 const Form = () => {
   const { errors, isLoading, handleSubmit, onSubmit, register } = useLoginForm()
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${apiBaseUrl}/api/v1/auth/google`
+  }
+
   return (
     <AuthFormContainer className='flex justify-center'>
       <div className='form-wrapper p-4'>
@@ -16,7 +22,7 @@ const Form = () => {
           Log in to your account
         </label>
         <div className='oauth-button-wrapper flex'>
-          <Button color='secondary'>
+          <Button color='secondary' onClick={handleGoogleLogin}>
             <GoogleIcon />
             Sign in with Google
           </Button>

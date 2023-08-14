@@ -6,10 +6,16 @@ import { PasswordInput, TextField, Button } from '@/atoms/form'
 import Divider from '@/atoms/divider'
 import { useSignupForm } from '@/hooks/signup'
 import { getFormInputError } from '@/utils/form'
+import { apiBaseUrl } from '@/constants'
 
 const Form = () => {
   const { errors, isLoading, register, handleSubmit, onSubmit } =
     useSignupForm()
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${apiBaseUrl}/api/v1/auth/google`
+  }
+
   return (
     <AuthFormContainer className='flex justify-center'>
       <div className='form-wrapper p-4'>
@@ -17,7 +23,7 @@ const Form = () => {
           Create your account
         </label>
         <div className='oauth-button-wrapper flex'>
-          <Button color='secondary'>
+          <Button color='secondary' onClick={handleGoogleLogin}>
             <GoogleIcon />
             Sign up with Google
           </Button>

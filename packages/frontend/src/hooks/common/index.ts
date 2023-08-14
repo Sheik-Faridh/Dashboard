@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
-import { useAppDispatch, useTypedSelector } from '@/redux/store'
+import { useTypedSelector } from '@/redux/store'
 import { useLazyLoggedInUserQuery } from '@/redux/services/user'
-import { setUser } from '@/redux/slice/user'
-import { QueryStatus } from '@reduxjs/toolkit/dist/query'
 import { getBlackListedUrl } from '@/utils'
 
 export const useToast = () => {
@@ -20,8 +18,11 @@ export const useToast = () => {
 
 export const useAppRoutes = () => {
   const mountedRef = useRef(false)
-
+  const user = useTypedSelector((state) => state.user.user)
+  const navigate = useNavigate()
   const [trigger] = useLazyLoggedInUserQuery()
+
+  const { id } = user ?? {}
 
   useEffect(() => {
     if (!mountedRef.current) {
@@ -34,6 +35,10 @@ export const useAppRoutes = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (id && getBlackListedUrl()) navigate('/')
+  }, [id, navigate])
 
   return {}
 }
