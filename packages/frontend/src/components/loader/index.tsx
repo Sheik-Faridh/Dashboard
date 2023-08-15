@@ -5,7 +5,7 @@ const PageLoader = () => {
   return (
     <div className='flex justify-center items-center w-full h-full'>
       <Lottie
-        className='w-[300px] h-[300px]'
+        className='w-[250px] h-[250px] relative bottom-[40px]'
         animationData={PageLoaderAnimation}
         loop={true}
       />

@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAppRoutes } from '@/hooks/common'
 
 const LoginPage = lazy(() => import('@/pages/login'))
@@ -9,6 +9,7 @@ const ForgotPasswordPage = lazy(() => import('@/pages/forgotpassword'))
 const ResetPasswordPage = lazy(() => import('@/pages/resetpassword'))
 const VerifyUserPage = lazy(() => import('@/pages/verifyuser'))
 const VacationPage = lazy(() => import('@/pages/vacation'))
+const NotFoundPage = lazy(() => import('@/pages/notfound'))
 
 const AppRoutes = () => {
   useAppRoutes()
@@ -23,6 +24,8 @@ const AppRoutes = () => {
         <Route path='/password/reset/:token' element={<ResetPasswordPage />} />
         <Route path='/verify/user/:token' element={<VerifyUserPage />} />
         <Route path='/vacation' element={<VacationPage />} />
+        <Route path='/not-found' element={<NotFoundPage />} />
+        <Route path='*' element={<Navigate to='/not-found' />} />
       </Routes>
     </Suspense>
   )

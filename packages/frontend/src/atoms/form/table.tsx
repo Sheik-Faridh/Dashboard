@@ -1,6 +1,7 @@
 import { AgGridReact, AgGridReactProps } from 'ag-grid-react'
 import { styled } from 'styled-components'
-import { ReactComponent as NoRowsIcon } from '@/assets/svg/no-rows-icon.svg'
+import Lottie from 'lottie-react'
+import NoDataAnimation from '@/assets/animation/no_data.json'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
@@ -18,8 +19,12 @@ const Container = styled.div`
 
 const NoRowDataComponent = () => {
   return (
-    <div className='flex w-[150px] h-[150px]'>
-      <NoRowsIcon />
+    <div className='flex'>
+      <Lottie
+        className='w-[200px] h-[200px] relative bottom-[15px]'
+        animationData={NoDataAnimation}
+        loop={true}
+      />
     </div>
   )
 }
