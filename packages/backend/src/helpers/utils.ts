@@ -35,3 +35,5 @@ export const getRandomBytes = (): Promise<string> =>
       resolve(buffer.toString('hex'))
     }),
   )
+
+export const isNumeric = (value: string) => /^-?\d+$/.test(value)

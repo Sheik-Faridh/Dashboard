@@ -328,6 +328,7 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
         model: 'user',
         key: 'id'
       },
+      unique: "fk_faculty_user_id",
       field: 'user_id'
     },
     departmentId: {
@@ -506,17 +507,18 @@ export class Faculty extends Model<FacultyAttributes, FacultyCreationAttributes>
         ]
       },
       {
+        name: "user_id",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "user_id" },
+        ]
+      },
+      {
         name: "achievement",
         using: "BTREE",
         fields: [
           { name: "achievement" },
-        ]
-      },
-      {
-        name: "fk_faculty_user_id",
-        using: "BTREE",
-        fields: [
-          { name: "user_id" },
         ]
       },
       {

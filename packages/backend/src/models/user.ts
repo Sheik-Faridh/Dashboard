@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { Faculty, FacultyId } from './faculty';
+import type { Faculty, FacultyCreationAttributes, FacultyId } from './faculty';
 import type { Organization, OrganizationId } from './organization';
 import type { Student, StudentId } from './student';
 import type { UserRole, UserRoleId } from './user_role';
@@ -50,18 +50,11 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   getOrganization!: Sequelize.BelongsToGetAssociationMixin<Organization>;
   setOrganization!: Sequelize.BelongsToSetAssociationMixin<Organization, OrganizationId>;
   createOrganization!: Sequelize.BelongsToCreateAssociationMixin<Organization>;
-  // User hasMany Faculty via userId
-  faculties!: Faculty[];
-  getFaculties!: Sequelize.HasManyGetAssociationsMixin<Faculty>;
-  setFaculties!: Sequelize.HasManySetAssociationsMixin<Faculty, FacultyId>;
-  addFaculty!: Sequelize.HasManyAddAssociationMixin<Faculty, FacultyId>;
-  addFaculties!: Sequelize.HasManyAddAssociationsMixin<Faculty, FacultyId>;
-  createFaculty!: Sequelize.HasManyCreateAssociationMixin<Faculty>;
-  removeFaculty!: Sequelize.HasManyRemoveAssociationMixin<Faculty, FacultyId>;
-  removeFaculties!: Sequelize.HasManyRemoveAssociationsMixin<Faculty, FacultyId>;
-  hasFaculty!: Sequelize.HasManyHasAssociationMixin<Faculty, FacultyId>;
-  hasFaculties!: Sequelize.HasManyHasAssociationsMixin<Faculty, FacultyId>;
-  countFaculties!: Sequelize.HasManyCountAssociationsMixin;
+  // User hasOne Faculty via userId
+  faculty!: Faculty;
+  getFaculty!: Sequelize.HasOneGetAssociationMixin<Faculty>;
+  setFaculty!: Sequelize.HasOneSetAssociationMixin<Faculty, FacultyId>;
+  createFaculty!: Sequelize.HasOneCreateAssociationMixin<Faculty>;
   // User hasMany Student via userId
   students!: Student[];
   getStudents!: Sequelize.HasManyGetAssociationsMixin<Student>;

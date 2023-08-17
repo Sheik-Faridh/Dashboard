@@ -9,7 +9,6 @@ export const isAuthenticated = (
   if (req.url.includes('/auth/')) return next()
 
   if (req.user?.id) return next()
-
   // Create a new error with a custom message
   const error = new UnAuthorizedRequest()
   // Pass the error to the error-handling middleware
